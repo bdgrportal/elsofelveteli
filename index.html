@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felvételi — interjú & bemutató</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --navy:#0F1530;--navy2:#1B2350;--pink:#E63E78;--pink-soft:#FCE4ED;
+    --green:#1E9E5A;--green-soft:#E3F6EA;--black:#0A0A0C;
+    --gray-100:#F5F5F7;--gray-200:#E8E8EC;--gray-400:#9498A6;--gray-600:#5A5E6D;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background-color:var(--gray-100);
+    background-image:linear-gradient(rgba(27,35,80,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(27,35,80,.05) 1px, transparent 1px);
+    background-size:28px 28px;color:var(--black);font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 0 90px;}
+
+  .hero{background:var(--navy);background-image:radial-gradient(circle at 85% 0%, rgba(230,62,120,.35), transparent 55%);
+    color:#fff;padding:36px 32px 28px;border-radius:0 0 28px 28px;margin-bottom:8px;}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;}
+  .hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(24px,3.2vw,34px);margin:0;letter-spacing:-.01em;}
+  .hero .sub{color:#C7CBE0;font-size:13.5px;margin-top:6px;max-width:520px;}
+  .mode-toggle{display:flex;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:4px;}
+  .mode-btn{background:none;border:none;color:#C7CBE0;font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
+  .mode-btn.active{background:var(--pink);color:#fff;}
+
+  .nav{display:flex;gap:8px;flex-wrap:wrap;padding:18px 32px 0;}
+  .nav a{text-decoration:none;font-size:12px;font-weight:700;color:var(--navy2);background:#fff;border:1.5px solid var(--gray-200);padding:7px 13px;border-radius:999px;}
+  .nav a:hover{border-color:var(--pink);color:var(--pink);}
+
+  .content{padding:0 32px;}
+  .sec{margin-top:42px;}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;}
+  .sec-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;color:var(--gray-200);line-height:1;}
+  .sec-head h2{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin:0;color:var(--navy);}
+  .sec-hint{color:var(--gray-600);font-size:13px;margin:4px 0 16px;max-width:640px;}
+  .interviewer-only-badge{font-size:10.5px;font-weight:700;background:var(--pink-soft);color:var(--pink);padding:3px 9px;border-radius:999px;margin-left:6px;vertical-align:middle;}
+
+  body[data-page="interviewer"] .sec:not(.pg-interviewer){display:none !important;}
+  body[data-page="candidate"] .sec:not(.pg-candidate){display:none !important;}
+  body[data-page="scoring"] .sec:not(.pg-scoring){display:none !important;}
+
+  .accordion-item{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;}
+  .acc-head{width:100%;background:none;border:none;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;text-align:left;}
+  .acc-head .ttl{display:flex;align-items:center;gap:10px;}
+  .acc-head .badge{width:28px;height:28px;border-radius:50%;background:var(--pink-soft);color:var(--pink);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .acc-head span.label{font-weight:700;font-size:14px;color:var(--navy);}
+  .acc-head .chev{color:var(--gray-400);font-size:18px;transition:transform .2s;}
+  .accordion-item.open .chev{transform:rotate(180deg);color:var(--pink);}
+  .accordion-item.open .acc-head .badge{background:var(--pink);color:#fff;}
+  .acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 18px;}
+  .accordion-item.open .acc-body{padding:0 18px 18px;}
+  .acc-body p, .acc-body li{font-size:13.5px;line-height:1.65;color:var(--gray-600);}
+  .acc-body ul{margin:0;padding-left:18px;}
+  .acc-body li{margin-bottom:6px;}
+  .acc-body b{color:var(--navy);}
+
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+  .info-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:18px;}
+  .info-card h3{font-family:'Space Grotesk',sans-serif;font-size:14.5px;margin:0 0 8px;color:var(--navy);}
+  .info-card .stat{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--pink);margin-bottom:6px;display:block;}
+  .info-card p{font-size:12.5px;color:var(--gray-600);line-height:1.55;margin:0;}
+
+  table.mini-table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.mini-table th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;font-weight:600;}
+  table.mini-table td{padding:7px 10px;border-bottom:1px solid var(--gray-200);color:var(--gray-600);}
+  table.mini-table tr:nth-child(even) td{background:var(--gray-100);}
+
+  .abc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+  @media (max-width:760px){.abc-grid{grid-template-columns:repeat(2,1fr);}}
+  .abc-card{border-radius:12px;padding:14px;text-align:center;font-weight:700;font-size:13px;cursor:pointer;border:2px solid transparent;}
+  .abc-card[data-cat="A+"]{background:var(--green-soft);color:var(--green);}
+  .abc-card[data-cat="A"]{background:#EAF3E2;color:#5B8C3E;}
+  .abc-card[data-cat="B"]{background:#FEF6E0;color:#B5862B;}
+  .abc-card[data-cat="C"]{background:#FBEAEA;color:#A33A3A;}
+  .abc-card.selected{border-color:var(--navy);box-shadow:0 0 0 3px rgba(15,21,48,.1);}
+
+  .scorebox{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;}
+  .scorebox label{font-weight:700;font-size:13px;color:var(--navy);display:block;margin-bottom:8px;}
+  .star-mini-row{display:flex;gap:4px;}
+  .star-mini{font-size:22px;color:var(--gray-200);cursor:pointer;}
+  .star-mini.on{color:var(--pink);}
+
+  .redflag-check{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+  .redflag-check label{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gray-600);font-weight:500;}
+
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+  @media (max-width:700px){.field-row{grid-template-columns:1fr;}}
+  .field label{display:block;font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px;}
+  .field input, .field select{width:100%;padding:9px 11px;border:1px solid var(--gray-200);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13.5px;background:var(--gray-100);}
+  .field textarea{width:100%;min-height:64px;padding:9px 11px;border:1px solid var(--gray-200);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--gray-100);resize:vertical;}
+
+  .qa-block{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;}
+  .qa-block h4{font-family:'Space Grotesk',sans-serif;font-size:13.5px;color:var(--pink);margin:0 0 8px;text-transform:uppercase;letter-spacing:.03em;}
+  .qa-block ul{margin:0;padding-left:18px;font-size:13px;color:var(--gray-600);line-height:1.7;}
+
+  .pdf-btn{background:var(--green);color:#fff;border:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
+  .pdf-btn:hover{background:#188048;}
+
+  .gyik-item{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;margin-bottom:8px;overflow:hidden;}
+  .gyik-q{width:100%;background:none;border:none;text-align:left;padding:13px 16px;font-weight:700;font-size:13px;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;}
+  .gyik-a{max-height:0;overflow:hidden;transition:max-height .25s ease;padding:0 16px;font-size:13px;color:var(--gray-600);line-height:1.6;}
+  .gyik-item.open .gyik-a{padding:0 16px 14px;}
+
+  footer{margin-top:30px;text-align:center;color:var(--gray-400);font-size:12px;}
+
+  /* Küldetés — flashy marketing banner */
+  .mission-banner{
+    background:linear-gradient(120deg, var(--navy) 0%, var(--navy2) 55%, var(--pink) 130%);
+    border-radius:24px;padding:34px 30px;display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:18px;box-shadow:0 20px 50px -25px rgba(15,21,48,.6);
+  }
+  .mission-stat{flex:1;min-width:180px;text-align:center;}
+  .mission-num{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;
+    font-size:clamp(22px,2.6vw,32px);line-height:1.1;}
+  .mission-num .arrow{color:#FF9DC0;margin:0 4px;}
+  .mission-num .unit{display:block;font-size:13px;font-weight:600;color:#C7CBE0;margin-top:2px;}
+  .mission-label{display:block;font-size:11.5px;font-weight:600;color:#D7DAEC;margin-top:8px;letter-spacing:.02em;}
+  .mission-divider{width:1px;align-self:stretch;background:rgba(255,255,255,.18);min-height:60px;}
+  @media (max-width:700px){.mission-divider{display:none;}}
+
+  /* Csapatfa — clean card-grid, NOT pyramidal */
+  .tree-hub-banner{
+    background:var(--navy);color:#fff;border-radius:16px;padding:18px 24px;text-align:center;
+    margin-bottom:18px;
+  }
+  .tree-hub-banner .hub-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;}
+  .tree-hub-banner .hub-role{font-size:12px;color:#C7CBE0;margin-top:3px;}
+  .manager-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .manager-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:16px;padding:16px;border-top:4px solid var(--green);}
+  .manager-card .m-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:var(--navy);}
+  .manager-card .m-role{font-size:11px;color:var(--gray-400);font-weight:600;margin-bottom:10px;}
+  .member-chip-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+  .member-chip{background:var(--gray-100);border:1px solid var(--gray-200);color:var(--gray-600);
+    border-radius:8px;padding:5px 9px;font-size:11px;font-weight:600;}
+  .member-chip.placeholder{background:var(--pink-soft);border:1.5px dashed var(--pink);color:var(--pink);font-weight:700;}
+</style>
+</head>
+<body data-page="interviewer">
+
+<div id="pwGate" style="position:fixed;inset:0;background:#0F1530;display:flex;align-items:center;justify-content:center;z-index:99999;font-family:'Poppins',sans-serif;">
+  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:320px;width:90%;text-align:center;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);">
+    <div style="font-size:28px;margin-bottom:10px;">🔒</div>
+    <div style="font-weight:700;font-size:15px;color:#0F1530;margin-bottom:16px;">Belső használatra — kérjük add meg a jelszót</div>
+    <input id="pwInput" type="password" placeholder="Jelszó" style="width:100%;padding:10px 12px;border:1.5px solid #E8E8EC;border-radius:8px;font-size:14px;margin-bottom:12px;box-sizing:border-box;">
+    <div id="pwError" style="color:#E63E78;font-size:12.5px;min-height:16px;margin-bottom:8px;"></div>
+    <button id="pwSubmit" style="width:100%;background:#1E9E5A;color:#fff;border:none;padding:11px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Poppins',sans-serif;">Belépés</button>
+  </div>
+</div>
+<script>
+(function(){
+  const PASSWORD = "felveteli2026";
+  const gate = document.getElementById('pwGate');
+  if(sessionStorage.getItem('felveteli_ok') === '1'){ gate.style.display = 'none'; }
+  function tryLogin(){
+    const val = document.getElementById('pwInput').value;
+    if(val === PASSWORD){ sessionStorage.setItem('felveteli_ok','1'); gate.style.display = 'none'; }
+    else { document.getElementById('pwError').textContent = 'Helytelen jelszó, próbáld újra.'; }
+  }
+  document.getElementById('pwSubmit').onclick = tryLogin;
+  document.getElementById('pwInput').addEventListener('keydown', e=>{ if(e.key==='Enter') tryLogin(); });
+})();
+</script>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h1>🤝 Felvételi — interjú & bemutató</h1>
+        <div class="sub">Cégbemutató, karrierút, kérdésbank és élő pontozás egy felületen.</div>
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btnInterviewer" onclick="setPage('interviewer')">🎯 Interjú nézet</button>
+        <button class="mode-btn" id="btnCandidate" onclick="setPage('candidate')">👤 Jelölt nézet</button>
+        <button class="mode-btn" id="btnScoring" onclick="setPage('scoring')">📝 Kérdésbank & pontozó</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="#cegbemutato">Cégbemutató</a>
+    <a href="#csapatfa">Csapatszerkezet</a>
+    <a href="#munkamodszer">Hogyan dolgozunk</a>
+    <a href="#karrier">Karrier & kereset</a>
+    <a href="#kitkeresunk">Kit keresünk</a>
+    <a href="#forgatokonyvek">Forgatókönyvek</a>
+    <a href="#karrieriranytu">Karrieriránytű</a>
+    <a href="#ugyfelek">Ügyfelek forrása</a>
+    <a href="#piac">Piaci adatok</a>
+    <a href="#kerdesbank">Kérdésbank</a>
+    <a href="#pontozas">Pontozás & jegyzet</a>
+    <a href="#gyik">GYIK</a>
+    <a href="#negativ">Negatív vélemények</a>
+    <a href="#lezaras">Hogyan tovább</a>
+  </div>
+
+  <div class="content">
+
+    <!-- 01 CÉGBEMUTATÓ -->
+    <div class="sec pg-candidate" id="cegbemutato">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Cégbemutató</h2></div>
+      <div class="card-grid">
+        <div class="info-card">
+          <span class="stat">440.000+</span>
+          <h3>Ügyfél, napi szinten</h3>
+          <p>Hazánkban 50+ irodával, 2.500+ munkatárssal dolgozunk. Egy független kapocs vagyunk az emberek és a piac között.</p>
+        </div>
+        <div class="info-card">
+          <span class="stat">1970 óta</span>
+          <h3>16 országban</h3>
+          <p>Európa 16 országában, 5 millió+ ügyféllel. 55 éves tapasztalat a családok és vállalkozások pénzügyi tervezésében.</p>
+        </div>
+        <div class="info-card">
+          <span class="stat">30+</span>
+          <h3>Bank, biztosító partner</h3>
+          <p>Nincs saját termékünk — összehasonlítjuk és kiválasztjuk a piac legjobb megoldásait minden ügyfélnek, függetlenül.</p>
+        </div>
+        <div class="info-card">
+          <span class="stat">DÍJMENTES</span>
+          <h3>az ügyfél felé</h3>
+          <p>Az MNB szabályozása alapján a pénzintézetek előre meghatározott díjából részesülünk — az ügyfélnek nem kerül pénzbe.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 01b KÜLDETÉS -->
+    <div class="sec pg-candidate" id="kuldetes">
+      <div class="mission-banner">
+        <div class="mission-stat">
+          <span class="mission-num">300M <span class="arrow">→</span> 1Mrd<span class="unit">Ft</span></span>
+          <span class="mission-label">Irodai forgalom célja</span>
+        </div>
+        <div class="mission-divider"></div>
+        <div class="mission-stat">
+          <span class="mission-num">+5<span class="unit">iroda</span></span>
+          <span class="mission-label">Nyitás a következő 5 évben</span>
+        </div>
+        <div class="mission-divider"></div>
+        <div class="mission-stat">
+          <span class="mission-num">100<span class="unit">fő</span></span>
+          <span class="mission-label">Csapatcél, franchise-struktúrában</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 01c CSAPATSZERKEZET -->
+    <div class="sec pg-candidate" id="csapatfa">
+      <div class="sec-head"><span class="sec-num">01b</span><h2>Csapatszerkezet</h2></div>
+      <div id="teamTreeWrap"></div>
+    </div>
+
+    <!-- 02 MUNKAMÓDSZER -->
+    <div class="sec pg-candidate" id="munkamodszer">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Hogyan dolgozunk</h2></div>
+      <div class="card-grid">
+        <div class="info-card"><h3>1. Elemzés</h3><p>Megismerkedünk egymással, megvizsgáljuk a célokat, terveket, elképzeléseket.</p></div>
+        <div class="info-card"><h3>2. Tanácsadás</h3><p>Logikus, átlátható tervezetet dolgozunk ki, és segítünk kiválasztani a megfelelő szolgáltatásokat.</p></div>
+        <div class="info-card"><h3>3. Szerviz</h3><p>Évente konzultálunk, felhívjuk a figyelmet minden változásra — ez a garancia a munkánkra.</p></div>
+      </div>
+    </div>
+
+    <!-- 03 KARRIER & KERESET -->
+    <div class="sec pg-candidate pg-interviewer" id="karrier">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Karrier & kereset</h2></div>
+      <table class="mini-table">
+        <tr><th>Szint</th><th>Fő feladat</th><th>Kritérium</th><th>Min. idő</th><th>Jutalék/ES</th></tr>
+        <tr><td>R1 — kezdő elemző</td><td>Gyakornoki elemzések</td><td>MNB tanfolyam jelentkezés</td><td>start</td><td>375 Ft</td></tr>
+        <tr><td>R2 — önálló elemző</td><td>Önálló elemzések</td><td>500 ES + T0/T1/T2 vizsga</td><td>1 hónap</td><td>750 Ft (~600)</td></tr>
+        <tr><td>R3 — önálló tanácsadó</td><td>Önálló tanácsadások</td><td>3.000 ES + T3/T4 vizsgák</td><td>4-6 hónap</td><td>900 Ft (~750)</td></tr>
+        <tr><td>R4 — senior tanácsadó</td><td>+ kezdők támogatása</td><td>8.000 ES + MNB2 + 85% minőség</td><td>12 hónap</td><td>1.350 Ft (~1.100)</td></tr>
+        <tr><td>R5 — senior tanácsadó</td><td>+ kezdők támogatása</td><td>20.000 ES + MNB3 + 85% minőség</td><td>20-24 hónap</td><td>1.650 Ft (~1.300) + BePro</td></tr>
+        <tr><td>GS — fiókvezető</td><td>Értékesítés szervezése + mentorálás</td><td>3 db R2 munkatárs</td><td>12-18 hónap</td><td>1.350 Ft + vez. jutalék</td></tr>
+        <tr><td>BL — területi vezető</td><td>Értékesítés szervezése + mentorálás</td><td>1 GS + 4 db R2</td><td>24-36 hónap</td><td>1.650 Ft + BePro + vez. jutalék</td></tr>
+        <tr><td>BD — területi igazgató</td><td>Iroda igazgatása + vezetők mentorálása</td><td>4 GS + 4 R2</td><td>60 hónap</td><td>1.800 Ft + BePro + vez. jutalék</td></tr>
+        <tr><td>RD — regionális igazgató</td><td>Irodák igazgatása</td><td>4 db BL</td><td>96-120 hónap</td><td>1.950 Ft + BePro + vez. jutalék</td></tr>
+        <tr><td>LD — országos igazgató</td><td>Irodák igazgatása</td><td>6 db BL vagy 4 BD</td><td>120-180 hónap</td><td>2.100 Ft + BePro + vez. jutalék</td></tr>
+      </table>
+
+      <div id="jutalekAcc" style="margin-top:14px;"></div>
+
+      <div class="scorebox" style="margin-top:14px;">
+        <label>🧮 ES / Jutalék kalkulátor</label>
+        <div class="field-row">
+          <div class="field"><label>Termék havi/éves díja vagy összege (Ft)</label><input type="number" id="calcFt" placeholder="pl. 30000" value="30000"></div>
+          <div class="field"><label>Karrierszint</label>
+            <select id="calcSzint">
+              <option value="375">R1 — 375 Ft/ES</option>
+              <option value="750" selected>R2 — 750 Ft/ES</option>
+              <option value="900">R3 — 900 Ft/ES</option>
+              <option value="1350">R4 — 1.350 Ft/ES</option>
+              <option value="1650">R5 — 1.650 Ft/ES</option>
+              <option value="1800">BD — 1.800 Ft/ES</option>
+              <option value="1950">RD — 1.950 Ft/ES</option>
+              <option value="2100">LD — 2.100 Ft/ES</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Termék típusa (egyszerűsített ES-szorzó)</label>
+            <select id="calcTipus">
+              <option value="4.8">Havi nyugdíj/megtakarítás megtak. (×4,8 / 1000 Ft havi díj)</option>
+              <option value="5.5">Havi életbiztosítás (×5,5 / 1000 Ft havi díj)</option>
+              <option value="0.143">Lakásbiztosítás (×0,143 / 1000 Ft éves díj)</option>
+              <option value="6.6">Lakáshitel (×6,6 / 1.000.000 Ft hitelösszeg)</option>
+              <option value="9">Befektetés (×9 / 1.000.000 Ft összeg)</option>
+            </select>
+          </div>
+          <div class="field" style="display:flex;align-items:flex-end;">
+            <button class="pdf-btn" style="width:100%;background:var(--navy);" onclick="runCalc()">Kiszámol</button>
+          </div>
+        </div>
+        <div id="calcResult" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--green);margin-top:10px;"></div>
+        <p style="font-size:11.5px;color:var(--gray-400);margin-top:6px;">⚠️ Egyszerűsített becslés oktatási célra — a pontos jutalékot a hatályos províziós lista és az OVB Tools app kalkulátora adja.</p>
+      </div>
+
+      <div class="card-grid" style="margin-top:14px;">
+        <div class="info-card"><span class="stat">150–400e Ft</span><h3>Diák / másodállás</h3><p>Átlagosan havi 8-12 ügyfélfolyamattal, az első évben.</p></div>
+        <div class="info-card"><span class="stat">600e–1M Ft</span><h3>Főállású induló</h3><p>Heti 40-50 órás kapacitással, fokozott irodai jelenléttel.</p></div>
+        <div class="info-card"><span class="stat">1–2,5M Ft</span><h3>Tanácsadó, 2-4 év</h3><p>Szakmai tapasztalattal, önálló praxis mellett.</p></div>
+        <div class="info-card"><span class="stat">1,5–3M Ft</span><h3>Vezető, 2-5 év</h3><p>Szakmai + menedzsment tapasztalattal, komolyabb felelősséggel.</p></div>
+      </div>
+    </div>
+
+    <!-- 04 KIT KERESÜNK (interviewer only) -->
+    <div class="sec pg-interviewer" id="kitkeresunk">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Kit keresünk</h2></div>
+      <div class="abc-grid">
+        <div class="abc-card" data-cat="A+">A+<br><span style="font-size:10.5px;font-weight:500;">mind 3 erős</span></div>
+        <div class="abc-card" data-cat="A">A<br><span style="font-size:10.5px;font-weight:500;">idő+képesség ok, motiváció ingadozik</span></div>
+        <div class="abc-card" data-cat="B">B<br><span style="font-size:10.5px;font-weight:500;">akarja, de még nincs ideje/tudása</span></div>
+        <div class="abc-card" data-cat="C">C<br><span style="font-size:10.5px;font-weight:500;">illeszkedési probléma</span></div>
+      </div>
+      <div id="kitKeresunkAcc"></div>
+
+      <div class="scorebox" style="margin-top:14px;">
+        <label>Főállású vs másodállású jelöltek</label>
+        <div class="card-grid">
+          <div class="info-card"><span class="stat">10%</span><h3>Főállású jelentkező</h3><p>Ritka — jellemzően 2-3 év banki/biztosítási vagy vállalkozói tapasztalattal érkezik.</p></div>
+          <div class="info-card"><span class="stat">90%</span><h3>Másodállású jelentkező</h3><p>Két alcsoport: egyetemista/diák, vagy főállásban/vállalkozóként dolgozó.</p></div>
+        </div>
+      </div>
+
+      <div class="scorebox">
+        <label>Diák vs főállású — előny/hátrány (általános tapasztalat)</label>
+        <table class="mini-table">
+          <tr><th>Egyetemista, diák</th><th>Főállású</th></tr>
+          <tr><td><b>Hátrány:</b> vizsgaidőszak ingadozás, kevesebb élet/munkatapasztalat, gyors visszajelzést igényel</td><td><b>Hátrány:</b> korlátozott időkeret, erősebb beidegződések, lassabb komfortzóna-váltás</td></tr>
+          <tr><td><b>Előny:</b> gyors tanulási tempó, rugalmas időbeosztás, nyitott az új tapasztalatokra, jól kezeli az online teret</td><td><b>Előny:</b> magasabb felelősségérzet, érettebb döntéshozatal, stabilabb munkafegyelem, jobb kommunikáció</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- 05 FORGATÓKÖNYVEK -->
+    <div class="sec pg-candidate pg-interviewer" id="forgatokonyvek">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Forgatókönyvek</h2></div>
+      <div id="forgatokonyvAcc"></div>
+    </div>
+
+    <!-- 06 KARRIERIRÁNYTŰ -->
+    <div class="sec pg-interviewer" id="karrieriranytu">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Karrieriránytű</h2></div>
+      <table class="mini-table">
+        <tr><th></th><th>Alkalmazott</th><th>Vállalkozó</th><th>Micro-franchise (mi)</th></tr>
+        <tr><td>Bevételek</td><td>fix, kiszámítható</td><td>kezdetben kiszámíthatatlan, később korlátlan</td><td>elején is kiszámítható, később skálázható</td></tr>
+        <tr><td>Kiadás, befektetés</td><td>esetleg iskolai költség</td><td>változó, javarészt milliós kezdőtőke</td><td>40.000 Ft, állami képzés, ösztöndíjas</td></tr>
+        <tr><td>Terhelés</td><td>átlagos</td><td>ingadozó, elején nehéz</td><td>elején kiszámíthatóan nehéz, később könnyebb</td></tr>
+        <tr><td>Növekedés</td><td>korlátos</td><td>Te vagy a motorja, korlátlan</td><td>Te vagy a motorja, kiszámítható, skálázható</td></tr>
+        <tr><td>Kiemelt kockázat</td><td>stagnálás, felmondás</td><td>piac, konkurencia, adók</td><td>ha elavul a fővállalkozó, az hat rád is</td></tr>
+        <tr><td>Időbeosztás</td><td>kötött</td><td>100% szabadság</td><td>80% szabadság, 20% kötöttség</td></tr>
+      </table>
+      <div class="scorebox" style="margin-top:14px;">
+        <label>Honnan tudom kideríteni, hogy nekem való-e?</label>
+        <div class="card-grid">
+          <div class="info-card"><h3>✅ Igen, ha…</h3><p>dolgoznál suli mellett úgy, hogy később fix karrier lehet · nem zavar, hogy bevételed van és nem fizetésed · megtanulnád a modern pénzügyi stratégiákat · skálázható üzletben gondolkozol</p></div>
+          <div class="info-card"><h3>🚫 Nem az, ha…</h3><p>fix fizetésre van szükséged · nincs heti 15 órád · nem vonz a vállalkozás világa · az önállóság felelőssége gondot okoz · nincs erkölcsi bizonyítványod</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 ÜGYFELEK FORRÁSA -->
+    <div class="sec pg-interviewer" id="ugyfelek">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Ügyfelek forrása</h2></div>
+      <div id="ugyfelekAcc"></div>
+    </div>
+
+    <!-- 08 PIACI ADATOK -->
+    <div class="sec pg-interviewer" id="piac">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Piaci adatok</h2></div>
+      <div class="card-grid">
+        <div class="info-card"><span class="stat">6,15M fő</span><h3>15-65 éves népesség</h3><p>Magyarországon — a potenciális ügyfélkör alapja (KSH).</p></div>
+        <div class="info-card"><span class="stat">4,4M fő</span><h3>Teljes munkaidős foglalkoztatott</h3><p>A legaktívabb célcsoport pénzügyi döntésekre.</p></div>
+        <div class="info-card"><span class="stat">2M+3,3M</span><h3>Élő szerződés (élet + lakás biztosítás)</h3><p>A piaci lefedettség így max. 50%, vagy kevesebb — van bőven feladat.</p></div>
+        <div class="info-card"><span class="stat">1M új ügyfél</span><h3>MNB célja 2026-ig</h3><p>Az öngondoskodási megtakarítások piacán — a következő 10 évben duplázódhat az állomány.</p></div>
+      </div>
+    </div>
+
+    <!-- 06 KÉRDÉSBANK (interviewer only) -->
+    <div class="sec pg-scoring" id="kerdesbank">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Kérdésbank</h2></div>
+      <div id="kerdesbankWrap"></div>
+    </div>
+
+    <!-- 07 PONTOZÁS & JEGYZET (interviewer only) -->
+    <div class="sec pg-scoring" id="pontozas">
+      <div class="sec-head"><span class="sec-num">10</span><h2>Pontozás & jegyzet</h2></div>
+
+      <div class="field-row">
+        <div class="field"><label>Jelölt neve</label><input type="text" id="candName" placeholder="pl. Kovács Anna"></div>
+        <div class="field"><label>Interjú dátuma</label><input type="date" id="candDate"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Interjút készítő</label><input type="text" id="candInterviewer" placeholder="Név"></div>
+        <div class="field"><label>Forrás</label>
+          <select id="candSource">
+            <option>munkatársi ajánlás</option><option>ügyfél ajánlás</option><option>munkaerőpiaci füzet</option>
+            <option>fizetett hirdetés</option><option>csoportos hirdetés</option><option>egyéb</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="scorebox">
+        <label>Jelölt megjelenése</label>
+        <div class="star-mini-row" data-score="0" id="score-megjelenes"></div>
+      </div>
+      <div class="scorebox">
+        <label>Kommunikációs képesség</label>
+        <div class="star-mini-row" data-score="0" id="score-kommunikacio"></div>
+      </div>
+      <div class="scorebox">
+        <label>Hangulat, kisugárzás</label>
+        <div class="star-mini-row" data-score="0" id="score-hangulat"></div>
+      </div>
+
+      <div class="scorebox">
+        <label>Vélt potenciál (A+ / A / B / C)</label>
+        <div class="abc-grid" id="potentialPicker">
+          <div class="abc-card" data-cat="A+">A+</div>
+          <div class="abc-card" data-cat="A">A</div>
+          <div class="abc-card" data-cat="B">B</div>
+          <div class="abc-card" data-cat="C">C</div>
+        </div>
+        <label style="margin-top:10px;">🚩 Red flag észlelve?</label>
+        <div class="redflag-check">
+          <label><input type="checkbox" data-rf="1"> Ápolatlan külső (haj, körmök, fogak, ruha)</label>
+          <label><input type="checkbox" data-rf="1"> Jelentős késés, idő bagatellizálása</label>
+          <label><input type="checkbox" data-rf="1"> Igénytelen beszéd, igénytelen írás, CV-hiba</label>
+        </div>
+      </div>
+
+      <div class="scorebox">
+        <label>Strukturált jegyzetek a kérdésblokkok alapján</label>
+        <div class="field" style="margin-bottom:10px;"><label>1. Motiváció, pályakép</label><textarea id="note1"></textarea></div>
+        <div class="field" style="margin-bottom:10px;"><label>2. Tanulás, önreflexió</label><textarea id="note2"></textarea></div>
+        <div class="field" style="margin-bottom:10px;"><label>3. Kommunikáció, emberkezelés</label><textarea id="note3"></textarea></div>
+        <div class="field" style="margin-bottom:10px;"><label>4. Időgazdálkodás</label><textarea id="note4"></textarea></div>
+        <div class="field" style="margin-bottom:10px;"><label>5. Felelősség, önállóság</label><textarea id="note5"></textarea></div>
+        <div class="field"><label>6. Pénzügyek, mindset</label><textarea id="note6"></textarea></div>
+      </div>
+
+      <div class="scorebox">
+        <label>Szabad jegyzet, összegzés</label>
+        <textarea id="noteFree" style="min-height:90px;"></textarea>
+      </div>
+
+      <button class="pdf-btn" onclick="downloadInterviewPDF()">📄 Interjú összefoglaló PDF letöltése</button>
+    </div>
+
+    <!-- 08 GYIK -->
+    <div class="sec pg-candidate" id="gyik">
+      <div class="sec-head"><span class="sec-num">11</span><h2>Gyakori kérdések</h2></div>
+      <div id="gyikWrap"></div>
+    </div>
+
+    <!-- 12 NEGATÍV VÉLEMÉNYEK KEZELÉSE -->
+    <div class="sec pg-interviewer" id="negativ">
+      <div class="sec-head"><span class="sec-num">12</span><h2>Negatív vélemények kezelése</h2></div>
+      <div id="negativAcc"></div>
+    </div>
+
+    <!-- 13 LEZÁRÁS -->
+    <div class="sec pg-candidate" id="lezaras">
+      <div class="sec-head"><span class="sec-num">13</span><h2>Hogyan tovább?</h2></div>
+      <div class="info-card">
+        <p>Örülünk, hogy volt szerencsénk megismerkedni személyesen is ezen az interjún. Vezető kollégákkal minden héten hétfőn és csütörtökön feldolgozzuk az aktualitásokat, így a jelentkezésekkel közösen foglalkozunk.</p>
+        <p style="margin-top:10px;">➡️ Arra kérünk, hogy küldj nekünk egy <b>motivációs levelet</b> válaszlevélben e-mailben 24 órán belül, amennyiben a második körön részt szeretnél venni. A levél hossza maximum A4 terjedelmű legyen, és az első körön elhangzottak alapján írd meg, miért szeretnél nálunk dolgozni.</p>
+        <p style="margin-top:10px;">A második kör alkalmával egy 5 rövid feladatból álló sorozatot kapsz, ami speciális előképzettséget nem igényel, számológép és internet segítségével megoldható feladatok lesznek benne.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Belső használatra — felvételi interjú támogatására.</footer>
+</div>
+
+<script>
+function setPage(page){
+  document.body.setAttribute('data-page', page);
+  document.getElementById('btnInterviewer').classList.toggle('active', page==='interviewer');
+  document.getElementById('btnCandidate').classList.toggle('active', page==='candidate');
+  document.getElementById('btnScoring').classList.toggle('active', page==='scoring');
+  document.querySelectorAll('.nav a').forEach(a=>{
+    const target = document.querySelector(a.getAttribute('href'));
+    a.style.display = (target && target.classList.contains('pg-'+page)) ? '' : 'none';
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+setPage('interviewer');
+
+// 04 Kit keresünk accordion
+const kitKeresunkData = [
+  {title:"A+ kategória", body:"Mindhárom tényező kiemelkedően jó: van ideje, megvannak a képességei, és valóban akarja is. Gyorsan átlátja a rendszert, kevés iránymutatással halad, felelősséget vállal. Vezetői szempontból nem menedzselni kell, hanem teret adni."},
+  {title:"A kategória", body:"Idő és képesség rendben, de a belső motiváció még nem stabil. Nem elengedni, hanem vezetni kell — visszajelzés, célok tisztázása, sikerélmény a kulcs. Sok A-ból lehet A+."},
+  {title:"B kategória", body:"Nagyon akarja, de még nincs elég ideje vagy tudása. Lassabban indul, több támogatást igényel, viszont hosszabb távon stabil A lehet belőle türelemmel."},
+  {title:"C kategória", body:"Nem alkalmatlanság, inkább illeszkedési probléma — nincs ideje, képessége vagy motivációja most, ebben a rendszerben. Hosszú távon energiát von el a többiektől."},
+  {title:"Miért nem mindegy az arány?", body:"1 A ≈ 6 C — egy jól működő A többet ér, mint több problémás szereplő együtt. 2 B ≈ 1 A — két motivált, tanuló ember együtt komoly értéket teremthet. 10 C ≠ 1 A — a mennyiség nem váltja ki a minőséget."},
+  {title:"Alapfeltételek a csapatba kerüléshez", body:"Tisztességes megjelenés és igényesség, választékos beszéd és jó alaphangulat, rendezett előélet, érettségi/diploma, gazdasági érdeklődés. Nem luxus, alap igényesség."}
+];
+const kkWrap = document.getElementById('kitKeresunkAcc');
+kitKeresunkData.forEach((b,i)=>{
+  const item = document.createElement('div');
+  item.className='accordion-item';
+  item.innerHTML = `<button class="acc-head" onclick="this.parentElement.classList.toggle('open'); this.nextElementSibling.style.maxHeight = this.parentElement.classList.contains('open') ? this.nextElementSibling.scrollHeight+30+'px':'0px';">
+      <div class="ttl"><span class="badge">${i+1}</span><span class="label">${b.title}</span></div><span class="chev">⌄</span>
+    </button><div class="acc-body"><p>${b.body}</p></div>`;
+  kkWrap.appendChild(item);
+});
+
+// abc-card click toggle (display only, in section 04)
+document.querySelectorAll('#kitkeresunk .abc-card').forEach(c=>{
+  c.style.cursor='default';
+});
+
+// Csapatfa — clean card-grid, network style (NOT pyramid)
+const teamTree = {
+  hub: {name:"BD Gentischer", role:"Richárd — felsővezető"},
+  branches: [
+    {manager:"GS Steinmetz", role:"középvezető", subs:[]},
+    {manager:"GS Angelcsev", role:"középvezető", subs:[]},
+    {manager:"BL Kiss", role:"középvezető", subs:[]},
+    {manager:"GS Holló", role:"középvezető", subs:[]},
+    {manager:"GS Szabó", role:"középvezető", subs:[]}
+  ]
+};
+function renderTeamTree(){
+  const wrap = document.getElementById('teamTreeWrap');
+  let cardsHtml = '';
+  teamTree.branches.forEach(b=>{
+    const chips = b.subs.map(s=>{
+      const isPlaceholder = s.includes('❓');
+      return `<span class="member-chip ${isPlaceholder?'placeholder':''}">${s}</span>`;
+    }).join('');
+    cardsHtml += `
+      <div class="manager-card">
+        <div class="m-name">${b.manager}</div>
+        <div class="m-role">${b.role}</div>
+        <div class="member-chip-wrap">${chips}</div>
+      </div>`;
+  });
+  wrap.innerHTML = `
+    <div class="tree-hub-banner">
+      <div class="hub-name">${teamTree.hub.name}</div>
+      <div class="hub-role">${teamTree.hub.role}</div>
+    </div>
+    <div class="manager-grid">${cardsHtml}</div>`;
+}
+renderTeamTree();
+
+// generic accordion builder
+function buildAccordion(containerId, data){
+  const wrap = document.getElementById(containerId);
+  data.forEach((b,i)=>{
+    const item = document.createElement('div');
+    item.className='accordion-item';
+    item.innerHTML = `<button class="acc-head" onclick="this.parentElement.classList.toggle('open'); this.nextElementSibling.style.maxHeight = this.parentElement.classList.contains('open') ? this.nextElementSibling.scrollHeight+40+'px':'0px';">
+        <div class="ttl"><span class="badge">${i+1}</span><span class="label">${b.title}</span></div><span class="chev">⌄</span>
+      </button><div class="acc-body">${b.body}</div>`;
+    wrap.appendChild(item);
+  });
+}
+
+// 03 Jutalék fogalmak accordion
+buildAccordion('jutalekAcc', [
+  {title:"ES / Egység — mi ez?", body:"<p>Az OVB nemzetközi (16 ország) jelenléte miatt minden bank/biztosító termékét egy közös mértékegységben, az <b>ES (egység)</b>-ben kezeli. Így minden ország minden termelése egyben kezelhető. Akárki, akármilyen pozícióban dolgozik, az ES/termék mindig ugyanannyi — ami változik, az az ES-re jutó forintérték (a karrierszint szorzója).</p>"},
+  {title:"Jutalék 2 fő csoportja", body:"<ul><li><b>Terméktípus I.</b> — mindennapos szerződések (lakásbiztosítás, autóbiztosítás, egészségpénztár). Rövid futamidő, alacsonyabb jutalék, de gyakori ismétlődés.</li><li><b>Terméktípus II.</b> — pénzügyi szerződések (megtakarítás, nyugdíj, hitel, befektetés). Hosszú futamidő, a teljes futamidőre előre adott, magasabb jutalék.</li></ul>"},
+  {title:"BePro jutalék (fenntartási)", body:"<p>A biztosítási szerződés <b>fenntartásáért</b> jár, nem csak a megkötésért — minél tovább él a szerződés, annál tovább kapod. Példa: 100.000 Ft éves díjú lakásbiztosítás → ~4.000 Ft/év BePro. 10 db esetén havi 40.000 Ft passzív bevétel, amíg élnek a szerződések. <b>R5-től saját magad után, BL-től a teljes csapat után is megkapod.</b></p>"},
+  {title:"Tartalékok — sztornó és eximuss", body:"<ul><li><b>Sztornó-tartalék:</b> a biztosítási jutalék 10%-át az OVB Központ 2 évre félreteszi — biztonsági háttér gyenge hónapok, betegség esetére.</li><li><b>Eximuss-tartalék:</b> jogszabályi alapon (2013-as törvénymódosítás) a befektetési életbiztosítások és lakáshitelek jutalékának egy része csak 1 év múlva, a szerződés fennmaradása esetén kerül kifizetésre (kb. 80% előre, 20% utólag).</li></ul>"},
+  {title:"Hitelspecialista jutalék (LEAD)", body:"<p>A banki ügyintézés gyorsan változik — a hitelspecialisták ezt naprakészen követik, átlagosan 5x gyorsabban dolgoznak a banki ügyekben. Ha LEAD-et adsz egy specialistának, ő elvégzi a &quot;piszkos&quot; ügyintézést, és a teljes jutalék 25%-át kéri ezért.</p>"}
+]);
+
+// ES kalkulátor — egyszerűsített HA-logika
+function runCalc(){
+  const ft = parseFloat(document.getElementById('calcFt').value) || 0;
+  const szint = parseFloat(document.getElementById('calcSzint').value);
+  const szorzo = parseFloat(document.getElementById('calcTipus').value);
+  const tipusSelect = document.getElementById('calcTipus');
+  const tipusText = tipusSelect.options[tipusSelect.selectedIndex].text;
+
+  let es = 0;
+  // HA-szerű elágazás a választott terméktípus alapján
+  if(tipusText.includes('hitel')){
+    es = (ft / 1000000) * szorzo;
+  } else if(tipusText.includes('Befektetés')){
+    es = (ft / 1000000) * szorzo;
+  } else if(tipusText.includes('Lakásbiztosítás')){
+    es = (ft / 1000) * szorzo;
+  } else {
+    // havi díjas termékek (nyugdíj, életbiztosítás)
+    es = (ft / 1000) * szorzo;
+  }
+
+  const jutalek = Math.round(es * szint);
+  const result = document.getElementById('calcResult');
+  result.innerHTML = `≈ ${es.toFixed(1)} ES &nbsp;→&nbsp; <span style="color:var(--navy);">${jutalek.toLocaleString('hu-HU')} Ft jutalék</span>`;
+}
+
+// 05 Forgatókönyvek — teljes alapszabály accordion
+buildAccordion('forgatokonyvAcc', [
+  {title:"🎓 Hobbista — OVB nem prioritás", body:`<table class="mini-table">
+    <tr><td>Havi egyéni termelés</td><td>min. 100 ES (negyedéves korrekció: 300 ES)</td></tr>
+    <tr><td>Havi csapat termelés</td><td>nincsen</td></tr>
+    <tr><td>Előléptetés</td><td>R3-ig</td></tr>
+    <tr><td>Mentoring</td><td>alkalmi havi 1 PG / coaching, ha szükséges</td></tr>
+    <tr><td>Irodai jelenlét</td><td>nincs elvárt</td></tr>
+    <tr><td>Bevétel (irodai szinten)</td><td>50.000 – 200.000 Ft</td></tr>
+  </table>`},
+  {title:"📚 Diák / másodállású — OVB a prioritás iskola/munka mellett", body:`<table class="mini-table">
+    <tr><td>Havi egyéni termelés</td><td>min. 300 ES (negyedéves: 900 ES)</td></tr>
+    <tr><td>Előléptetés</td><td>alapesetben R4-ig, vezetői ambícióval GS-ig</td></tr>
+    <tr><td>Mentoring</td><td>heti 1 óra fejlesztő PG</td></tr>
+    <tr><td>Irodai jelenlét</td><td>min. heti 1 nap</td></tr>
+    <tr><td>Fix időpontok</td><td>péntek 09:30-11:00 tréning + 13:00-16:00 időpont-egyeztetés</td></tr>
+    <tr><td>Bevétel (irodai szinten)</td><td>150.000 – 600.000 Ft</td></tr>
+  </table>`},
+  {title:"💼 Főállású tanácsadó — OVB köré szervezve minden", body:`<table class="mini-table">
+    <tr><td>Havi egyéni termelés</td><td>min. 500 ES (negyedéves: 1.500 ES)</td></tr>
+    <tr><td>Havi HR aktivitás</td><td>2 db új első körös felvételi/hó (ha vezetővé válna)</td></tr>
+    <tr><td>Előléptetés</td><td>alapesetben R4-ig, BL-ig vezetői ambícióval</td></tr>
+    <tr><td>Irodahasználat</td><td>irodát nyithat, zárhat, tárgyaló prioritással</td></tr>
+    <tr><td>Bevétel (irodai szinten)</td><td>800.000 – 1.500.000 Ft</td></tr>
+  </table>`},
+  {title:"👑 Vezetők, igazgatók — kizárólag belső kiválasztás", body:`<table class="mini-table">
+    <tr><td>Havi egyéni+csapat termelés</td><td>min. 700 ES (negyedéves: 2.100 ES)</td></tr>
+    <tr><td>Havi HR aktivitás</td><td>4 db új első körös felvételi/hó (12/negyedév)</td></tr>
+    <tr><td>Irodai jelenlét</td><td>min. heti 2 nap</td></tr>
+    <tr><td>Asszisztencia</td><td>kötelező együttműködni asszisztenssel</td></tr>
+    <tr><td>Bevétel (irodai szinten)</td><td>1.000.000 – 4.000.000 Ft</td></tr>
+  </table>`}
+]);
+
+// 07 Ügyfelek forrása accordion
+buildAccordion('ugyfelekAcc', [
+  {title:"1. Gyakornoki füzet — pályakezdők eszköze", body:"<p>Vezetővel közösen összeállított lista ismerősi/baráti/családi körből. Egy új munkatárs átlagosan 100 javaslatból 60-70 db elemzést tud egyeztetni. Stresszmentes, nincs szaktudás-igény (vezető mindig jelen van). <b>Tilos &quot;fűt-fát&quot; beírni</b> csak a darabszám miatt — vezetői felügyelettel, prioritás alapján kell rendezni a listát, nem szimpátia szerint.</p>"},
+  {title:"2. Leadek / ajánlások", body:"<p>55 éve ebben vagyunk a legjobbak — ezért maradhat díjmentes a szolgáltatás. Átlagosan <b>3 leadet</b> kapunk minden elégedett ügyféltől. Lehet aktív lead (közösen gyűjtött) vagy passzív (random, pl. munkahelyi szóbeszéd alapján).</p>"},
+  {title:"3. Social media", body:"<p>Nem fő csatorna — a pénzügy, jog és egészségügy olyan terület, ahol a bizalmas, emberi jelenlét az érték. Karrier elején a vezető segít kapcsolatot találni; 1 év után egyedi, személyre szabott social media megjelenés épül (FB, IG, TikTok, YouTube, podcast).</p>"},
+  {title:"4. Iroda ügyfelei", body:"<p>Az OVB Központ nem foglalkozik ügyfélszerzéssel vagy kiosztással — ez kizárólag az irodák feladata. Kezdő munkatársak 3-4 hónap után kapnak iroda-ügyfeleket (korábbi, nem továbblépett elemzésekből), hogy gyakorolhassák az idegenekkel való munkát.</p>"}
+]);
+
+// 12 Negatív vélemények kezelése accordion
+buildAccordion('negativAcc', [
+  {title:"MLM cég az OVB?", body:"<p><b>Nem.</b> Az MLM-ben folyamatos tagszervezési kényszer uralkodik, terméket árulnak (pl. serpenyő, krém). Nekünk nincs saját termékünk — a bankok/biztosítók termékeinek forgalmazásából részesülünk, állami szabályozás szerint egyenlő arányban minden szolgáltatótól. Tagszervezésért nem kapunk pénzt. A piramisjáték a Btk. 412. § alapján börtönbüntetéssel jár — 55 év alatt feltűnt volna a hatóságoknak.</p>"},
+  {title:"Drágák a termékek / túl sok jutalékot kapnak a munkatársak?", body:"<p>Nincs saját termékünk. A jutalék mértékét <b>a jogalkotó</b> határozza meg, minden bank/biztosító ugyanannyit fizet — ki van zárva, hogy valaki magasabb jutalékért ajánljon egy céget. Egy OVB-s munkatárs abból a jutalékból kap, amiből a banki ügyintéző is kapna, csak előtte elvégzi az ügyintézés munkáját.</p>"},
+  {title:"Reddit / anonim fórumok", body:"<p>Bárki írhat bármit, forrásmegjelölés nélkül — ez könnyen vezet tévhitekhez, dezinformációhoz. A kommentelők egy része valódi szakember, többségük felületes, álbiztonságot adó tudással. 526.495 megkötött szerződésből a legutóbbi felügyeleti vizsgálat 1.875 hibás szerződést talált — ez 0,36%, 99,64% rendben volt.</p>"},
+  {title:"Google-vélemények — miért hitelesebbek?", body:"<p>Minden tanácsadónak van egyedi digitális névjegye, amin a vélemény írásához fel kell tüntetni a tanácsadó nevét — ez kizárja a visszaélést. A Google &quot;trust index&quot; tovább szűri a megbízhatatlan, friss vagy gyanús fiókokat.</p>"},
+  {title:"Mit ajánlj ellenőrzésre, ha a jelölt bizalmatlan?", body:"<ul><li>Hatósági engedély megléte (MNB regiszter) — ez alapján vonható felelősségre bárki</li><li>Személyes viselkedés — jószándékú vagy svindler-gyanús?</li><li>Személyes referenciák — ki ajánlotta, miben jó?</li></ul>"}
+]);
+
+// 06 Kérdésbank
+const kerdesBank = [
+  {title:"Bevezető, szintrehozás", items:["Kezdjünk azzal, hogy mesélj magadról néhány szóban."]},
+  {title:"1. Motiváció, pályakép, korábbi munkái", items:[
+    "Mesélj a korábbi munkahelyeidről — melyik tetszett, melyik kevésbé?",
+    "Legutóbbi helyről miért / milyen körülmények közt jött el?",
+    "Milyen konkrét céljaid vannak a következő 2–3 évre?",
+    "Diákként mi készteti arra, hogy az iskola mellé egy új komoly területet vezessen be?",
+    "Mi vonz most a legjobban ebben a munkában, és mitől tart a legjobban?"
+  ]},
+  {title:"2. Tanulás, fejlődés, önreflexió", items:[
+    "Mondj egy példát, amikor rövid idő alatt kellett új dolgot megtanulnod.",
+    "Mesélj egy helyzetről, amikor hibáztál, vagy nem hoztad a kívánt teljesítményt.",
+    "Zavarna, ha hetente átlag 3 órát kell tanulással tölteni a munkán felül?",
+    "Hogyan érzed magad, ha egy csapaton belül rangsorolnak teljesítmény alapján?"
+  ]},
+  {title:"3. Kommunikáció, emberkezelés", items:[
+    "Mesélj egy konfliktusról vagy félreértésről — mi történt, te mit tettél?",
+    "Volt, hogy valakit neked kellett meggyőznöd? Hogyan csináltad, mi lett a vége?"
+  ]},
+  {title:"4. Időgazdálkodás", items:[
+    "Hogy néz ki egy átlagos heted most?",
+    "Hány óra munka lenne ideális a jelenlegi órarended mellett? (fenntarthatóság!)",
+    "Mondj egy példát, amikor egyszerre túl sok feladatod volt — mit priorizáltál?"
+  ]},
+  {title:"5. Felelősség, önállóság", items:[
+    "Mesélj egy helyzetről, amikor valaki kifejezetten számított rád.",
+    "Volt, hogy a vezetőd nem volt elérhető, mégis döntened kellett?"
+  ]},
+  {title:"6. Pénzügyek, mindset", items:[
+    "Diákként teljesen eltartja magát, részben, vagy van ilyen ambíció?",
+    "Honnan tájékozódik pénzügyek kapcsán? Nyitott téma a pénz a családban?",
+    "Mi a minimum és az ideális fizetés kérdése?"
+  ]}
+];
+const kbWrap = document.getElementById('kerdesbankWrap');
+kerdesBank.forEach(b=>{
+  const block = document.createElement('div');
+  block.className='qa-block';
+  block.innerHTML = `<h4>${b.title}</h4><ul>${b.items.map(q=>`<li>${q}</li>`).join('')}</ul>`;
+  kbWrap.appendChild(block);
+});
+
+// 07 score stars
+function buildStars(id){
+  const row = document.getElementById(id);
+  for(let i=1;i<=5;i++){
+    const s = document.createElement('span');
+    s.className='star-mini';
+    s.textContent='★';
+    s.onclick = ()=>{
+      row.dataset.score = i;
+      Array.from(row.children).forEach((el,idx)=>el.classList.toggle('on', idx<i));
+    };
+    row.appendChild(s);
+  }
+}
+['score-megjelenes','score-kommunikacio','score-hangulat'].forEach(buildStars);
+
+document.querySelectorAll('#potentialPicker .abc-card').forEach(c=>{
+  c.onclick = ()=>{
+    document.querySelectorAll('#potentialPicker .abc-card').forEach(x=>x.classList.remove('selected'));
+    c.classList.add('selected');
+  };
+});
+
+function downloadInterviewPDF(){
+  if(typeof jspdf === 'undefined'){ alert('A PDF-generátor nem töltődött be.'); return; }
+  const { jsPDF } = jspdf;
+  const doc = new jsPDF();
+  let y = 18;
+  doc.setFontSize(16);
+  doc.text('Felvételi interjú — összefoglaló', 14, y); y+=10;
+  doc.setFontSize(11);
+  const name = document.getElementById('candName').value || '—';
+  const date = document.getElementById('candDate').value || '—';
+  const interviewer = document.getElementById('candInterviewer').value || '—';
+  const source = document.getElementById('candSource').value || '—';
+  doc.text(`Jelölt: ${name}`, 14, y); y+=6;
+  doc.text(`Dátum: ${date}`, 14, y); y+=6;
+  doc.text(`Interjút készítő: ${interviewer}`, 14, y); y+=6;
+  doc.text(`Forrás: ${source}`, 14, y); y+=9;
+
+  const sM = document.getElementById('score-megjelenes').dataset.score || 0;
+  const sK = document.getElementById('score-kommunikacio').dataset.score || 0;
+  const sH = document.getElementById('score-hangulat').dataset.score || 0;
+  doc.text(`Megjelenés: ${sM}/5   Kommunikáció: ${sK}/5   Hangulat: ${sH}/5`, 14, y); y+=8;
+
+  const potEl = document.querySelector('#potentialPicker .abc-card.selected');
+  doc.text(`Vélt potenciál: ${potEl ? potEl.dataset.cat : '—'}`, 14, y); y+=8;
+
+  const rfChecked = Array.from(document.querySelectorAll('[data-rf="1"]:checked')).map(el=>el.parentElement.textContent.trim());
+  doc.text('Red flag-ek: ' + (rfChecked.length ? rfChecked.join('; ') : 'nincs'), 14, y, {maxWidth:180}); y+=12;
+
+  const noteLabels = ['1. Motiváció, pályakép','2. Tanulás, önreflexió','3. Kommunikáció','4. Időgazdálkodás','5. Felelősség','6. Pénzügyek'];
+  for(let i=1;i<=6;i++){
+    const val = document.getElementById('note'+i).value;
+    if(val){
+      if(y>260){ doc.addPage(); y=18; }
+      doc.setFont(undefined,'bold'); doc.text(noteLabels[i-1]+':', 14, y); doc.setFont(undefined,'normal'); y+=5;
+      const lines = doc.splitTextToSize(val, 180);
+      doc.text(lines, 14, y); y += lines.length*5 + 4;
+    }
+  }
+  const freeNote = document.getElementById('noteFree').value;
+  if(freeNote){
+    if(y>250){ doc.addPage(); y=18; }
+    doc.setFont(undefined,'bold'); doc.text('Szabad jegyzet:', 14, y); doc.setFont(undefined,'normal'); y+=5;
+    const lines = doc.splitTextToSize(freeNote, 180);
+    doc.text(lines, 14, y);
+  }
+  doc.save(`interju_${name.replace(/\s+/g,'_') || 'jelolt'}.pdf`);
+}
+
+// 08 GYIK
+const gyikData = [
+  {q:"Nincs tapasztalatom/előképzettségem. Van esélyem?", a:"Van. A banki és biztosítási piac folyamatosan változik, a nálunk működő képzési rendszer kifejezetten a pályakezdők gyors fejlődését támogatja."},
+  {q:"Nincs szükségem speciális képzésre?", a:"De igen. Az MNB előírása szerint el kell végezni egy államilag elismert, 4 napos alapozó képzést és sikeres vizsgát kell tenni. Teljesen online zajlik."},
+  {q:"Kiváltja valami a 4 napos képzést?", a:"Igen — bármely alapszakos diploma, közgazdasági érettségi, FOSZK, vagy korábbi MNB hatósági vizsga."},
+  {q:"Mennyibe kerül a képzés?", a:"A díja 40.000 Ft, nálunk ösztöndíjas formában is elérhető, saját oktatókkal és applikációval."},
+  {q:"Amíg betanulok, keresek pénzt?", a:"Igen. A betanulás első napjától szakmai vezetőkkel és mentorral dolgozol, valódi feladatokban, így már a próbaidő alatt is jövedelem keletkezik."},
+  {q:"Én választok mentort magamnak?", a:"Általában a mentor jelöli ki az új munkatársat, szakmai illeszkedés alapján."},
+  {q:"Mennyit dolgozok egy hónapban?", a:"Másodállású és diák kollégáink átlagosan heti 15-20 órát dolgoznak, nagyobb vagy kisebb időráfordítás is megoldható."},
+  {q:"Kihagyhatok egy hónapot is?", a:"Igen. Külföldi tanulmányok, betegség vagy hasonló élethelyzetek kezelhetők, hosszú távon számolunk a munkatárssal."},
+  {q:"Hol dolgozok főként?", a:"Irodában és home office-ban is lehetséges, hetente általában 3-4 fix óra van, amikor személyes jelenlét szükséges."},
+  {q:"Mennyire rugalmas a munkaidő?", a:"Kifejezetten rugalmas — projektalapú működésben mindenki saját maga osztja be a feladatait, az ügyfélnek viszont időben kell szolgáltatást kapnia."},
+  {q:"Milyen gyorsan léphetek előre?", a:"A teljesítményed, tanulási sebességed és időráfordításod határozza meg. Egységes karrierút, kizárt érdekellentét."},
+  {q:"Mennyire stabil ez a szakma?", a:"A banki-biztosítási szektor stabil, növekvő kereslettel a független tanácsadók iránt — az árérzékenység miatt különösen Magyarországon."},
+  {q:"Mi a dresscode?", a:"Az irodában smart casual az elvárt megjelenés, home office esetén a kamera előtti megjelenés hasonló."},
+  {q:"Milyen eszközökre van szükségem?", a:"Egy saját laptopra, amely böngészőt és Excel-t futtat. Tablet nem ideális."},
+  {q:"Ha meggondolom magam, befejezhetem?", a:"Bármikor, de bízunk benne, hogy nem így indulunk neki a kalandnak."},
+  {q:"Elveszi a mesterséges intelligencia a munkát?", a:"Valószínűleg nem. Három terület van, ahol az embereknek komoly emberi kapcsolódásra van szükségük: jog, egészségügy, pénz. A döntéseket nem (csak) excel-táblák, hanem tapasztalat, lelki tényezők is befolyásolják."},
+  {q:"Hátrányt jelent, ha valaki fiatal vagy pályakezdő?", a:"Csak akkor, ha nem alázatos. Az ügyfeleket az eredmény érdekli, nem az életkor — ugyanazt a kalkulátort használja egy 20 és egy 44 éves kolléga is."},
+  {q:"Jogilag milyen szerződéssel dolgoznak a munkatársak?", a:"Megbízási szerződéssel, ami lehetővé teszi a teljesítményarányos bevételt. Státusz: egyéni vagy társas vállalkozó. Az egyéni vállalkozás egy 8 perces Ügyfélkapus folyamat, bármikor nyitható/zárható."},
+  {q:"A felépített ügyfélkapcsolatok biztonságban vannak?", a:"Igen. Nincs olyan, hogy egy aktív munkatárs ügyfelei átkerülnek máshoz — ezt szigorú szerződés védi minden partnerrel."},
+  {q:"Mit jelent a skálázás (csapatépítés)?", a:"Amikor valaki a saját egyéni kapacitásának határait feszegeti, csapatot építhet — minimum 3 fő már önálló szervezeti egységnek számít, a legnagyobb hazai hálózat 800+ fős."},
+  {q:"Hogyan épül fel a szervezet?", a:"Német és magyar központ → országos/regionális/területi igazgatóságok → területi vezetők és fiókvezetők → elemzők, tanácsadók és specialisták. Vezetőségbe kizárólag belső kiválasztás útján lehet kerülni."}
+];
+const gyikWrap = document.getElementById('gyikWrap');
+gyikData.forEach((g)=>{
+  const item = document.createElement('div');
+  item.className='gyik-item';
+  item.innerHTML = `<button class="gyik-q" onclick="this.parentElement.classList.toggle('open'); this.nextElementSibling.style.maxHeight=this.parentElement.classList.contains('open')?this.nextElementSibling.scrollHeight+20+'px':'0px';">${g.q}<span>⌄</span></button><div class="gyik-a"><p>${g.a}</p></div>`;
+  gyikWrap.appendChild(item);
+});
+</script>
+</body>
+</html>
