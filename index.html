@@ -97,10 +97,27 @@
 
   .qa-block{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:16px 18px;margin-bottom:10px;}
   .qa-block h4{font-family:'Space Grotesk',sans-serif;font-size:13.5px;color:var(--pink);margin:0 0 8px;text-transform:uppercase;letter-spacing:.03em;}
-  .qa-block ul{margin:0;padding-left:18px;font-size:13px;color:var(--gray-600);line-height:1.7;}
+  .qa-block ul{margin:0 0 10px;padding-left:18px;font-size:13px;color:var(--gray-600);line-height:1.7;}
+  .qa-note-wrap{max-width:420px;}
+  .qa-note-wrap label{display:block;font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px;}
+  .qa-note-wrap textarea{width:100%;min-height:54px;padding:9px 11px;border:1px solid var(--gray-200);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--gray-100);resize:vertical;}
 
   .pdf-btn{background:var(--green);color:#fff;border:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
   .pdf-btn:hover{background:#188048;}
+
+  /* Záró: szabad jegyzet + PDF export — elegáns panel */
+  .summary-panel{background:linear-gradient(135deg, var(--navy) 0%, var(--navy2) 65%, #2A1E45 130%);
+    border-radius:24px;padding:30px 32px;box-shadow:0 20px 50px -25px rgba(15,21,48,.6);}
+  .summary-panel label{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:#fff;margin-bottom:12px;}
+  .summary-panel textarea{width:100%;min-height:110px;padding:14px 16px;border:1px solid rgba(255,255,255,.18);
+    border-radius:14px;font-family:'Poppins',sans-serif;font-size:13.5px;line-height:1.6;
+    background:rgba(255,255,255,.07);color:#fff;resize:vertical;margin-bottom:18px;}
+  .summary-panel textarea::placeholder{color:#9FA4C0;}
+  .summary-panel textarea:focus{outline:none;border-color:var(--pink);background:rgba(255,255,255,.1);}
+  .pdf-btn-elegant{display:inline-flex;align-items:center;gap:9px;background:var(--pink);color:#fff;border:none;
+    font-weight:700;font-size:14px;padding:13px 26px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;
+    box-shadow:0 10px 25px -10px rgba(230,62,120,.7);transition:transform .15s, background .15s;}
+  .pdf-btn-elegant:hover{background:#c92e64;transform:translateY(-1px);}
 
   .gyik-item{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;margin-bottom:8px;overflow:hidden;}
   .gyik-q{width:100%;background:none;border:none;text-align:left;padding:13px 16px;font-weight:700;font-size:13px;color:var(--navy);cursor:pointer;display:flex;justify-content:space-between;}
@@ -108,6 +125,55 @@
   .gyik-item.open .gyik-a{padding:0 16px 14px;}
 
   footer{margin-top:30px;text-align:center;color:var(--gray-400);font-size:12px;}
+
+  /* Cégbemutató — lapozós deck */
+  .deck-wrap{background:var(--navy);border-radius:24px;padding:0;overflow:hidden;box-shadow:0 20px 50px -25px rgba(15,21,48,.6);position:relative;}
+  .deck-stage{position:relative;min-height:340px;}
+  .deck-slide{display:none;padding:38px 34px 30px;color:#fff;min-height:340px;}
+  .deck-slide.active{display:flex;flex-direction:column;justify-content:center;}
+  .deck-slide .d-eyebrow{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;letter-spacing:.08em;color:#8FE3B8;text-transform:uppercase;margin-bottom:10px;}
+  .deck-slide h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(19px,2.4vw,26px);line-height:1.25;margin:0 0 16px;}
+  .deck-slide h3 .accent{color:#5FD6A8;}
+  .deck-slide p{font-size:14px;line-height:1.7;color:#D7DAEC;margin:0 0 10px;max-width:680px;}
+  .deck-slide ul{margin:0 0 12px;padding-left:0;list-style:none;}
+  .deck-slide ul li{font-size:14px;line-height:1.6;color:#fff;font-weight:600;margin-bottom:9px;padding-left:20px;position:relative;}
+  .deck-slide ul li::before{content:"▸";position:absolute;left:0;color:var(--pink);font-weight:700;}
+  .deck-slide ol{margin:0 0 12px;padding-left:20px;}
+  .deck-slide ol li{font-size:14px;line-height:1.6;color:#fff;font-weight:600;margin-bottom:9px;}
+  .deck-slide ol li::marker{color:#F2C14E;font-weight:700;}
+  .deck-note{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:14px 16px;margin-top:8px;font-size:13.5px;color:#fff;font-weight:600;line-height:1.55;}
+  .deck-note b{color:#5FD6A8;}
+  .deck-footnote{font-size:11.5px;color:#9FA4C0;font-style:italic;margin-top:14px;}
+  .deck-split{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px;}
+  .deck-split-col{flex:1;min-width:220px;background:rgba(255,255,255,.06);border-radius:14px;padding:14px 16px;}
+  .deck-split-col .lbl{font-size:11px;font-weight:700;letter-spacing:.04em;color:#9FA4C0;text-transform:uppercase;margin-bottom:6px;}
+  .deck-split-col .val{font-size:14px;font-weight:700;color:#fff;}
+  .deck-split-col.is-pink .val{color:#FF8FB8;}
+  .deck-split-col.is-green .val{color:#5FD6A8;}
+  .deck-flag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;background:var(--pink);color:#fff;padding:4px 12px;border-radius:999px;margin-bottom:14px;}
+  .deck-controls{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.1);}
+  .deck-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-weight:700;font-size:13px;padding:8px 16px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
+  .deck-btn:hover{background:var(--pink);border-color:var(--pink);}
+  .deck-btn:disabled{opacity:.35;cursor:default;}
+  .deck-btn:disabled:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);}
+  .deck-dots{display:flex;gap:6px;}
+  .deck-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;}
+  .deck-dot.active{background:var(--pink);width:18px;border-radius:4px;}
+  .deck-counter{font-size:12px;color:#9FA4C0;font-weight:600;}
+
+  /* Start számla — lépés-sorok */
+  .startszamla-head{background:var(--navy);color:#fff;border-radius:18px;padding:18px 22px;margin-bottom:16px;}
+  .startszamla-head h3{font-family:'Space Grotesk',sans-serif;font-size:17px;margin:0 0 4px;}
+  .startszamla-head p{font-size:13px;color:#C7CBE0;margin:0;max-width:600px;line-height:1.6;}
+  .step-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;}
+  .step-card{background:#fff;border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:16px;flex:1;min-width:200px;}
+  .step-card .num{width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+  .step-card h4{font-size:13.5px;color:var(--navy);margin:0 0 6px;font-family:'Space Grotesk',sans-serif;line-height:1.3;}
+  .step-card p{font-size:12px;color:var(--gray-600);margin:0;line-height:1.55;}
+  .step-card .amount{display:inline-block;margin-top:9px;font-weight:700;font-size:13px;color:var(--pink);}
+  .step-card.is-green .num{background:var(--green);}
+  .step-card.is-green .amount{color:var(--green);}
+  .step-sub-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.04em;margin:18px 0 8px;}
 
   /* Küldetés — flashy marketing banner */
   .mission-banner{
@@ -188,12 +254,12 @@
     <a href="#munkamodszer">Hogyan dolgozunk</a>
     <a href="#karrier">Karrier & kereset</a>
     <a href="#kitkeresunk">Kit keresünk</a>
+    <a href="#startszamla">Start számla</a>
     <a href="#forgatokonyvek">Forgatókönyvek</a>
     <a href="#karrieriranytu">Karrieriránytű</a>
     <a href="#ugyfelek">Ügyfelek forrása</a>
-    <a href="#piac">Piaci adatok</a>
-    <a href="#kerdesbank">Kérdésbank</a>
     <a href="#pontozas">Pontozás & jegyzet</a>
+    <a href="#kerdesbank">Kérdésbank</a>
     <a href="#gyik">GYIK</a>
     <a href="#negativ">Negatív vélemények</a>
     <a href="#lezaras">Hogyan tovább</a>
@@ -201,29 +267,146 @@
 
   <div class="content">
 
-    <!-- 01 CÉGBEMUTATÓ -->
+    <!-- 01 CÉGBEMUTATÓ — lapozós deck -->
     <div class="sec pg-candidate" id="cegbemutato">
       <div class="sec-head"><span class="sec-num">01</span><h2>Cégbemutató</h2></div>
-      <div class="card-grid">
-        <div class="info-card">
-          <span class="stat">440.000+</span>
-          <h3>Ügyfél, napi szinten</h3>
-          <p>Hazánkban 50+ irodával, 2.500+ munkatárssal dolgozunk. Egy független kapocs vagyunk az emberek és a piac között.</p>
+
+      <div class="deck-wrap" id="deckWrap">
+        <div class="deck-stage" id="deckStage">
+
+          <div class="deck-slide active">
+            <span class="d-eyebrow">Magyar piac · 2026</span>
+            <h3>Mekkora a tér, amiben mozgunk?</h3>
+            <div class="deck-split">
+              <div class="deck-split-col">
+                <div class="lbl">15-65 éves népesség</div>
+                <div class="val">6,15M fő</div>
+              </div>
+              <div class="deck-split-col is-green">
+                <div class="lbl">Teljes munkaidős foglalkoztatott</div>
+                <div class="val">4,4M fő</div>
+              </div>
+            </div>
+            <div class="deck-split" style="margin-top:14px;">
+              <div class="deck-split-col is-pink">
+                <div class="lbl">Élő szerződés (élet + lakás biztosítás)</div>
+                <div class="val">2M + 3,3M</div>
+              </div>
+              <div class="deck-split-col">
+                <div class="lbl">MNB célja 2026-ig</div>
+                <div class="val">1M új ügyfél</div>
+              </div>
+            </div>
+            <div class="deck-footnote">A piaci lefedettség így max. 50%, vagy kevesebb — van bőven feladat. Az öngondoskodási megtakarítások piacán a következő 10 évben duplázódhat az állomány (forrás: KSH, MNB).</div>
+          </div>
+
+          <div class="deck-slide">
+            <span class="d-eyebrow">BD Gentischer · 2026</span>
+            <h3 style="font-size:clamp(26px,4vw,38px);">BEMUTATKOZÁS</h3>
+            <p>Pénzügyi tanácsadás — családoknak és vállalkozásoknak, függetlenül.</p>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Hogyan kerülhet egy családhoz akár <span class="accent">több millió forint</span> fizetésemelés nélkül?</h3>
+          </div>
+
+          <div class="deck-slide">
+            <span class="d-eyebrow">BD Gentischer</span>
+            <h3>Úgy, hogy minden évben 2 órára leül egy <span class="accent">független</span> tanácsadóval.</h3>
+            <div class="deck-note">Ebből ma letudjuk az <b>első 1 órát</b>, a másodikról a beszélgetés végén döntünk.</div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Az emberek pénzügyi élete három területből áll:</h3>
+            <ul>
+              <li>Megtakarítanak</li>
+              <li>Hiteleket vesznek fel</li>
+              <li>Biztosításokat kötnek</li>
+            </ul>
+            <div class="deck-note">Mindhárom folyamatosan ismétlődik, de nem mindegy, <b>hogyan</b>.</div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Célunk az, hogy a <span class="accent">legjobb ajánlat</span> nyerjen — ne az, amelyik először jön szembe.</h3>
+          </div>
+
+          <div class="deck-slide">
+            <span class="d-eyebrow">Ügyintézés ≠ Tanácsadás</span>
+            <ul>
+              <li>Hazánkban több mint 20 bank, több száz termékkel</li>
+              <li>Több mint 30 biztosító, szintén több száz termékkel</li>
+            </ul>
+            <div class="deck-split">
+              <div class="deck-split-col">
+                <div class="lbl">Egy bankban</div>
+                <div class="val">Az adott termék a fontos</div>
+              </div>
+              <div class="deck-split-col is-green">
+                <div class="lbl">Nálunk</div>
+                <div class="val">Az ügyfél elvárása a fontos</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Hogyan zajlik a közös munka?</h3>
+            <ol>
+              <li>Állapotfelmérés 6 lépésben, értékesítés nélkül</li>
+              <li>Keresünk, kutatunk, összehasonlítunk</li>
+              <li>Közérthetően átadjuk az infót</li>
+              <li>Minden papírmunkát elintézünk</li>
+            </ol>
+            <div class="deck-note"><b>95%-ban</b> találunk legalább egy területet, amin tudunk javítani.</div>
+            <div class="deck-footnote">Mára országosan 50+ irodában 440.000+ ügyfelet szolgálunk ki munkatársainkkal.</div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Mit nyersz, ha együtt dolgozunk?</h3>
+            <ul>
+              <li>Időt, energiát, pénzt hozunk</li>
+              <li>Minden évben utánkövetés</li>
+              <li>7/7 nap nyitvatartás, online és offline</li>
+              <li>Egyedi partneri kedvezmények</li>
+            </ul>
+            <div class="deck-note"><b>360 fokos</b> full service irodaként működünk, minden egy helyen elérhető.</div>
+          </div>
+
+          <div class="deck-slide">
+            <span class="deck-flag">Fontos!</span>
+            <h3>Nem árulunk reményt és nem ígérünk gyors meggazdagodást!</h3>
+            <p>Tény-alapon segítünk beállítani egy család pénzügyi portfólióját — közérthetően, törvényesen.</p>
+            <div class="deck-footnote">Felügyeleti engedélyszámom: 116072866119</div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Mennyibe kerül a teljes szolgáltatási kör?</h3>
+            <ul><li>Díjmentes</li></ul>
+            <div class="deck-note">
+              <b>Nekünk miért éri meg?</b><br>
+              Tanácsadóként sikerdíjat kapunk abból a díjból, amit a bank a saját ügyintézőjének adna.
+              Ez a garancia arra, ha nem jó munkát végzek, nincs fizetésem.
+              Ügyfeleim ajánlásokkal honorálják a munkámat.
+            </div>
+          </div>
+
+          <div class="deck-slide">
+            <h3>Szolgáltató partnerem, az <span class="accent">OVB Hungary</span></h3>
+            <ul>
+              <li>1970 óta 16 országban dolgozunk, 5 millió+ ügyféllel</li>
+              <li>Hazánkban 50 irodával, 2.500+ munkatárssal</li>
+              <li>Teljes jogi és informatikai háttér</li>
+              <li>Specialista rendszer és partneri kapcsolatok</li>
+            </ul>
+          </div>
+
         </div>
-        <div class="info-card">
-          <span class="stat">1970 óta</span>
-          <h3>16 országban</h3>
-          <p>Európa 16 országában, 5 millió+ ügyféllel. 55 éves tapasztalat a családok és vállalkozások pénzügyi tervezésében.</p>
-        </div>
-        <div class="info-card">
-          <span class="stat">30+</span>
-          <h3>Bank, biztosító partner</h3>
-          <p>Nincs saját termékünk — összehasonlítjuk és kiválasztjuk a piac legjobb megoldásait minden ügyfélnek, függetlenül.</p>
-        </div>
-        <div class="info-card">
-          <span class="stat">DÍJMENTES</span>
-          <h3>az ügyfél felé</h3>
-          <p>Az MNB szabályozása alapján a pénzintézetek előre meghatározott díjából részesülünk — az ügyfélnek nem kerül pénzbe.</p>
+        <div class="deck-controls">
+          <button class="deck-btn" id="deckPrev" onclick="deckGo(-1)">← Vissza</button>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span class="deck-counter" id="deckCounter">1 / 11</span>
+            <div class="deck-dots" id="deckDots"></div>
+          </div>
+          <button class="deck-btn" id="deckNext" onclick="deckGo(1)">Tovább →</button>
         </div>
       </div>
     </div>
@@ -355,6 +538,103 @@
       </div>
     </div>
 
+    <!-- 04b START SZÁMLA -->
+    <div class="sec pg-candidate pg-interviewer" id="startszamla">
+      <div class="sec-head"><span class="sec-num">04b</span><h2>Start számla & induló jövedelem</h2></div>
+
+      <div class="startszamla-head">
+        <h3>Start számla — 200.000 Ft</h3>
+        <p>4 kulcs lépés és a feltöltés folyamata.</p>
+      </div>
+      <div class="step-row">
+        <div class="step-card">
+          <div class="num">1</div>
+          <h4>Akadémia gyakorlás</h4>
+          <p>Minden helyesen megválaszolt kérdés után 10 Ft-tal növeli a Start számlán gyűjtött összeget.</p>
+          <span class="amount">40.000 Ft (20%)</span>
+        </div>
+        <div class="step-card">
+          <div class="num">2</div>
+          <h4>Első sikeres vizsga</h4>
+          <p>Az első olyan vizsga, melyre az MNB felé le lett jelentve, és nem orvosi igazolással marad távol.</p>
+          <span class="amount">20.000 Ft (10%)</span>
+        </div>
+        <div class="step-card">
+          <div class="num">3</div>
+          <h4>8 mentorált elemzés</h4>
+          <p>Minden egyes elvégzett és jóváhagyott mentorált elemzés után 10.000 Ft kerül jóváírásra.</p>
+          <span class="amount">80.000 Ft (40%)</span>
+        </div>
+        <div class="step-card">
+          <div class="num">4</div>
+          <h4>Onboarding részvétel</h4>
+          <p>Az értékelést igazgatód végzi, 10.000 Ft-os lépésekben, aktivitás alapján.</p>
+          <span class="amount">60.000 Ft (30%)</span>
+        </div>
+      </div>
+
+      <div class="startszamla-head">
+        <h3>Első 200 ES + díjmentes MNB 2-es vizsga</h3>
+        <p>Az összeghez regisztrációdat követően juthatsz hozzá, ami kb. 25-30 nap — amennyiben a regisztráció hónapjában és az azt követőben legalább 200 egységet termelsz a mentorod segítségével (melyekre jutalék is érkezik), a start egyenleg kifizetésre kerül.</p>
+      </div>
+      <div class="step-row">
+        <div class="step-card is-green">
+          <div class="num">01</div>
+          <h4>Onboarding</h4>
+          <p>Figyelj és tanulj a vezetőidtől, és készülj a heti mini vizsgákra az e-learning segítségével!</p>
+        </div>
+        <div class="step-card is-green">
+          <div class="num">02</div>
+          <h4>Gyakorlás</h4>
+          <p>Fontos, hogy a hatósági vizsga elsőre sikerüljön — sikerélmény és 40.000 Ft!</p>
+        </div>
+        <div class="step-card is-green">
+          <div class="num">03</div>
+          <h4>Kezdő elemzések</h4>
+          <p>Szakmai bevezetés és 80.000 Ft a kezdő elemzéseidre, eredménytől függetlenül!</p>
+        </div>
+        <div class="step-card is-green">
+          <div class="num">04</div>
+          <h4>Díjmentes MNB 2 vizsga</h4>
+          <p>Megajándékozunk egy 40.000 Ft-os képzési kuponnal a banki üzletághoz, 60 napon belül!</p>
+        </div>
+        <div class="step-card is-green">
+          <div class="num">05</div>
+          <h4>Első 200 ES</h4>
+          <p>120.000 Ft fizetés, első sikeresen lezárt projektek.</p>
+        </div>
+      </div>
+
+      <div class="step-sub-label">Közös célok az első hónapban</div>
+      <div class="step-row">
+        <div class="step-card">
+          <div class="num">01</div>
+          <h4>Tanfolyam indulás</h4>
+          <p>Beiratkozunk az MNB tanfolyamra, elkezded a felkészülést és gyakorolsz az éles vizsgára.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">02</div>
+          <h4>Irodai onboarding</h4>
+          <p>Részt veszel az irodai oktatásokon és e-learningen, hogy elsajátíts szakmai alapokat.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">03</div>
+          <h4>Szakmai bevezető</h4>
+          <p>Mentoroddal betekintést nyersz a hétköznapi munkába, ügyfeleken keresztül, éles helyzetekben.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">04</div>
+          <h4>Önállósodás</h4>
+          <p>Mini vizsgákon keresztül és megszerzett éles tapasztalatoknak köszönhetően.</p>
+        </div>
+        <div class="step-card">
+          <div class="num">05</div>
+          <h4>320.000 Ft</h4>
+          <p>200 ES teljesítésével és a Start számla feltöltésével nagyságrendileg az első havi bevételed is megérkezik.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- 05 FORGATÓKÖNYVEK -->
     <div class="sec pg-candidate pg-interviewer" id="forgatokonyvek">
       <div class="sec-head"><span class="sec-num">05</span><h2>Forgatókönyvek</h2></div>
@@ -388,26 +668,9 @@
       <div id="ugyfelekAcc"></div>
     </div>
 
-    <!-- 08 PIACI ADATOK -->
-    <div class="sec pg-interviewer" id="piac">
-      <div class="sec-head"><span class="sec-num">08</span><h2>Piaci adatok</h2></div>
-      <div class="card-grid">
-        <div class="info-card"><span class="stat">6,15M fő</span><h3>15-65 éves népesség</h3><p>Magyarországon — a potenciális ügyfélkör alapja (KSH).</p></div>
-        <div class="info-card"><span class="stat">4,4M fő</span><h3>Teljes munkaidős foglalkoztatott</h3><p>A legaktívabb célcsoport pénzügyi döntésekre.</p></div>
-        <div class="info-card"><span class="stat">2M+3,3M</span><h3>Élő szerződés (élet + lakás biztosítás)</h3><p>A piaci lefedettség így max. 50%, vagy kevesebb — van bőven feladat.</p></div>
-        <div class="info-card"><span class="stat">1M új ügyfél</span><h3>MNB célja 2026-ig</h3><p>Az öngondoskodási megtakarítások piacán — a következő 10 évben duplázódhat az állomány.</p></div>
-      </div>
-    </div>
-
-    <!-- 06 KÉRDÉSBANK (interviewer only) -->
-    <div class="sec pg-scoring" id="kerdesbank">
-      <div class="sec-head"><span class="sec-num">09</span><h2>Kérdésbank</h2></div>
-      <div id="kerdesbankWrap"></div>
-    </div>
-
     <!-- 07 PONTOZÁS & JEGYZET (interviewer only) -->
     <div class="sec pg-scoring" id="pontozas">
-      <div class="sec-head"><span class="sec-num">10</span><h2>Pontozás & jegyzet</h2></div>
+      <div class="sec-head"><span class="sec-num">08</span><h2>Pontozás & jegyzet</h2></div>
 
       <div class="field-row">
         <div class="field"><label>Jelölt neve</label><input type="text" id="candName" placeholder="pl. Kovács Anna"></div>
@@ -452,39 +715,40 @@
         </div>
       </div>
 
-      <div class="scorebox">
-        <label>Strukturált jegyzetek a kérdésblokkok alapján</label>
-        <div class="field" style="margin-bottom:10px;"><label>1. Motiváció, pályakép</label><textarea id="note1"></textarea></div>
-        <div class="field" style="margin-bottom:10px;"><label>2. Tanulás, önreflexió</label><textarea id="note2"></textarea></div>
-        <div class="field" style="margin-bottom:10px;"><label>3. Kommunikáció, emberkezelés</label><textarea id="note3"></textarea></div>
-        <div class="field" style="margin-bottom:10px;"><label>4. Időgazdálkodás</label><textarea id="note4"></textarea></div>
-        <div class="field" style="margin-bottom:10px;"><label>5. Felelősség, önállóság</label><textarea id="note5"></textarea></div>
-        <div class="field"><label>6. Pénzügyek, mindset</label><textarea id="note6"></textarea></div>
-      </div>
+    </div>
 
-      <div class="scorebox">
+    <!-- 06 KÉRDÉSBANK (interviewer only) -->
+    <div class="sec pg-scoring" id="kerdesbank">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Kérdésbank</h2></div>
+      <div id="kerdesbankWrap"></div>
+    </div>
+
+    <!-- ZÁRÓ: szabad jegyzet + PDF export -->
+    <div class="sec pg-scoring" id="zaras-jegyzet">
+      <div class="summary-panel">
         <label>Szabad jegyzet, összegzés</label>
-        <textarea id="noteFree" style="min-height:90px;"></textarea>
+        <textarea id="noteFree" placeholder="Összbenyomás, döntés, javaslat a következő körre…"></textarea>
+        <button class="pdf-btn-elegant" onclick="downloadInterviewPDF()">
+          <span>📄</span> Interjú összefoglaló PDF letöltése
+        </button>
       </div>
-
-      <button class="pdf-btn" onclick="downloadInterviewPDF()">📄 Interjú összefoglaló PDF letöltése</button>
     </div>
 
     <!-- 08 GYIK -->
     <div class="sec pg-candidate" id="gyik">
-      <div class="sec-head"><span class="sec-num">11</span><h2>Gyakori kérdések</h2></div>
+      <div class="sec-head"><span class="sec-num">10</span><h2>Gyakori kérdések</h2></div>
       <div id="gyikWrap"></div>
     </div>
 
     <!-- 12 NEGATÍV VÉLEMÉNYEK KEZELÉSE -->
     <div class="sec pg-interviewer" id="negativ">
-      <div class="sec-head"><span class="sec-num">12</span><h2>Negatív vélemények kezelése</h2></div>
+      <div class="sec-head"><span class="sec-num">11</span><h2>Negatív vélemények kezelése</h2></div>
       <div id="negativAcc"></div>
     </div>
 
     <!-- 13 LEZÁRÁS -->
     <div class="sec pg-candidate" id="lezaras">
-      <div class="sec-head"><span class="sec-num">13</span><h2>Hogyan tovább?</h2></div>
+      <div class="sec-head"><span class="sec-num">12</span><h2>Hogyan tovább?</h2></div>
       <div class="info-card">
         <p>Örülünk, hogy volt szerencsénk megismerkedni személyesen is ezen az interjún. Vezető kollégákkal minden héten hétfőn és csütörtökön feldolgozzuk az aktualitásokat, így a jelentkezésekkel közösen foglalkozunk.</p>
         <p style="margin-top:10px;">➡️ Arra kérünk, hogy küldj nekünk egy <b>motivációs levelet</b> válaszlevélben e-mailben 24 órán belül, amennyiben a második körön részt szeretnél venni. A levél hossza maximum A4 terjedelmű legyen, és az első körön elhangzottak alapján írd meg, miért szeretnél nálunk dolgozni.</p>
@@ -672,33 +936,33 @@ buildAccordion('negativAcc', [
 // 06 Kérdésbank
 const kerdesBank = [
   {title:"Bevezető, szintrehozás", items:["Kezdjünk azzal, hogy mesélj magadról néhány szóban."]},
-  {title:"1. Motiváció, pályakép, korábbi munkái", items:[
+  {title:"1. Motiváció, pályakép, korábbi munkái", note:"note1", items:[
     "Mesélj a korábbi munkahelyeidről — melyik tetszett, melyik kevésbé?",
     "Legutóbbi helyről miért / milyen körülmények közt jött el?",
     "Milyen konkrét céljaid vannak a következő 2–3 évre?",
     "Diákként mi készteti arra, hogy az iskola mellé egy új komoly területet vezessen be?",
     "Mi vonz most a legjobban ebben a munkában, és mitől tart a legjobban?"
   ]},
-  {title:"2. Tanulás, fejlődés, önreflexió", items:[
+  {title:"2. Tanulás, fejlődés, önreflexió", note:"note2", items:[
     "Mondj egy példát, amikor rövid idő alatt kellett új dolgot megtanulnod.",
     "Mesélj egy helyzetről, amikor hibáztál, vagy nem hoztad a kívánt teljesítményt.",
     "Zavarna, ha hetente átlag 3 órát kell tanulással tölteni a munkán felül?",
     "Hogyan érzed magad, ha egy csapaton belül rangsorolnak teljesítmény alapján?"
   ]},
-  {title:"3. Kommunikáció, emberkezelés", items:[
+  {title:"3. Kommunikáció, emberkezelés", note:"note3", items:[
     "Mesélj egy konfliktusról vagy félreértésről — mi történt, te mit tettél?",
     "Volt, hogy valakit neked kellett meggyőznöd? Hogyan csináltad, mi lett a vége?"
   ]},
-  {title:"4. Időgazdálkodás", items:[
+  {title:"4. Időgazdálkodás", note:"note4", items:[
     "Hogy néz ki egy átlagos heted most?",
     "Hány óra munka lenne ideális a jelenlegi órarended mellett? (fenntarthatóság!)",
     "Mondj egy példát, amikor egyszerre túl sok feladatod volt — mit priorizáltál?"
   ]},
-  {title:"5. Felelősség, önállóság", items:[
+  {title:"5. Felelősség, önállóság", note:"note5", items:[
     "Mesélj egy helyzetről, amikor valaki kifejezetten számított rád.",
     "Volt, hogy a vezetőd nem volt elérhető, mégis döntened kellett?"
   ]},
-  {title:"6. Pénzügyek, mindset", items:[
+  {title:"6. Pénzügyek, mindset", note:"note6", items:[
     "Diákként teljesen eltartja magát, részben, vagy van ilyen ambíció?",
     "Honnan tájékozódik pénzügyek kapcsán? Nyitott téma a pénz a családban?",
     "Mi a minimum és az ideális fizetés kérdése?"
@@ -708,9 +972,38 @@ const kbWrap = document.getElementById('kerdesbankWrap');
 kerdesBank.forEach(b=>{
   const block = document.createElement('div');
   block.className='qa-block';
-  block.innerHTML = `<h4>${b.title}</h4><ul>${b.items.map(q=>`<li>${q}</li>`).join('')}</ul>`;
+  const noteHtml = b.note ? `<div class="qa-note-wrap"><label>Jegyzet ehhez a blokkhoz</label><textarea id="${b.note}"></textarea></div>` : '';
+  block.innerHTML = `<h4>${b.title}</h4><ul>${b.items.map(q=>`<li>${q}</li>`).join('')}</ul>${noteHtml}`;
   kbWrap.appendChild(block);
 });
+
+// 01 Cégbemutató deck lapozó
+(function(){
+  const slides = document.querySelectorAll('#deckStage .deck-slide');
+  const dotsWrap = document.getElementById('deckDots');
+  const counter = document.getElementById('deckCounter');
+  const prevBtn = document.getElementById('deckPrev');
+  const nextBtn = document.getElementById('deckNext');
+  let idx = 0;
+  slides.forEach((s,i)=>{
+    const d = document.createElement('span');
+    d.className = 'deck-dot' + (i===0?' active':'');
+    d.onclick = ()=>{ idx = i; render(); };
+    dotsWrap.appendChild(d);
+  });
+  function render(){
+    slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    Array.from(dotsWrap.children).forEach((d,i)=>d.classList.toggle('active', i===idx));
+    counter.textContent = (idx+1) + ' / ' + slides.length;
+    prevBtn.disabled = idx===0;
+    nextBtn.disabled = idx===slides.length-1;
+  }
+  window.deckGo = function(dir){
+    idx = Math.min(slides.length-1, Math.max(0, idx+dir));
+    render();
+  };
+  render();
+})();
 
 // 07 score stars
 function buildStars(id){
