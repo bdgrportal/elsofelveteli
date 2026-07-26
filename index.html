@@ -102,6 +102,33 @@
   .qa-note-wrap label{display:block;font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px;}
   .qa-note-wrap textarea{width:100%;min-height:54px;padding:9px 11px;border:1px solid var(--gray-200);border-radius:8px;font-family:'Poppins',sans-serif;font-size:13px;background:var(--gray-100);resize:vertical;}
 
+  /* ── KOMPETENCIA MERO (sulyozott) ── */
+  .komp-leg{font-size:11px;color:var(--gray-400);margin:-2px 0 10px;line-height:1.5;}
+  .komp-row{display:grid;grid-template-columns:1fr 44px auto;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed var(--gray-200);}
+  .komp-row:last-child{border-bottom:none;}
+  .komp-l{display:flex;flex-direction:column;line-height:1.28;min-width:0;}
+  .komp-l b{font-size:13px;font-weight:700;color:var(--navy);}
+  .komp-l i{font-style:normal;font-size:11px;color:var(--gray-400);}
+  .komp-w{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12.5px;color:var(--pink);text-align:right;}
+  .komp-pills{display:flex;gap:4px;}
+  .komp-p{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--gray-200);background:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;color:var(--gray-400);cursor:pointer;line-height:1;}
+  .komp-p:hover{border-color:var(--pink);color:var(--pink);}
+  .komp-p.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .komp-row.ko .komp-l b{color:#B91C1C;}
+  .komp-tot{margin-top:14px;border-top:1.5px solid var(--gray-200);padding-top:13px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;}
+  .komp-tot .v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:28px;line-height:1;}
+  .komp-tot .v.ap,.komp-tot .v.a{color:var(--green);} .komp-tot .v.b{color:#B5862B;} .komp-tot .v.c{color:#A33A3A;} .komp-tot .v.nil{color:var(--gray-400);}
+  .komp-tot .m{font-size:12px;color:var(--gray-600);font-weight:600;line-height:1.5;}
+  .komp-tot .m b{color:var(--navy);}
+  .komp-bar{flex:1 1 150px;min-width:110px;height:8px;border-radius:999px;background:var(--gray-200);overflow:hidden;}
+  .komp-bar i{display:block;height:100%;border-radius:999px;transition:width .2s;}
+  .komp-bar i.ap,.komp-bar i.a{background:var(--green);} .komp-bar i.b{background:#E0A63A;} .komp-bar i.c{background:#D06A6A;} .komp-bar i.nil{background:var(--gray-200);}
+  .komp-apply{border:1.5px solid var(--navy);background:#fff;color:var(--navy);border-radius:999px;padding:7px 15px;font-family:'Poppins',sans-serif;font-weight:700;font-size:12px;cursor:pointer;white-space:nowrap;}
+  .komp-apply:hover{background:var(--navy);color:#fff;}
+  .komp-ko{margin-top:11px;background:#FEF2F2;border:1px solid #F8CCCC;color:#B91C1C;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:600;line-height:1.55;}
+  @media (max-width:640px){ .komp-row{grid-template-columns:1fr 44px;} .komp-pills{grid-column:1/-1;} }
+  .qa-block li .q-w{display:block;font-size:11.5px;color:var(--gray-400);line-height:1.5;margin:2px 0 7px;}
+
   .pdf-btn{background:var(--green);color:#fff;border:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
   .pdf-btn:hover{background:#188048;}
 
@@ -703,6 +730,14 @@
         <div class="star-mini-row" data-score="0" id="score-hangulat"></div>
       </div>
 
+      <div class="scorebox" id="kompBox">
+        <label>🧭 Kompetencia mérő (súlyozott)</label>
+        <div class="komp-leg">Pontozz 1&ndash;5 skálán: <b>1</b> = jelentősen elmarad &middot; <b>2</b> = elmarad &middot; <b>3</b> = megfelel &middot; <b>4</b> = erős &middot; <b>5</b> = kiemelkedő. A súlyok összege 100%. Ugyanarra a számra újra kattintva törlöd az értéket.</div>
+        <div id="kompRows"></div>
+        <div class="komp-tot" id="kompTotal"></div>
+        <div id="kompKo"></div>
+      </div>
+
       <div class="scorebox">
         <label>Vélt potenciál (A+ / A / B / C)</label>
         <div class="abc-grid" id="potentialPicker">
@@ -976,6 +1011,14 @@ const kerdesBank = [
     "Diákként teljesen eltartja magát, részben, vagy van ilyen ambíció?",
     "Honnan tájékozódik pénzügyek kapcsán? Nyitott téma a pénz a családban?",
     "Mi a minimum és az ideális fizetés kérdése?"
+  ]},
+  {title:"7. Szituációs próba \u2013 meggyőzés & nyomás alatt", note:"note7", items:[
+    {q:"Győzz meg róla, hogy miért Te vagy az az ember, akire rábízzam a banki és biztosítási ügyintézésem?",
+     w:"🔍 Mit figyelj: felépít-e valódi érvelést, vagy csak jelszavakat mond \u2013 rólad vagy az ügyfél előnyéről beszél \u2013 hogyan viseli, hogy improvizálnia kell. → Kommunikáció, Versenyszellem, Intelligencia"},
+    {q:"Hétvégén ütközik egy fontos továbbképzéssel egy szeretted / barátod születésnapi partyja \u2013 hogyan magyarázod el neki, hogy nem tudsz elmenni a rendezvényére?",
+     w:"🔍 Mit figyelj: felvállalja-e a saját döntését, vagy másra hárít (\u201ea főnököm elrendelte\u201d) \u2013 menekül-e a konfliktus elől \u2013 keres-e valós kompenzációt. → Felelősségvállalás, Munkabírás, Érzelmi stabilitás"},
+    {q:"Találkozol egy ügyféllel, aki a fiatalságodra hivatkozva elgondolkozik azon, hogy visszalép az együttműködéstől \u2013 hogyan magyarázod el neki, hogy hibás döntést hoz?",
+     w:"🔍 Mit figyelj: elfogadja-e azonnal a nemet \u2013 tud-e kifogást kezelni sértődés nélkül \u2013 behozza-e mögé a céget, a mentort, a rendszert. → Visszautasítás-tűrés, Kommunikáció, Érzelmi stabilitás"}
   ]}
 ];
 const kbWrap = document.getElementById('kerdesbankWrap');
@@ -983,7 +1026,10 @@ kerdesBank.forEach(b=>{
   const block = document.createElement('div');
   block.className='qa-block';
   const noteHtml = b.note ? `<div class="qa-note-wrap"><label>Jegyzet ehhez a blokkhoz</label><textarea id="${b.note}"></textarea></div>` : '';
-  block.innerHTML = `<h4>${b.title}</h4><ul>${b.items.map(q=>`<li>${q}</li>`).join('')}</ul>${noteHtml}`;
+  const liHtml = b.items.map(q => (typeof q === 'string')
+    ? `<li>${q}</li>`
+    : `<li>${q.q}<span class="q-w">${q.w}</span></li>`).join('');
+  block.innerHTML = `<h4>${b.title}</h4><ul>${liHtml}</ul>${noteHtml}`;
   kbWrap.appendChild(block);
 });
 
@@ -1030,6 +1076,74 @@ function buildStars(id){
   }
 }
 ['score-megjelenes','score-kommunikacio','score-hangulat'].forEach(buildStars);
+
+/* ── 07b KOMPETENCIA MERO (sulyozott) ─────────────────────────────────── */
+const KOMP = [
+  {k:'munkabiras',   l:'Munkabírás',            w:20, h:'Mennyi valós órát tesz bele, hogyan bírja a tartós terhelést.'},
+  {k:'tanulas',      l:'Tanulási sebesség',     w:15, h:'Milyen gyorsan vesz fel új tudást, kell-e kétszer elmondani.'},
+  {k:'erzelmi',      l:'Érzelmi stabilitás',    w:15, h:'Kudarc, kritika, hullámvölgy után mennyi idő alatt áll vissza.'},
+  {k:'kommunikacio', l:'Kommunikáció',          w:15, h:'Érthetően, magabiztosan, az ügyfél nyelvén beszél-e.'},
+  {k:'felelosseg',   l:'Felelősségvállalás',    w:10, h:'Magára vagy a körülményekre mutat, ha nem jön a teljesítmény.'},
+  {k:'verseny',      l:'Versenyszellem',        w:10, h:'Motiválja-e a rangsor, akar-e jobb lenni a tegnapi önmagánál.'},
+  {k:'intelligencia',l:'Intelligencia',         w:5,  h:'Összefüggéseket lát-e, számokkal, logikával mit kezd.'},
+  {k:'onalloseg',    l:'Önállóság',             w:5,  h:'Mennyi kézen fogás kell, hogy elinduljon és haladjon.'},
+  {k:'visszautasitas',l:'Visszautasítás-tűrés', w:5,  h:'Hány nem után áll le, hogyan éli meg az elutasítást.'}
+];
+var _kompS = {};
+function kompResult(){
+  var rows = KOMP.map(function(k){ return {k:k.k, l:k.l, w:k.w, s:(_kompS[k.k]||0)}; });
+  var sw=0, ss=0, filled=0;
+  rows.forEach(function(r){ if(r.s){ filled++; sw+=r.w; ss+=r.w*r.s; } });
+  var pct = sw ? Math.round(ss/(sw*5)*100) : 0;
+  var avg = sw ? Math.round(ss/sw*10)/10 : 0;
+  var band = !sw          ? {k:'nil', lbl:'nincs adat',                 cat:null}
+           : pct>=80      ? {k:'ap',  lbl:'A+ \u2013 kiemelt jelölt',      cat:'A+'}
+           : pct>=65      ? {k:'a',   lbl:'A \u2013 mehet a második körre', cat:'A'}
+           : pct>=50      ? {k:'b',   lbl:'B \u2013 feltételesen',          cat:'B'}
+           :                {k:'c',   lbl:'C \u2013 nem javasolt',          cat:'C'};
+  var ko = rows.filter(function(r){ return r.s && r.s<=2 && r.w>=15; }).map(function(r){ return r.l; });
+  return {rows:rows, all:KOMP.length, filled:filled, sw:sw, pct:pct, avg:avg, band:band, ko:ko};
+}
+function kompSet(k,v){ _kompS[k] = (_kompS[k]===v ? 0 : v); kompRender(); }
+function kompApply(){
+  var R = kompResult(); if(!R.band.cat) return;
+  document.querySelectorAll('#potentialPicker .abc-card').forEach(function(c){
+    c.classList.toggle('selected', c.dataset.cat===R.band.cat);
+  });
+  var el=document.getElementById('potentialPicker');
+  if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function kompRender(){
+  var wrap = document.getElementById('kompRows'); if(!wrap) return;
+  wrap.innerHTML = KOMP.map(function(k){
+    var s = _kompS[k.k]||0, pills='';
+    for(var i=1;i<=5;i++){
+      pills += '<button type="button" class="komp-p'+(s===i?' on':'')+'" onclick="kompSet(\''+k.k+'\','+i+')">'+i+'</button>';
+    }
+    return '<div class="komp-row'+((s && s<=2 && k.w>=15)?' ko':'')+'">'
+      + '<div class="komp-l"><b>'+k.l+'</b><i>'+k.h+'</i></div>'
+      + '<span class="komp-w">'+k.w+'%</span>'
+      + '<div class="komp-pills">'+pills+'</div>'
+      + '</div>';
+  }).join('');
+  var R = kompResult();
+  var tot = document.getElementById('kompTotal');
+  if(tot){
+    tot.innerHTML = '<div class="v '+R.band.k+'">'+(R.sw?R.pct+'%':'\u2013')+'</div>'
+      + '<div class="komp-bar"><i class="'+R.band.k+'" style="width:'+(R.sw?R.pct:0)+'%"></i></div>'
+      + '<div class="m"><b>'+R.band.lbl+'</b><br>átlag '+(R.sw?String(R.avg).replace('.',','):'\u2013')+'/5 &middot; '
+      + R.filled+'/'+R.all+' kompetencia kitöltve'
+      + (R.sw<100 && R.sw ? ' &middot; a súlyok '+R.sw+'%-a alapján' : '')+'</div>'
+      + (R.band.cat ? '<button type="button" class="komp-apply" onclick="kompApply()">↳ Potenciál: '+R.band.cat+'</button>' : '');
+  }
+  var kob = document.getElementById('kompKo');
+  if(kob){
+    kob.innerHTML = R.ko.length
+      ? '<div class="komp-ko">🚩 <b>Kiütő pont:</b> '+R.ko.join(', ')+' \u2013 nagy súlyú kompetencia 2 vagy az alatti értéken. Az átlag ezt elfedi, de a gyakorlatban ez viszi el a jelöltet: külön indoklás nélkül ne engedd tovább.</div>'
+      : '';
+  }
+}
+kompRender();
 
 document.querySelectorAll('#potentialPicker .abc-card').forEach(c=>{
   c.onclick = ()=>{
@@ -1144,6 +1258,43 @@ function downloadInterviewPDF(){
     y+=10;
   }
 
+  /* ── kompetencia mérő ── */
+  const KR = (typeof kompResult==='function') ? kompResult() : null;
+  if(KR && KR.filled){
+    const kh = 21 + KR.rows.length*5.8 + (KR.ko.length?9:5);
+    if(y+kh>BOTTOM){ doc.addPage(); y=20; }
+    doc.setDrawColor(LINE[0],LINE[1],LINE[2]); doc.setLineWidth(.35);
+    doc.roundedRect(M,y,CW,kh,2.5,2.5,'S');
+    doc.setFont(F,'bold'); doc.setFontSize(8); doc.setTextColor(TEAL[0],TEAL[1],TEAL[2]);
+    doc.text('KOMPETENCIA MÉRŐ (SÚLYOZOTT)',M+7,y+8);
+    doc.setFont(F,'bold'); doc.setFontSize(13); doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+    doc.text(KR.pct+'%', W-M-7, y+9.4, {align:'right'});
+    doc.setFont(F,'normal'); doc.setFontSize(7.6); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.text(KR.band.lbl, W-M-7, y+14, {align:'right'});
+    KR.rows.forEach((r,i)=>{
+      const ry=y+18.5+i*5.8;
+      doc.setFont(F,'normal'); doc.setFontSize(8.6); doc.setTextColor(INK[0],INK[1],INK[2]);
+      doc.text(r.l,M+7,ry);
+      doc.setFontSize(7.4); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+      doc.text(r.w+'%',M+56,ry);
+      for(let d=0; d<5; d++){
+        const cx=M+68+d*5.6;
+        if(d<r.s){ doc.setFillColor(TEAL[0],TEAL[1],TEAL[2]); doc.circle(cx,ry-1.1,1.7,'F'); }
+        else { doc.setDrawColor(190,202,218); doc.setLineWidth(.35); doc.circle(cx,ry-1.1,1.7,'S'); }
+      }
+      doc.setFont(F,'bold'); doc.setFontSize(8.4); doc.setTextColor(NAVY[0],NAVY[1],NAVY[2]);
+      doc.text(r.s?String(r.s):'-', M+100, ry);
+    });
+    let ky = y+18.5+KR.rows.length*5.8;
+    doc.setFont(F,'normal'); doc.setFontSize(7.4); doc.setTextColor(GRAY[0],GRAY[1],GRAY[2]);
+    doc.text('Átlag '+String(KR.avg).replace('.',',')+'/5 · '+KR.filled+'/'+KR.all+' kompetencia kitöltve', M+7, ky+1.5);
+    if(KR.ko.length){
+      doc.setFont(F,'bold'); doc.setFontSize(7.6); doc.setTextColor(185,28,28);
+      doc.text(doc.splitTextToSize('KIÜTŐ PONT: '+KR.ko.join(', '), CW-16), M+7, ky+6);
+    }
+    y+=kh+8;
+  }
+
   /* ── jegyzet-szekciók ── */
   const writePar=(lines)=>{
     let i=0;
@@ -1165,8 +1316,8 @@ function downloadInterviewPDF(){
     writePar(doc.splitTextToSize(text,CW-8));
     y+=6;
   };
-  const noteLabels=['Motiváció, pályakép','Tanulás, önreflexió','Kommunikáció, emberkezelés','Időgazdálkodás','Felelősség, önállóság','Pénzügyek, mindset'];
-  for(let i=1;i<=6;i++){ section((i)+'. '+noteLabels[i-1], val('note'+i)); }
+  const noteLabels=['Motiváció, pályakép','Tanulás, önreflexió','Kommunikáció, emberkezelés','Időgazdálkodás','Felelősség, önállóság','Pénzügyek, mindset','Szituációs próba (meggyőzés & nyomás alatt)'];
+  for(let i=1;i<=7;i++){ section((i)+'. '+noteLabels[i-1], val('note'+i)); }
   section('Szabad jegyzet, összegzés', val('noteFree'));
 
   /* ── lábléc minden oldalra ── */
@@ -1213,10 +1364,13 @@ async function felvSavePipeline(btn){
   const sM=+(document.getElementById('score-megjelenes').dataset.score||0);
   const sK=+(document.getElementById('score-kommunikacio').dataset.score||0);
   const sH=+(document.getElementById('score-hangulat').dataset.score||0);
+  const KR=(typeof kompResult==='function')?kompResult():null;
   const rf=Array.from(document.querySelectorAll('[data-rf="1"]:checked')).map(el=>el.parentElement.textContent.trim());
   const date=val('candDate')||new Date().toISOString().slice(0,10);
   const note='📄 Felvételi 1 ('+date+'): megjelenés '+sM+'/5 · kommunikáció '+sK+'/5 · hangulat '+sH+'/5'
     +(pot?(' · potenciál: '+pot):'')
+    +((KR&&KR.filled)?(' · kompetencia-index: '+KR.pct+'% ('+KR.band.lbl+', '+KR.filled+'/'+KR.all+' kitöltve)'
+        +(KR.ko.length?(' 🚩 kiütő pont: '+KR.ko.join(', ')):'')):'')
     +(rf.length?(' · RED FLAG: '+rf.join('; ')):'')
     +(val('candInterviewer')?(' · interjúztató: '+val('candInterviewer')):'');
   const nowIso=new Date().toISOString();
