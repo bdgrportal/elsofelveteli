@@ -1367,12 +1367,35 @@ async function felvSavePipeline(btn){
   const KR=(typeof kompResult==='function')?kompResult():null;
   const rf=Array.from(document.querySelectorAll('[data-rf="1"]:checked')).map(el=>el.parentElement.textContent.trim());
   const date=val('candDate')||new Date().toISOString().slice(0,10);
+  const jegyzet=(document.getElementById('noteFree')?document.getElementById('noteFree').value:'').trim();
   const note='📄 Felvételi 1 ('+date+'): megjelenés '+sM+'/5 · kommunikáció '+sK+'/5 · hangulat '+sH+'/5'
     +(pot?(' · potenciál: '+pot):'')
     +((KR&&KR.filled)?(' · kompetencia-index: '+KR.pct+'% ('+KR.band.lbl+', '+KR.filled+'/'+KR.all+' kitöltve)'
         +(KR.ko.length?(' 🚩 kiütő pont: '+KR.ko.join(', ')):'')):'')
     +(rf.length?(' · RED FLAG: '+rf.join('; ')):'')
     +(val('candInterviewer')?(' · interjúztató: '+val('candInterviewer')):'');
+  /* ── 🎤 A TELJES INTERJÚ egy csomagban — a portál HR-kártyáján jelenik meg ── */
+  const kompObj={};
+  if(KR&&KR.rows) KR.rows.forEach(function(r){ if(r.s) kompObj[r.l]=r.s+'/5 (súly: '+r.w+'%)'; });
+  const interju={
+    datum: date,
+    keszito: val('candInterviewer')||null,
+    telefon: val('candPhone')||null,
+    foglalkozas: val('candOccupation')||null,
+    forras: val('candSource')||null,
+    megjelenes: sM?sM+'/5':null,
+    kommunikacio: sK?sK+'/5':null,
+    kisugarzas: sH?sH+'/5':null,
+    kompetenciak: Object.keys(kompObj).length?kompObj:null,
+    kompetencia_index: (KR&&KR.filled)?(KR.pct+'% — '+KR.band.lbl+' ('+KR.filled+'/'+KR.all+' kitöltve)'):null,
+    kiuto_pont: (KR&&KR.ko&&KR.ko.length)?KR.ko.join(' · '):null,
+    redflag: rf.length?rf.join(' · '):null,
+    potencial: pot||null,
+    jegyzet: jegyzet||null
+  };
+  Object.keys(interju).forEach(function(k){ if(interju[k]==null) delete interju[k]; });
+  /* a szabad jegyzet a note-ba is bekerül — eddig teljesen elveszett! */
+  const noteTeljes = note + (jegyzet?('\n📝 '+jegyzet):'');
   const nowIso=new Date().toISOString();
   try{
     const q=FELV_SB_URL+'/rest/v1/recruit_pipeline?select=id,note,phone,forras,occupation'
@@ -1381,22 +1404,42 @@ async function felvSavePipeline(btn){
     if(!g.ok) throw new Error('lekérdezés sikertelen ('+g.status+')');
     const rows=await g.json();
     if(rows.length){
-      const body={stage:'felv1',rating:pot,note:((rows[0].note?rows[0].note+'\n':'')+note),
+      const body={stage:'felv1',rating:pot,note:((rows[0].note?rows[0].note+'\n':'')+noteTeljes),
+        interju:interju,
         next_step:'Felvételi 2 egyeztetése',last_activity_at:nowIso,updated_at:nowIso};
       if(val('candPhone') && !rows[0].phone) body.phone=val('candPhone');
       if(val('candOccupation') && !rows[0].occupation) body.occupation=val('candOccupation');
       const u=await fetch(FELV_SB_URL+'/rest/v1/recruit_pipeline?id=eq.'+rows[0].id,
         {method:'PATCH',headers:H,body:JSON.stringify(body)});
-      if(!u.ok) throw new Error('frissítés sikertelen ('+u.status+')');
-      show('✅ Frissítve a HR Pipeline-ban: '+name+' → „Felvételi 1 kész”. Nincs dupla admin! 🎉',true);
+      if(!u.ok){
+        /* ha az interju oszlop még nincs meg, mentés nélküle — semmi nem vész el, a note őrzi */
+        const t1=await u.text();
+        if(/interju/.test(t1)){
+          delete body.interju;
+          const u2=await fetch(FELV_SB_URL+'/rest/v1/recruit_pipeline?id=eq.'+rows[0].id,
+            {method:'PATCH',headers:H,body:JSON.stringify(body)});
+          if(!u2.ok) throw new Error('frissítés sikertelen ('+u2.status+')');
+        } else throw new Error('frissítés sikertelen ('+u.status+') '+t1.slice(0,120));
+      }
+      show('✅ Frissítve a HR Pipeline-ban: '+name+' — a teljes interjú a kártyára került. 🎉',true);
     } else {
       const body={user_email:s.email,nev:name,phone:val('candPhone'),forras:val('candSource'),
         rating:pot,occupation:val('candOccupation'),status:'active',stage:'felv1',labels:[],docs:[],
-        note:note,next_step:'Felvételi 2 egyeztetése',added_by:s.email,last_activity_at:nowIso};
-      const p=await fetch(FELV_SB_URL+'/rest/v1/recruit_pipeline',
+        interju:interju,
+        note:noteTeljes,next_step:'Felvételi 2 egyeztetése',added_by:s.email,last_activity_at:nowIso};
+      let p=await fetch(FELV_SB_URL+'/rest/v1/recruit_pipeline',
         {method:'POST',headers:Object.assign({'Prefer':'return=minimal'},H),body:JSON.stringify(body)});
-      if(!p.ok){ const t=await p.text(); throw new Error('mentés sikertelen ('+p.status+') '+t.slice(0,140)); }
-      show('✅ Bekerült a HR Pipeline-ba: '+name+' → „Felvételi 1 kész” oszlop. Nincs dupla admin! 🎉',true);
+      if(!p.ok){
+        const t=await p.text();
+        if(/interju/.test(t)){
+          /* az interju oszlop még hiányzik — mentés nélküle, a note őrzi az adatokat */
+          delete body.interju;
+          p=await fetch(FELV_SB_URL+'/rest/v1/recruit_pipeline',
+            {method:'POST',headers:Object.assign({'Prefer':'return=minimal'},H),body:JSON.stringify(body)});
+          if(!p.ok){ const t2=await p.text(); throw new Error('mentés sikertelen ('+p.status+') '+t2.slice(0,140)); }
+        } else throw new Error('mentés sikertelen ('+p.status+') '+t.slice(0,140));
+      }
+      show('✅ Bekerült a HR Pipeline-ba: '+name+' — a teljes interjúval együtt. 🎉',true);
     }
   }catch(e){ show('⚠️ Hiba: '+(e&&e.message||e),false); }
   if(btn) btn.disabled=false;
