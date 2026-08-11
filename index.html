@@ -129,6 +129,54 @@
   @media (max-width:640px){ .komp-row{grid-template-columns:1fr 44px;} .komp-pills{grid-column:1/-1;} }
   .qa-block li .q-w{display:block;font-size:11.5px;color:var(--gray-400);line-height:1.5;margin:2px 0 7px;}
 
+  /* ⏱ vezénylő + kemény adatok + horgonyok */
+  /* 🧭 menetrend-fonál */
+  .flow-step{border:1.5px solid var(--gray-200);border-radius:14px;background:#fff;margin-bottom:10px;overflow:hidden;transition:border-color .2s, box-shadow .2s;}
+  .flow-step.now{border-color:var(--pink);box-shadow:0 4px 18px rgba(233,62,113,.14);}
+  .fs-head{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none;}
+  .fs-head:hover{background:#f8fafc;}
+  .fs-num{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex:0 0 26px;}
+  .flow-step.now .fs-num{background:var(--pink);}
+  .fs-time{font-weight:800;font-size:12px;color:var(--pink);font-variant-numeric:tabular-nums;flex:0 0 46px;}
+  .fs-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14.5px;color:var(--navy);}
+  .fs-car{margin-left:auto;color:#94a3b8;transition:transform .2s;}
+  .flow-step.open .fs-car{transform:rotate(180deg);}
+  .fs-body{display:none;padding:0 16px 14px;}
+  .flow-step.open .fs-body{display:block;}
+  .fs-cel{font-size:12px;color:#475569;margin-bottom:7px;}
+  .fs-lead{font-size:13px;line-height:1.6;color:var(--navy);background:#f0f7f4;border-left:3px solid #0e7a5f;border-radius:0 10px 10px 0;padding:8px 12px;margin-bottom:8px;}
+  .fs-body ul{margin:0 0 8px;padding-left:18px;font-size:13px;color:#334155;line-height:1.75;}
+  .fs-body .q-w{display:block;font-size:11.5px;color:#7d8ea3;margin:2px 0 6px;}
+  .fs-score{font-size:11.5px;font-weight:600;color:#7a5410;background:#fdf6e3;border-radius:9px;padding:6px 10px;margin-bottom:8px;line-height:1.5;}
+  .prx-lead{font-size:13px;color:#475569;background:#f0f7f4;border:1.5px solid #bfe3d2;border-radius:12px;padding:10px 14px;line-height:1.55;margin-bottom:12px;}
+  .prx-script{background:#fff;border:1.5px solid var(--gray-200);border-left:4px solid var(--pink);border-radius:12px;padding:12px 16px;}
+  .prx-script p{font-size:13.5px;line-height:1.65;color:var(--navy);margin:6px 0;}
+  .prx-t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:var(--navy);}
+  .prx-watch{margin-top:12px;font-size:12.5px;color:#7a5410;background:#fdf6e3;border:1.5px solid #ecd9a0;border-radius:12px;padding:9px 13px;line-height:1.55;}
+  .lbl-sub{font-size:11px;font-weight:600;color:#94a3b8;margin-left:6px;text-transform:none;}
+  .tmr-bar{display:flex;gap:3px;height:10px;margin:8px 0 6px;}
+  .tmr-seg{border-radius:99px;background:#e2e8f0;transition:background .3s;}
+  .tmr-seg.on{background:var(--pink);} .tmr-seg.done{background:#94e2c6;}
+  .tmr-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .tmr-btn{background:var(--navy);color:#fff;border:none;border-radius:99px;padding:7px 16px;font-weight:700;font-size:12.5px;cursor:pointer;font-family:'Poppins',sans-serif;}
+  .tmr-clock{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;color:var(--navy);}
+  .tmr-phase{font-size:12.5px;font-weight:600;color:#475569;}
+  .fb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  @media(max-width:720px){.fb-grid{grid-template-columns:1fr;}}
+  .fb-l{font-size:12px;font-weight:700;color:#475569;margin-bottom:4px;}
+  .fb-note{font-size:11.5px;color:#94a3b8;margin-top:8px;line-height:1.5;}
+  .hard-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;}
+  @media(max-width:720px){.hard-grid{grid-template-columns:1fr;}}
+  .hard-item{border:1.5px solid #dbe4ee;border-radius:12px;padding:10px 12px;background:#fbfdfe;}
+  .hard-item .hh{font-weight:800;font-size:13px;color:var(--navy);margin-bottom:3px;}
+  .hard-item .hf{font-size:11.5px;color:#0e7a5f;background:#f0f7f4;border-radius:8px;padding:5px 8px;margin-bottom:6px;line-height:1.5;}
+  .hard-item .hq{font-size:12px;color:#475569;font-style:italic;margin-bottom:7px;line-height:1.45;}
+  .hard-item input,.hard-item select{width:100%;border:1.5px solid #dbe4ee;border-radius:9px;padding:7px 10px;font-size:13px;font-family:'Poppins',sans-serif;color:var(--navy);background:#fff;}
+  .hard-item .hk{font-size:11px;color:#b45309;margin-top:6px;font-weight:600;}
+  .hard-src{margin-top:10px;font-size:12.5px;color:#1e3a8a;background:#eef4fd;border:1px solid #c7dbf5;border-radius:10px;padding:8px 12px;line-height:1.5;}
+  .hard-src:empty{display:none;}
+  .komp-anchor{font-size:11px;color:#7d8ea3;margin-top:3px;line-height:1.45;}
+  .komp-anchor b{color:var(--navy);}
   .pdf-btn{background:var(--green);color:#fff;border:none;font-weight:700;font-size:13.5px;padding:11px 20px;border-radius:999px;cursor:pointer;font-family:'Poppins',sans-serif;}
   .pdf-btn:hover{background:#188048;}
 
@@ -689,15 +737,54 @@
       </div>
     </div>
 
-    <!-- 07 ÜGYFELEK FORRÁSA -->
+    <!-- 07 PRAXIS-ALAP — a warm market keretezése, szó szerinti szkripttel -->
     <div class="sec pg-interviewer" id="ugyfelek">
-      <div class="sec-head"><span class="sec-num">07</span><h2>Ügyfelek forrása</h2></div>
-      <div id="ugyfelekAcc"></div>
+      <div class="sec-head"><span class="sec-num">07</span><h2>🌱 Praxis-alap — így mondd el a kapcsolati hálót</h2></div>
+
+      <div class="prx-lead">A cél: a jelölt MÉG A FELVÉTELIN értse meg és fogadja el, hogy a praxisa a saját
+        körén indul. Amit itt elfogad, az onboardingkor már nem meglepetés. Amit itt elutasít,
+        azzal most spóroltál meg 3 hónapot.</div>
+
+      <div class="prx-script">
+        <div class="prx-t">🎙️ Mondd szó szerint (17–24. perc környékén):</div>
+        <p>„Ez a szakma úgy működik, mint a fodrászé vagy a személyi edzőé: az első ügyfeleid onnan
+        jönnek, akik már ismernek és bíznak benned. <b>Nálunk senki nem kezd hideghívással.</b>
+        Ezért az egyik legfontosabb, amit ma megnézünk: van-e körülötted elég ember, akinek
+        egyáltalán hasznos tudsz lenni."</p>
+        <p>„És fontos: az első körben <b>nem eladsz senkinek</b>. Gyakorolsz. Az ismerőseid ingyen
+        kapnak egy teljes pénzügyi elemzést, te pedig vizsgafeladatot teljesítesz. A lista, amit
+        építesz, <b>a tiéd marad</b> — ez a te praxisod alapköve, senki nem hívja fel helyetted."</p>
+      </div>
+
+      <table class="mini-table" style="margin-top:12px;">
+        <tr><th>Mérföldkő</th><th>Mi a célja</th><th>Mikor</th></tr>
+        <tr><td><b>Első 10 név</b></td><td>a gyakorló elemzések alanyai — Ő tanul, nem elad</td><td>1–2. hét</td></tr>
+        <tr><td><b>30-ig</b></td><td>a közvetlen kör tudja, mivel foglalkozik</td><td>1. hónap</td></tr>
+        <tr><td><b>60-ig</b></td><td>telefon-névjegyzék + Facebook-módszer — export, nem listaírás</td><td>2. hónap</td></tr>
+        <tr><td><b>100-ig</b></td><td>ajánlásokkal együtt nő magától — ez az első negyedév végállapota, nem induló követelmény</td><td>3. hónap</td></tr>
+      </table>
+
+      <div class="card-grid" style="margin-top:12px;">
+        <div class="info-card"><h3>💎 Bizalomépítő húzás</h3><p>Mutasd meg a SAJÁT füzetedet: „Ez a 4. név lett az első ügyfelem, ma is az." A füzet így nem MLM-kellék, hanem egy működő praxis születési anyakönyve.</p></div>
+        <div class="info-card"><h3>🛡️ Miért nem MLM — mondd ki</h3><p>„Az MLM-ben a lista a rendszeré, és kicsavarja a kapcsolataidat. Nálunk a lista a tiéd, a cél a te tanulásod — és pont ezért kérdezem MOST, nem felvétel után."</p></div>
+      </div>
+
+      <div class="prx-watch">👁️ <b>Figyeld a reakciót:</b> ez a blokk a 🎯 Kemény adatok „10 név teszt"-jének
+        előszobája. Aki itt megfeszül vagy kifogásol („az ismerőseimet nem keverném bele"),
+        annál a warm market valójában nem elérhető → C besorolás, forrástól függetlenül.</div>
+
+      <div style="margin-top:14px;"><div class="prx-t" style="margin-bottom:6px;">📚 A többi ügyfél-forrás (röviden, ha kérdezi):</div><div id="ugyfelekAcc"></div></div>
+    </div>
+
+    <!-- 06 KÉRDÉSBANK (interviewer only) -->
+    <div class="sec pg-scoring" id="kerdesbank">
+      <div class="sec-head"><span class="sec-num">08</span><h2>🧭 Interjú-menetrend — ezen a fonálon menj végig</h2></div>
+      <div id="kerdesbankWrap"></div>
     </div>
 
     <!-- 07 PONTOZÁS & JEGYZET (interviewer only) -->
     <div class="sec pg-scoring" id="pontozas">
-      <div class="sec-head"><span class="sec-num">08</span><h2>Pontozás & jegyzet</h2></div>
+      <div class="sec-head"><span class="sec-num">09</span><h2>Pontozás & jegyzet</h2></div>
 
       <div class="field-row">
         <div class="field"><label>Jelölt neve</label><input type="text" id="candName" placeholder="pl. Kovács Anna"></div>
@@ -717,17 +804,70 @@
         <div class="field"><label>Jelölt foglalkozása / szakja</label><input type="text" id="candOccupation" placeholder="pl. egyetemista — gazdálkodás"></div>
       </div>
 
-      <div class="scorebox">
-        <label>Jelölt megjelenése</label>
-        <div class="star-mini-row" data-score="0" id="score-megjelenes"></div>
+      <!-- ⏱ 35 PERCES VEZÉNYLŐ — a szakaszra kattintva látod, mi a dolgod -->
+      <div class="scorebox" id="timerBox">
+        <label>⏱ 35 perces vezénylő</label>
+        <div class="tmr-bar" id="tmrBar"></div>
+        <div class="tmr-row">
+          <button type="button" class="tmr-btn" id="tmrBtn" onclick="tmrToggle()">▶ Indítás</button>
+          <span class="tmr-clock" id="tmrClock">35:00</span>
+          <span class="tmr-phase" id="tmrPhase">0–3 · Keretezés — mi ez a beszélgetés, mi lesz a vége</span>
+        </div>
       </div>
+
       <div class="scorebox">
-        <label>Kommunikációs képesség</label>
-        <div class="star-mini-row" data-score="0" id="score-kommunikacio"></div>
+        <label>Első benyomás <span class="lbl-sub">tájékoztató — NEM része a kompetencia-indexnek</span></label>
+        <div class="fb-grid">
+          <div><div class="fb-l">Jelölt megjelenése</div><div class="star-mini-row" data-score="0" id="score-megjelenes"></div></div>
+          <div><div class="fb-l">Kapcsolódás, gördülékenység</div><div class="star-mini-row" data-score="0" id="score-kommunikacio"></div></div>
+          <div><div class="fb-l">Hangulat, kisugárzás</div><div class="star-mini-row" data-score="0" id="score-hangulat"></div></div>
+        </div>
+        <div class="fb-note">A kommunikációt LENT, a kompetencia-mérőben pontozd bizonyíték alapján — itt csak az első 5 perc benyomása él, hogy a kettő ne mosódjon össze.</div>
       </div>
-      <div class="scorebox">
-        <label>Hangulat, kisugárzás</label>
-        <div class="star-mini-row" data-score="0" id="score-hangulat"></div>
+
+      <!-- 🎯 KEMÉNY ADATOK — a 3 legerősebb beválás-jelző + coachability -->
+      <div class="scorebox" id="hardBox">
+        <label>🎯 Kemény adatok <span class="lbl-sub">ezek döntenek, nem a benyomás</span></label>
+        <div class="hard-grid">
+          <div class="hard-item">
+            <div class="hh">📇 Warm market — a 10 név teszt</div>
+            <div class="hf">🎙️ Felvezetés: „Az előbb beszéltünk róla, hogy az első körben gyakorolsz, nem eladsz. Játsszunk el ezzel egy percet…"</div>
+            <div class="hq">„Kik jutnak eszedbe, akiknek szívesen segítenél egy ilyen ingyenes elemzéssel? Mondj neveket, ahogy jönnek — keresztnév is elég. Egy perced van, én számolom."</div>
+            <input type="number" id="hardNames" min="0" max="99" placeholder="hány nevet mondott 60 mp alatt?">
+            <div class="hk">KO: ha 60 mp alatt &lt;5 név jön, a becsült háló &lt;30 fő → C, forrástól függetlenül.</div>
+          </div>
+          <div class="hard-item">
+            <div class="hh">⏰ Valós idő-kapacitás</div>
+            <div class="hf">🎙️ Felvezetés: „Nem az érdekel, mennyi időd LENNE — az érdekel, mennyi VAN. Ezért nem jövőt kérdezek, hanem múltat."</div>
+            <div class="hq">„Meséld el a múlt hetedet napokra bontva — reggeltől estig, nagyjából. …És ebben hol lett volna heti 15 óra erre a munkára?"</div>
+            <input type="number" id="hardHours" min="0" max="80" placeholder="reális óra / hét">
+            <div class="hk">KO: &lt;8 óra/hét = nem indítható. 15+ óra = teljes értékű start.</div>
+          </div>
+          <div class="hard-item">
+            <div class="hh">💰 Jutalék-tűrés</div>
+            <div class="hf">🎙️ Felvezetés: „Erre a kérdésre nincs jó válasz — őszintét kérek, mert ezen múlik, hogy jó helyre jössz-e."</div>
+            <div class="hq">„Volt már olyan bevételed, ami a teljesítményedtől függött? Ha igen: milyen volt a leggyengébb hónap, és mit csináltál? Ha nem: miből élnél az első 2-3 hónapban, amíg felpörög?"</div>
+            <select id="hardJutalek">
+              <option value="">— válassz —</option>
+              <option>volt már, jól kezelte</option>
+              <option>volt már, nehezen viselte</option>
+              <option>nem volt még, de nyitott rá</option>
+              <option>🚩 fix fizetés-igény / azonnali pénzkényszer</option>
+            </select>
+          </div>
+          <div class="hard-item">
+            <div class="hh">🧠 Coachability-teszt</div>
+            <div class="hf">🎙️ Így tanítsd (30 mp): „Mutatok egy trükköt. 72 osztva a kamattal = ennyi év alatt duplázódik a pénz. 6% kamatnál 72/6 = 12 év. Ennyi."</div>
+            <div class="hq">5 perccel később, másik téma közben: „Visszaugranék — el tudnád mondani a saját szavaiddal a 72-es szabályt? Mondjuk 8%-os kamatra?"</div>
+            <select id="hardCoach">
+              <option value="">— válassz —</option>
+              <option>visszaadta pontosan, saját példával</option>
+              <option>részben adta vissza</option>
+              <option>🚩 nem adta vissza / mellébeszélt</option>
+            </select>
+          </div>
+        </div>
+        <div class="hard-src" id="srcHint"></div>
       </div>
 
       <div class="scorebox" id="kompBox">
@@ -746,20 +886,24 @@
           <div class="abc-card" data-cat="B">B</div>
           <div class="abc-card" data-cat="C">C</div>
         </div>
+        <div class="field" style="margin-top:10px;">
+          <label>⚖️ Ha az ítéleted eltér a kompetencia-index kategóriájától, miért?</label>
+          <input type="text" id="elteresOk" placeholder="pl. az index A-t mond, de a kapacitás-adatai miatt B — ez a mező a saját torzításod ellen véd">
+        </div>
         <label style="margin-top:10px;">🚩 Red flag észlelve?</label>
         <div class="redflag-check">
           <label><input type="checkbox" data-rf="1"> Ápolatlan külső (haj, körmök, fogak, ruha)</label>
           <label><input type="checkbox" data-rf="1"> Jelentős késés, idő bagatellizálása</label>
           <label><input type="checkbox" data-rf="1"> Igénytelen beszéd, igénytelen írás, CV-hiba</label>
+          <label><input type="checkbox" data-rf="1"> Az első kérdése a pénz volt</label>
+          <label><input type="checkbox" data-rf="1"> Nem kérdezett semmit a munkáról</label>
+          <label><input type="checkbox" data-rf="1"> Előző munkahelyét / főnökét szidta</label>
+          <label><input type="checkbox" data-rf="1"> Nem tud saját kudarc-példát mondani</label>
+          <label><input type="checkbox" data-rf="1"> „Majd meglátjuk" válaszok az idő-kérdésre</label>
+          <label><input type="checkbox" data-rf="1"> MLM-múltról szélsőségesen beszél (imádta VAGY gyűlölte)</label>
         </div>
       </div>
 
-    </div>
-
-    <!-- 06 KÉRDÉSBANK (interviewer only) -->
-    <div class="sec pg-scoring" id="kerdesbank">
-      <div class="sec-head"><span class="sec-num">09</span><h2>Kérdésbank</h2></div>
-      <div id="kerdesbankWrap"></div>
     </div>
 
     <!-- ZÁRÓ: szabad jegyzet + PDF export -->
@@ -963,7 +1107,7 @@ buildAccordion('forgatokonyvAcc', [
 
 // 07 Ügyfelek forrása accordion
 buildAccordion('ugyfelekAcc', [
-  {title:"1. Gyakornoki füzet — pályakezdők eszköze", body:"<p>Vezetővel közösen összeállított lista ismerősi/baráti/családi körből. Egy új munkatárs átlagosan 100 javaslatból 60-70 db elemzést tud egyeztetni. Stresszmentes, nincs szaktudás-igény (vezető mindig jelen van). <b>Tilos &quot;fűt-fát&quot; beírni</b> csak a darabszám miatt — vezetői felügyelettel, prioritás alapján kell rendezni a listát, nem szimpátia szerint.</p>"},
+  {title:"1. Saját praxis (gyakornoki füzet)", body:"<p>A fő csatorna — a keretezését LÁSD FENT, a Praxis-alap blokkban. Technikailag: vezetővel közösen, prioritás alapján rendezett lista; átlagosan 100 névből 60-70 elemzés lesz. A vezető az első körökben végig jelen van, szaktudás nem kell hozzá.</p>"},
   {title:"2. Leadek / ajánlások", body:"<p>55 éve ebben vagyunk a legjobbak — ezért maradhat díjmentes a szolgáltatás. Átlagosan <b>3 leadet</b> kapunk minden elégedett ügyféltől. Lehet aktív lead (közösen gyűjtött) vagy passzív (random, pl. munkahelyi szóbeszéd alapján).</p>"},
   {title:"3. Social media", body:"<p>Nem fő csatorna — a pénzügy, jog és egészségügy olyan terület, ahol a bizalmas, emberi jelenlét az érték. Karrier elején a vezető segít kapcsolatot találni; 1 év után egyedi, személyre szabott social media megjelenés épül (FB, IG, TikTok, YouTube, podcast).</p>"},
   {title:"4. Iroda ügyfelei", body:"<p>Az OVB Központ nem foglalkozik ügyfélszerzéssel vagy kiosztással — ez kizárólag az irodák feladata. Kezdő munkatársak 3-4 hónap után kapnak iroda-ügyfeleket (korábbi, nem továbblépett elemzésekből), hogy gyakorolhassák az idegenekkel való munkát.</p>"}
@@ -979,59 +1123,117 @@ buildAccordion('negativAcc', [
 ]);
 
 // 06 Kérdésbank
+/* ══ 🧭 INTERJÚ-MENETREND ═══════════════════════════════════════════════
+   A modern strukturált interjú elve: minden szakasznak van célja, felvezető
+   mondata és kérdései — a kezdő vezető nem tud letérni az útról, a rutinos
+   pedig gyorsabb lesz. A szakaszok a ⏱ vezénylővel együtt világítanak.     */
 const kerdesBank = [
-  {title:"Bevezető, szintrehozás", items:["Kezdjünk azzal, hogy mesélj magadról néhány szóban."]},
-  {title:"1. Motiváció, pályakép, korábbi munkái", note:"note1", items:[
-    "Mesélj a korábbi munkahelyeidről — melyik tetszett, melyik kevésbé?",
-    "Legutóbbi helyről miért / milyen körülmények közt jött el?",
-    "Milyen konkrét céljaid vannak a következő 2–3 évre?",
-    "Diákként mi készteti arra, hogy az iskola mellé egy új komoly területet vezessen be?",
-    "Mi vonz most a legjobban ebben a munkában, és mitől tart a legjobban?"
-  ]},
-  {title:"2. Tanulás, fejlődés, önreflexió", note:"note2", items:[
+  {ph:0, time:'0–3', title:'Keretezés', cel:'A jelölt tudja, mi fog történni — a bizonytalanság az első perc után eltűnik.',
+   lead:'„Köszi, hogy itt vagy! 35 percünk lesz: először te mesélsz, aztán én mutatom meg, hogyan működik ez a munka, a végén pedig mindketten kimondjuk, van-e itt közös út. Jegyzetelni fogok — ez nálunk minden jelöltnél így megy."',
+   note:'note0', items:[
+    "Kezdjünk azzal, hogy mesélj magadról néhány szóban.",
+    "Mi vonz most a legjobban ebben a lehetőségben, és mitől tartasz a legjobban?"
+   ],
+   score:'⭐ Első benyomás csillagok (megjelenés, kapcsolódás, kisugárzás) — MOST, amíg friss.'},
+
+  {ph:1, time:'3–10', title:'Múlt + STAR-példák', cel:'Bizonyíték-gyűjtés: múltbeli VISELKEDÉS, nem ígéret. Minden válasznál kérd a konkrét példát.',
+   lead:'„Most a múltadról kérdezek — és mindenhol konkrét példát fogok kérni: mi volt a helyzet, te mit csináltál, mi lett a vége."',
+   note:'note1', items:[
+    "Mesélj a korábbi munkahelyeidről — melyik tetszett, melyik kevésbé? Miért jöttél el?",
     "Mondj egy példát, amikor rövid idő alatt kellett új dolgot megtanulnod.",
-    "Mesélj egy helyzetről, amikor hibáztál, vagy nem hoztad a kívánt teljesítményt.",
-    "Zavarna, ha hetente átlag 3 órát kell tanulással tölteni a munkán felül?",
-    "Hogyan érzed magad, ha egy csapaton belül rangsorolnak teljesítmény alapján?"
-  ]},
-  {title:"3. Kommunikáció, emberkezelés", note:"note3", items:[
-    "Mesélj egy konfliktusról vagy félreértésről — mi történt, te mit tettél?",
-    "Volt, hogy valakit neked kellett meggyőznöd? Hogyan csináltad, mi lett a vége?"
-  ]},
-  {title:"4. Időgazdálkodás", note:"note4", items:[
-    "Hogy néz ki egy átlagos heted most?",
-    "Hány óra munka lenne ideális a jelenlegi órarended mellett? (fenntarthatóság!)",
-    "Mondj egy példát, amikor egyszerre túl sok feladatod volt — mit priorizáltál?"
-  ]},
-  {title:"5. Felelősség, önállóság", note:"note5", items:[
+    "Mesélj egy helyzetről, amikor hibáztál vagy nem hoztad a kívánt teljesítményt. Mit csináltál utána?",
     "Mesélj egy helyzetről, amikor valaki kifejezetten számított rád.",
-    "Volt, hogy a vezetőd nem volt elérhető, mégis döntened kellett?"
-  ]},
-  {title:"6. Pénzügyek, mindset", note:"note6", items:[
-    "Diákként teljesen eltartja magát, részben, vagy van ilyen ambíció?",
-    "Honnan tájékozódik pénzügyek kapcsán? Nyitott téma a pénz a családban?",
-    "Mi a minimum és az ideális fizetés kérdése?"
-  ]},
-  {title:"7. Szituációs próba \u2013 meggyőzés & nyomás alatt", note:"note7", items:[
-    {q:"Győzz meg róla, hogy miért Te vagy az az ember, akire rábízzam a banki és biztosítási ügyintézésem?",
-     w:"🔍 Mit figyelj: felépít-e valódi érvelést, vagy csak jelszavakat mond \u2013 rólad vagy az ügyfél előnyéről beszél \u2013 hogyan viseli, hogy improvizálnia kell. → Kommunikáció, Versenyszellem, Intelligencia"},
-    {q:"Hétvégén ütközik egy fontos továbbképzéssel egy szeretted / barátod születésnapi partyja \u2013 hogyan magyarázod el neki, hogy nem tudsz elmenni a rendezvényére?",
-     w:"🔍 Mit figyelj: felvállalja-e a saját döntését, vagy másra hárít (\u201ea főnököm elrendelte\u201d) \u2013 menekül-e a konfliktus elől \u2013 keres-e valós kompenzációt. → Felelősségvállalás, Munkabírás, Érzelmi stabilitás"},
-    {q:"Találkozol egy ügyféllel, aki a fiatalságodra hivatkozva elgondolkozik azon, hogy visszalép az együttműködéstől \u2013 hogyan magyarázod el neki, hogy hibás döntést hoz?",
-     w:"🔍 Mit figyelj: elfogadja-e azonnal a nemet \u2013 tud-e kifogást kezelni sértődés nélkül \u2013 behozza-e mögé a céget, a mentort, a rendszert. → Visszautasítás-tűrés, Kommunikáció, Érzelmi stabilitás"}
-  ]}
+    "Volt, hogy döntened kellett, pedig senki nem mondta meg, mit tegyél?",
+    "Mesélj egy konfliktusról vagy félreértésről — mi történt, te mit tettél?"
+   ],
+   score:'📊 Kompetencia-mérő: Munkabírás · Tanulási sebesség · Érzelmi stabilitás · Felelősségvállalás · Önállóság — a horgonyok alapján, példa nélkül max 3.'},
+
+  {ph:2, time:'10–17', title:'Kapacitás + warm market', cel:'A két legkeményebb beválás-jelző. Előbb a praxis-keretezés (07-es blokk), utána a mérés.',
+   lead:'ELŐBB mondd el a 🌱 Praxis-alap szkriptet (07-es szekció) — a fodrász-analógiát és a „nem eladsz, gyakorolsz" keretet. UTÁNA jöhet a két teszt, mert a jelölt már érti, miért kérdezed.',
+   note:'note4', items:[
+    "→ 🎯 Kemény adatok: a 10 név teszt (a felvezetőjével együtt).",
+    "→ 🎯 Kemény adatok: múlt heti napirend + reális óra/hét.",
+    "Mondj egy példát, amikor egyszerre túl sok feladatod volt — mit priorizáltál?"
+   ],
+   score:'🎯 Kemény adatok: nevek/60 mp + óra/hét MOST kerüljön be — utólag már csak benyomás lenne.'},
+
+  {ph:3, time:'17–24', title:'Motiváció + jutalék-tűrés', cel:'Miből él, mit vár, bírja-e a változó bevételt. Itt derül ki a pénz-pánik.',
+   lead:'„Beszéljünk őszintén a pénzről — ez itt nem tabu, sőt: ez a szakmánk."',
+   note:'note6', items:[
+    "Milyen konkrét céljaid vannak a következő 2–3 évre?",
+    "Diákként / munka mellett: teljesen eltartod magad, részben, vagy ez a cél?",
+    "Honnan tájékozódsz pénzügyek kapcsán? Otthon nyitott téma a pénz?",
+    "Mi a minimum, amiből kijössz havonta — és mi lenne az ideális?",
+    "→ 🎯 Kemény adatok: jutalék-tűrés (a felvezetőjével).",
+    "Zavarna, ha hetente ~3 órát a munkán felül tanulással kell tölteni?",
+    "Hogyan érzed magad, ha egy csapaton belül teljesítmény alapján rangsorolnak?"
+   ],
+   score:'📊 Kompetencia-mérő: Versenyszellem · Visszautasítás-tűrés (ha volt rá példa) + 🎯 jutalék-tűrés mező.'},
+
+  {ph:4, time:'24–28', title:'Coachability-teszt', cel:'Tanítható-e. A legolcsóbb szűrő: 30 mp tanítás + 1 perc visszakérés.',
+   lead:'A 🎯 Kemény adatok blokkban van a szó szerinti tanító-szkript (72-es szabály). Tanítsd meg MOST, és a forrás-blokk UTÁN kérd vissza — a késleltetés a lényeg.',
+   note:'note2', items:[
+    "→ 🎯 Kemény adatok: 72-es szabály megtanítása (30 mp).",
+    "Közben: „Milyen gyorsan szoktál új dolgokat felvenni? Mondj példát, amire büszke vagy."
+   ],
+   score:'🎯 coachability mező — de csak a KÉSLELTETETT visszakérés után töltsd (következő szakasz végén).'},
+
+  {ph:5, time:'28–32', title:'Forrás-blokk + szituáció + a jelölt kérdései', cel:'A forrás-specifikus kockázat + egy nyomás-teszt + kiderül, kérdez-e egyáltalán.',
+   lead:'„Két gyors dolog, aztán tiéd a terep: kérdezz bármit."',
+   note:'note7', items:[
+    "→ A forrás-kérdést a 🎯 blokk alján látod (a kiválasztott forráshoz igazodik).",
+    {q:"VÁLASSZ EGYET a három szituációból (idő csak egyre van): 1) Győzz meg, miért rád bíznám a pénzügyeimet? · 2) Hétvégi képzés vs. szeretted szülinapja — hogyan mondod el neki? · 3) Az ügyfél a fiatalságod miatt visszalépne — mit mondasz?",
+     w:"🔍 Mit figyelj: valódi érvelés vs. jelszavak · magára vállalja-e a döntést · kifogást kezel-e sértődés nélkül. → Kommunikáció, Intelligencia, Visszautasítás-tűrés"},
+    "MOST kérd vissza a 72-es szabályt (🎯 coachability mező kitöltése).",
+    "»Neked mi kérdésed van?« — ha SEMMI: 🚩 red flag pipálandó."
+   ],
+   score:'📊 Kommunikáció · Intelligencia a szituáció alapján + 🎯 coachability + forrás-red-flagek.'},
+
+  {ph:6, time:'32–35', title:'Zárás', cel:'Nincs lebegtetés: kimondott következő lépés, mindkét irányba.',
+   lead:'„Köszönöm, ez hasznos volt. Így látom: … [1 mondat erősség + 1 mondat kérdőjel]. A következő lépés nálunk: 48 órán belül visszajelzek — ha továbbmegyünk, egy második beszélgetés jön, ahol te is mélyebbre kérdezhetsz."',
+   note:'note3', items:[
+    "Zárás UTÁN, még frissiben: Vélt potenciál + eltérés-indoklás + red flagek + 📝 szabad jegyzet.",
+    "Mentés a HR Pipeline-ba — az egész interjú a jelölt kártyájára kerül."
+   ],
+   score:'⚠️ A pontozást az interjú UTÁN 10 percen belül zárd le — másnapra már a benyomás pontoz, nem a bizonyíték.'}
 ];
 const kbWrap = document.getElementById('kerdesbankWrap');
-kerdesBank.forEach(b=>{
+kerdesBank.forEach((b,ix)=>{
   const block = document.createElement('div');
-  block.className='qa-block';
-  const noteHtml = b.note ? `<div class="qa-note-wrap"><label>Jegyzet ehhez a blokkhoz</label><textarea id="${b.note}"></textarea></div>` : '';
+  block.className='flow-step'; block.setAttribute('data-flow',b.ph);
+  const noteHtml = b.note ? `<div class="qa-note-wrap" style="max-width:none;"><label>Jegyzet ehhez a szakaszhoz</label><textarea id="${b.note}"></textarea></div>` : '';
   const liHtml = b.items.map(q => (typeof q === 'string')
     ? `<li>${q}</li>`
     : `<li>${q.q}<span class="q-w">${q.w}</span></li>`).join('');
-  block.innerHTML = `<h4>${b.title}</h4><ul>${liHtml}</ul>${noteHtml}`;
+  block.innerHTML = `
+    <div class="fs-head" onclick="this.parentElement.classList.toggle('open')">
+      <span class="fs-num">${ix+1}</span>
+      <span class="fs-time">${b.time}'</span>
+      <span class="fs-title">${b.title}</span>
+      <span class="fs-car">▾</span>
+    </div>
+    <div class="fs-body">
+      <div class="fs-cel">🎯 ${b.cel}</div>
+      <div class="fs-lead">🎙️ ${b.lead}</div>
+      <ul>${liHtml}</ul>
+      <div class="fs-score">${b.score}</div>
+      ${noteHtml}
+    </div>`;
   kbWrap.appendChild(block);
 });
+/* az első szakasz nyitva indul */
+(function(){ var f=document.querySelector('.flow-step'); if(f) f.classList.add('open'); })();
+/* az időzítő világítja az aktuális szakaszt */
+function flowSync(){
+  var elapsed=35*60-_tmrLeft, perc=Math.floor(elapsed/60);
+  var idx=0; TMR_PHASES.forEach(function(ph,i){ if(perc>=ph.t) idx=i; });
+  document.querySelectorAll('.flow-step').forEach(function(el){
+    var mine=+el.getAttribute('data-flow');
+    el.classList.toggle('now',mine===idx);
+    if(mine===idx && _tmrT && !el.classList.contains('open')) el.classList.add('open');
+  });
+}
+setInterval(function(){ try{ if(_tmrT) flowSync(); }catch(e){} },5000);
 
 // 01 Cégbemutató deck lapozó
 (function(){
@@ -1078,16 +1280,27 @@ function buildStars(id){
 ['score-megjelenes','score-kommunikacio','score-hangulat'].forEach(buildStars);
 
 /* ── 07b KOMPETENCIA MERO (sulyozott) ─────────────────────────────────── */
+/* Horgonyzott skála (BARS): minden területnél definiált az 1 / 3 / 5 — így két
+   különböző interjúztató is közel ugyanoda pontoz. NE benyomásra, PÉLDÁRA pontozz. */
 const KOMP = [
-  {k:'munkabiras',   l:'Munkabírás',            w:20, h:'Mennyi valós órát tesz bele, hogyan bírja a tartós terhelést.'},
-  {k:'tanulas',      l:'Tanulási sebesség',     w:15, h:'Milyen gyorsan vesz fel új tudást, kell-e kétszer elmondani.'},
-  {k:'erzelmi',      l:'Érzelmi stabilitás',    w:15, h:'Kudarc, kritika, hullámvölgy után mennyi idő alatt áll vissza.'},
-  {k:'kommunikacio', l:'Kommunikáció',          w:15, h:'Érthetően, magabiztosan, az ügyfél nyelvén beszél-e.'},
-  {k:'felelosseg',   l:'Felelősségvállalás',    w:10, h:'Magára vagy a körülményekre mutat, ha nem jön a teljesítmény.'},
-  {k:'verseny',      l:'Versenyszellem',        w:10, h:'Motiválja-e a rangsor, akar-e jobb lenni a tegnapi önmagánál.'},
-  {k:'intelligencia',l:'Intelligencia',         w:5,  h:'Összefüggéseket lát-e, számokkal, logikával mit kezd.'},
-  {k:'onalloseg',    l:'Önállóság',             w:5,  h:'Mennyi kézen fogás kell, hogy elinduljon és haladjon.'},
-  {k:'visszautasitas',l:'Visszautasítás-tűrés', w:5,  h:'Hány nem után áll le, hogyan éli meg az elutasítást.'}
+  {k:'munkabiras',   l:'Munkabírás',            w:20, h:'Mennyi valós órát tesz bele, hogyan bírja a tartós terhelést.',
+    a1:'kitérő válasz, nincs példa', a3:'állítja, de konkrét példa nélkül', a5:'konkrét példa: hónapokig 50+ óra/hét, számszerű eredménnyel'},
+  {k:'tanulas',      l:'Tanulási sebesség',     w:15, h:'Milyen gyorsan vesz fel új tudást, kell-e kétszer elmondani.',
+    a1:'visszakérdezésre sem érti', a3:'érti, de nem tud sajátot hozzátenni', a5:'új fogalmat azonnal saját példára fordít (ld. coachability-teszt)'},
+  {k:'erzelmi',      l:'Érzelmi stabilitás',    w:15, h:'Kudarc, kritika, hullámvölgy után mennyi idő alatt áll vissza.',
+    a1:'a kudarc-példánál másra mutogat / összeomlik', a3:'volt kudarca, sablonosan dolgozta fel', a5:'konkrét kudarc + mit változtatott utána, érzelmileg rendezetten'},
+  {k:'kommunikacio', l:'Kommunikáció',          w:15, h:'Érthetően, magabiztosan, az ügyfél nyelvén beszél-e.',
+    a1:'zavaros, nem lehet követni', a3:'érthető, de színtelen', a5:'strukturáltan, a laikus nyelvén, kérdez is vissza'},
+  {k:'felelosseg',   l:'Felelősségvállalás',    w:10, h:'Magára vagy a körülményekre mutat, ha nem jön a teljesítmény.',
+    a1:'mindenről más tehet', a3:'részben vállalja', a5:'kérdés nélkül magánál kezdi: „ezt én rontottam el, ezt tanultam"'},
+  {k:'verseny',      l:'Versenyszellem',        w:10, h:'Motiválja-e a rangsor, akar-e jobb lenni a tegnapi önmagánál.',
+    a1:'kifejezetten zavarja az összemérés', a3:'semleges', a5:'példát hoz, ahol rangsor/cél hajtotta (sport, tanulmány, munka)'},
+  {k:'intelligencia',l:'Intelligencia',         w:5,  h:'Összefüggéseket lát-e, számokkal, logikával mit kezd.',
+    a1:'az egyszerű számpéldán is elakad', a3:'követi a logikát', a5:'magától lát összefüggést, jó kérdést tesz fel'},
+  {k:'onalloseg',    l:'Önállóság',             w:5,  h:'Mennyi kézen fogás kell, hogy elinduljon és haladjon.',
+    a1:'mindenre instrukciót vár', a3:'irányítással halad', a5:'példa: maga épített / szervezett valamit végig'},
+  {k:'visszautasitas',l:'Visszautasítás-tűrés', w:5,  h:'Hány nem után áll le, hogyan éli meg az elutasítást.',
+    a1:'az első nem letöri (példáiból látszik)', a3:'kezeli, de megviseli', a5:'példa: sorozatos nemek után is ment tovább (értékesítés, sport, felvételik)'}
 ];
 var _kompS = {};
 function kompResult(){
@@ -1121,7 +1334,7 @@ function kompRender(){
       pills += '<button type="button" class="komp-p'+(s===i?' on':'')+'" onclick="kompSet(\''+k.k+'\','+i+')">'+i+'</button>';
     }
     return '<div class="komp-row'+((s && s<=2 && k.w>=15)?' ko':'')+'">'
-      + '<div class="komp-l"><b>'+k.l+'</b><i>'+k.h+'</i></div>'
+      + '<div class="komp-l"><b>'+k.l+'</b><i>'+k.h + (k.a1?('<div class="komp-anchor"><b>1</b>= '+k.a1+' · <b>3</b>= '+k.a3+' · <b>5</b>= '+k.a5+'</div>'):'')+'</i></div>'
       + '<span class="komp-w">'+k.w+'%</span>'
       + '<div class="komp-pills">'+pills+'</div>'
       + '</div>';
@@ -1348,6 +1561,61 @@ function felvReadToken(){
     return { tok:ses.access_token||null, email:(ses.user&&ses.user.email)||null };
   }catch(e){ return {}; }
 }
+/* ── ⏱ 35 perces vezénylő ── */
+var TMR_PHASES=[
+  {t:0,  l:'0–3 · Keretezés — mi ez a beszélgetés, mi lesz a vége'},
+  {t:3,  l:'3–10 · Múlt + STAR-példák — munkabírás, kudarc, felelősség'},
+  {t:10, l:'10–17 · Kapacitás + warm market — a 10 név teszt, múlt heti napirend'},
+  {t:17, l:'17–24 · Motiváció + jutalék-tűrés'},
+  {t:24, l:'24–28 · Coachability — 72-es szabály tanítás + visszakérés'},
+  {t:28, l:'28–32 · Forrás-blokk + a jelölt kérdései'},
+  {t:32, l:'32–35 · Zárás — következő lépés kimondva'}
+];
+var _tmrT=null,_tmrLeft=35*60;
+function tmrRender(){
+  var bar=document.getElementById('tmrBar'); if(!bar) return;
+  var elapsed=35*60-_tmrLeft, perc=Math.floor(elapsed/60);
+  bar.innerHTML=TMR_PHASES.map(function(ph,i){
+    var veg=(i<TMR_PHASES.length-1)?TMR_PHASES[i+1].t:35;
+    var on=perc>=ph.t&&perc<veg;
+    return '<span class="tmr-seg'+(on?' on':'')+(perc>=veg?' done':'')+'" style="flex:'+(veg-ph.t)+'" title="'+ph.l+'"></span>';
+  }).join('');
+  var akt=TMR_PHASES.filter(function(ph){return perc>=ph.t;}).pop()||TMR_PHASES[0];
+  var pe=document.getElementById('tmrPhase'); if(pe) pe.textContent=akt.l;
+  var ce=document.getElementById('tmrClock');
+  if(ce){ var mm=Math.floor(_tmrLeft/60),ss=_tmrLeft%60;
+    ce.textContent=(mm<10?'0':'')+mm+':'+(ss<10?'0':'')+ss;
+    ce.style.color=_tmrLeft<180?'#dc2626':(_tmrLeft<420?'#b45309':''); }
+}
+function tmrToggle(){
+  var btn=document.getElementById('tmrBtn');
+  if(_tmrT){ clearInterval(_tmrT); _tmrT=null; if(btn) btn.textContent='▶ Folytatás'; return; }
+  if(btn) btn.textContent='⏸ Szünet';
+  _tmrT=setInterval(function(){ _tmrLeft=Math.max(0,_tmrLeft-1); tmrRender();
+    if(!_tmrLeft){ clearInterval(_tmrT); _tmrT=null; } },1000);
+}
+document.addEventListener('DOMContentLoaded',tmrRender);
+
+/* ── forrás-specifikus kötelező kérdés ── */
+var SRC_HINT={
+ 'munkatársi ajánlás':'Kötelező kérdés: „Mit mondott rólunk, aki ajánlott?" — a torz kép itt a kockázat: ha rózsaszínt hallott, most tedd helyre.',
+ 'ügyfél ajánlás':'Kötelező kérdés: „Ügyfélként mit láttál a munkánkból, mi fogott meg?" — előny: már látta a szakmát; teszteld, a MUNKÁT akarja-e vagy a tanácsadóját kedveli.',
+ 'munkaerőpiaci füzet':'Kötelező kérdés: „Mire emlékszel abból, amit rólunk olvastál?" — a felkészültség itt az elköteleződés mérője.',
+ 'fizetett hirdetés':'Kötelező kérdés: „Mit tudsz rólunk? Minek nézted utána?" — hirdetésből jövőnél a felkészületlenség red flag, és a pénz-motivációt külön teszteld.',
+ 'csoportos hirdetés':'Kötelező kérdés: „Miért pont erre jelentkeztél a sok közül?" — tömeghirdetésnél a sodródót szűrd: mi volt a SAJÁT döntése?',
+ 'egyéb':'Tisztázd az utat: honnan hallott rólunk, ki volt az első kontakt — e nélkül a forrás-statisztikád torzul.'
+};
+function srcHintRender(){
+  var sel=document.getElementById('candSource'), box=document.getElementById('srcHint');
+  if(!sel||!box) return;
+  var v=(sel.value||'').toLowerCase();
+  box.innerHTML=SRC_HINT[v]?('<b>📌 Forrás-blokk (28–32. perc):</b> '+SRC_HINT[v]):'';
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var sel=document.getElementById('candSource');
+  if(sel){ sel.addEventListener('change',srcHintRender); srcHintRender(); }
+});
+
 async function felvSavePipeline(btn){
   const box=document.getElementById('pipeStatus');
   const show=(msg,ok)=>{ if(!box) return; box.style.display='block'; box.textContent=msg;
@@ -1373,12 +1641,29 @@ async function felvSavePipeline(btn){
     +((KR&&KR.filled)?(' · kompetencia-index: '+KR.pct+'% ('+KR.band.lbl+', '+KR.filled+'/'+KR.all+' kitöltve)'
         +(KR.ko.length?(' 🚩 kiütő pont: '+KR.ko.join(', ')):'')):'')
     +(rf.length?(' · RED FLAG: '+rf.join('; ')):'')
-    +(val('candInterviewer')?(' · interjúztató: '+val('candInterviewer')):'');
+    +(val('candInterviewer')?(' · interjúztató: '+val('candInterviewer')):'')
+    +(document.getElementById('hardNames')&&document.getElementById('hardNames').value?(' · warm market: '+document.getElementById('hardNames').value+' név/60mp'):'')
+    +(document.getElementById('hardHours')&&document.getElementById('hardHours').value?(' · kapacitás: '+document.getElementById('hardHours').value+' óra/hét'):'');
   /* ── 🎤 A TELJES INTERJÚ egy csomagban — a portál HR-kártyáján jelenik meg ── */
   const kompObj={};
   if(KR&&KR.rows) KR.rows.forEach(function(r){ if(r.s) kompObj[r.l]=r.s+'/5 (súly: '+r.w+'%)'; });
+  const hv=id=>{const e=document.getElementById(id);return e?(e.value||'').trim():'';};
+  const szakaszJegyzet={};
+  ['note0','note1','note2','note3','note4','note6','note7'].forEach(function(nid){
+    var el=document.getElementById(nid);
+    if(el && el.value.trim()){
+      var st=(typeof kerdesBank!=='undefined')?kerdesBank.filter(function(b2){return b2.note===nid;})[0]:null;
+      szakaszJegyzet[(st?st.title:nid)]=el.value.trim();
+    }
+  });
   const interju={
     datum: date,
+    szakasz_jegyzetek: Object.keys(szakaszJegyzet).length?szakaszJegyzet:null,
+    warm_market_60mp: hv('hardNames')?hv('hardNames')+' név / 60 mp':null,
+    heti_ora: hv('hardHours')?hv('hardHours')+' óra/hét':null,
+    jutalek_tures: hv('hardJutalek')||null,
+    coachability: hv('hardCoach')||null,
+    elteres_ok: hv('elteresOk')||null,
     keszito: val('candInterviewer')||null,
     telefon: val('candPhone')||null,
     foglalkozas: val('candOccupation')||null,
