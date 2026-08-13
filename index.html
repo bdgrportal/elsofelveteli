@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Felvételi — interjú & bemutató</title>
-<!-- Felvételi 1 kérdőív v3.1 — kétpaneles munkafelület -->
+<!-- Felvételi 1 kérdőív v3.3 — egyszerűsített pontozás, 0. Before-kérdés, szabad tanítási feladat -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -330,11 +330,6 @@
   .qc-w li{margin-bottom:2px;}
   .qc textarea{width:100%;min-height:92px;padding:10px 12px;border:1.5px solid var(--gray-200);border-radius:10px;font-family:'Poppins',sans-serif;font-size:13.5px;background:var(--gray-100);resize:vertical;line-height:1.65;color:var(--black);}
   .qc textarea:focus{outline:none;border-color:var(--pink);background:#fff;}
-  .qc-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px;}
-  .tg{border:1.5px solid var(--gray-200);background:#fff;border-radius:999px;padding:6px 11px;font-size:11.5px;font-weight:600;color:var(--gray-600);cursor:pointer;font-family:'Poppins',sans-serif;line-height:1.2;}
-  .tg:hover{border-color:var(--navy);}
-  .tg.pos.on{background:var(--green);border-color:var(--green);color:#fff;}
-  .tg.neg.on{background:#B91C1C;border-color:#B91C1C;color:#fff;}
   .qs{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:9px 0 8px;border-top:1px dashed var(--gray-200);margin-top:9px;}
   .qs-l{font-size:12.5px;font-weight:700;color:var(--navy);flex:1 1 200px;min-width:0;}
   .qs-l i{display:block;font-style:normal;font-size:10.5px;font-weight:600;color:var(--gray-400);margin-top:1px;}
@@ -458,10 +453,10 @@
   /* ══ MUNKAFELÜLET — kétpaneles, fekvő elrendezés ═══════════════════════ */
   #wsGrid{display:none;}
   body[data-page="scoring"] #wsGrid{display:grid;}
-  #wsGrid{grid-template-columns:minmax(0,1fr) 1px minmax(400px,470px);gap:0;align-items:stretch;}
-  #wsLeft{min-width:0;overflow-y:auto;overflow-x:hidden;padding:0 26px 60px 0;}
-  #wsRight{min-width:0;overflow-y:auto;overflow-x:hidden;padding:0 2px 60px 26px;}
-  #wsDiv{background:#DDE1E9;box-shadow:0 0 0 0 transparent;}
+  #wsGrid{grid-template-columns:1fr 1px 1fr;gap:0;align-items:stretch;}
+  #wsLeft{min-width:0;overflow-y:auto;overflow-x:hidden;padding:0 34px 70px 4px;}
+  #wsRight{min-width:0;overflow-y:auto;overflow-x:hidden;padding:0 4px 70px 34px;}
+  #wsDiv{background:var(--navy);opacity:.85;}
   #wsGrid{position:relative;}
   #wsLeft::-webkit-scrollbar,#wsRight::-webkit-scrollbar{width:9px;}
   #wsLeft::-webkit-scrollbar-thumb,#wsRight::-webkit-scrollbar-thumb{background:#d7dbe4;border-radius:99px;}
@@ -474,11 +469,11 @@
   .ws-hd-t .wsclk{margin-left:auto;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--navy);font-variant-numeric:tabular-nums;}
 
   #wsSteps{display:flex;gap:5px;overflow-x:auto;padding-bottom:2px;}
-  .wst{flex:1 1 0;min-width:96px;min-height:52px;display:flex;flex-direction:column;justify-content:center;border:1.5px solid var(--gray-200);background:#fff;border-radius:11px;padding:7px 9px;cursor:pointer;text-align:left;font-family:'Poppins',sans-serif;line-height:1.22;transition:all .15s;}
+  .wst{flex:1 1 0;min-width:0;min-height:46px;display:flex;flex-direction:column;justify-content:center;border:1.5px solid var(--gray-200);background:#fff;border-radius:11px;padding:7px 9px;cursor:pointer;text-align:left;font-family:'Poppins',sans-serif;line-height:1.22;transition:all .15s;}
   .wst:hover{border-color:var(--pink);}
-  .wst .n{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:800;color:var(--pink);font-variant-numeric:tabular-nums;}
+  .wst .n{display:flex;align-items:center;gap:4px;font-size:9.5px;font-weight:800;color:var(--pink);font-variant-numeric:tabular-nums;white-space:nowrap;}
   .wst .n em{font-style:normal;width:15px;height:15px;border-radius:50%;background:var(--gray-200);color:var(--gray-600);display:inline-flex;align-items:center;justify-content:center;font-size:9px;}
-  .wst .t{font-size:11px;font-weight:700;color:var(--navy);margin-top:3px;display:block;}
+  .wst .t{font-size:10.5px;font-weight:700;color:var(--navy);margin-top:3px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .wst.on{background:var(--navy);border-color:var(--navy);}
   .wst.on .n{color:#FF8FB4;} .wst.on .t{color:#fff;} .wst.on .n em{background:var(--pink);color:#fff;}
   .wst.ok{border-color:#9fdcc3;background:#f6fffb;}
@@ -528,17 +523,21 @@
   .ws-acc .ws-acc-b{padding:0 14px 14px;}
   .ws-acc .scorebox{border:none;padding:0;margin:0;}
 
-  @media(min-width:1200px){
+  @media(min-width:900px){
     body[data-page="scoring"]{overflow:hidden;}
-    body[data-page="scoring"] .wrap{max-width:none;margin:0;padding:0 0 0;}
-    body[data-page="scoring"] .hero{padding:16px 26px 14px;border-radius:0 0 20px 20px;margin-bottom:4px;}
+    body[data-page="scoring"] .wrap{max-width:none;margin:0;padding:0;}
+    body[data-page="scoring"] .hero{padding:9px 22px;border-radius:0;margin:0;display:flex;align-items:center;background-image:none;}
     body[data-page="scoring"] .hero .sub{display:none;}
-    body[data-page="scoring"] .hero h1{font-size:20px;}
-    body[data-page="scoring"] .nav{padding:10px 26px 0;}
-    body[data-page="scoring"] .content{padding:0 26px;}
+    body[data-page="scoring"] .hero h1{font-size:15px;font-weight:700;}
+    body[data-page="scoring"] .hero-top{width:100%;flex-wrap:nowrap;align-items:center;gap:12px;}
+    body[data-page="scoring"] .mode-btn{padding:6px 12px;font-size:11.5px;}
+    body[data-page="scoring"] .nav{padding:7px 22px;background:#fff;border-bottom:1px solid var(--gray-200);gap:6px;}
+    body[data-page="scoring"] .nav a{padding:5px 11px;font-size:11px;}
+    body[data-page="scoring"] .content{padding:0 22px;}
+    body[data-page="scoring"] footer{display:none;}
     body[data-page="scoring"] #scoreDock{display:none;}
   }
-  @media(max-width:1199px){
+  @media(max-width:899px){
     #wsGrid{grid-template-columns:1fr;}
     #wsDiv{display:none;}
     #wsLeft,#wsRight{overflow:visible;height:auto!important;padding:0 0 20px;}
@@ -546,8 +545,23 @@
     .ws-hd{position:static;}
     #wsRight .dc{position:static;}
     #wsSteps{margin:0 -2px;}
-    .wst{flex:0 0 132px;}
+    .wst{flex:0 0 126px;}
   }
+
+  .qc-fig{background:#fdfbf3;border:1px dashed #e6dcbe;border-radius:10px;margin-bottom:10px;}
+  .qc-fig>summary{cursor:pointer;padding:8px 12px;font-size:11.8px;font-weight:700;color:#7a5410;list-style:none;}
+  .qc-fig>summary::-webkit-details-marker{display:none;}
+  .qc-fig>summary::after{content:' ▾';color:#b09a63;}
+  .qc-fig[open]>summary::after{content:' ▴';}
+  .qc-fig ul{margin:0;padding:0 14px 11px 30px;font-size:11.8px;color:#5A5E6D;line-height:1.6;}
+  .qc-fig li{margin-bottom:2px;}
+  .qs-b10{flex-wrap:wrap;gap:4px;}
+  .qs-b10 button{width:38px;height:38px;border-radius:9px;font-size:13px;}
+  .bf-lab{display:inline-block;margin-left:6px;font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 9px;background:var(--gray-200);color:var(--gray-600);vertical-align:middle;}
+  .bf-lab.g{background:var(--green-soft);color:var(--green);}
+  .bf-lab.y{background:#FEF3D6;color:#B5862B;}
+  .bf-lab.r{background:#FBEAEA;color:#A33A3A;}
+  .sd-g span{font-size:9.5px;padding:5px 1px;}
 </style>
 </head>
 <body data-page="interviewer">
@@ -1408,18 +1422,6 @@ var KOMP=[
   a5:'Konkrét, saját, 2–3 éves cél, és az elmúlt 30 napban is tett érte valódi lépést. Motiválja az összemérés.'}
 ];
 
-/* ── megfigyelési címkék (kérdésenként több is jelölhető) ──────────────── */
-var TAGS=[
- {t:'konkrét példa',           s:'pos'},
- {t:'számszerű eredmény',      s:'pos'},
- {t:'saját felelősség',        s:'pos'},
- {t:'tudatos rendszer',        s:'pos'},
- {t:'általános válasz',        s:'neg'},
- {t:'másokat hibáztat',        s:'neg'},
- {t:'ellentmondás',            s:'neg'},
- {t:'betanult válasznak tűnik',s:'neg'},
- {t:'red flag',                s:'neg'}
-];
 
 /* ── 5 KÖTELEZŐ BIZONYÍTÉKKÉRDÉS (2–12. perc) ─────────────────────────── */
 var QBANK=[
@@ -1454,6 +1456,18 @@ var QBANK=[
        'Hogyan viselte a nemet, és ment-e utána tovább, vagy leállt?',
        'A történet a kapcsolódásról szól, vagy csak a saját szorongásáról?']}
 ];
+
+/* ── választható tanítási feladatok (a vezető szabadon dönt) ──────────── */
+var GD_TASKS=['',
+ '72-es szabály: 72 osztva a hozammal = hány év alatt duplázódik a pénz',
+ 'Infláció és reálhozam: a névleges hozamból le kell vonni az inflációt',
+ 'Kockázat és hozam: magasabb hozam csak nagyobb ingadozással jár',
+ 'Vésztartalék: 3–6 havi kiadás, azonnal elérhető formában',
+ 'TBSZ 3+2: az ötödik év végén nulla kamatadó',
+ 'Diverzifikáció: miért nem egy lapra teszünk mindent',
+ 'Kamatos kamat: miért a korai kezdés a legerősebb tényező'
+];
+function gDTask(){ return (_g.gD_custom||'').trim() || (_g.gD_task||'').trim(); }
 
 /* ── KEMÉNY SZŰRŐK (22–28. perc) — NEM részei a kompetencia-átlagnak ──── */
 var GATE_LBL={g:'ZÖLD',y:'SÁRGA',r:'PIROS','':'nincs adat'};
@@ -1491,7 +1505,7 @@ var MASODIK_KOR=[
 
 /* ══ ÁLLAPOT ══════════════════════════════════════════════════════════ */
 var _qS={};     /* kérdésenkénti kompetencia-pontok: {q1:{ambicio:4}} */
-var _qT={};     /* kérdésenkénti megfigyelési címkék: {q1:['konkrét példa']} */
+var _qT={};     /* elavult (v3.2-ig megfigyelési címkék) — csak a régi mentések miatt marad */
 var _kOv={};    /* vezetői felülbírálat: {ambicio:{v:4,ok:'indok'}} */
 var _kNM={};    /* nem volt mérhető + indoklás: {kommunikacio:'indok'} */
 var _g={};      /* kemény szűrők mezői */
@@ -1508,8 +1522,8 @@ var FELV_LS='felv_interju_v3';
 var _asvT=null;
 var FELV_IDS=['candName','candDate','candInterviewer','candSource','candPhone','candOccupation',
  'noteFree','elteresOk','masodikKorHipotezis','nextStep','nextDeadline','cqNote',
- 'gA_hours','gA_days','gA_slots','gA_fix','gA_start','gA_note',
- 'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_note'];
+ 'gA_hours','gA_days','gA_slots','gA_fix','gA_note',
+ 'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'];
 
 function felvCollect(){
   var f={};
@@ -1575,10 +1589,6 @@ function _qKompList(q){
   return out;
 }
 function _qcHtml(q,ix){
-  var tags=TAGS.map(function(t){
-    var on=(_qT[q.id]||[]).indexOf(t.t)>=0;
-    return '<button type="button" class="tg '+t.s+(on?' on':'')+'" data-q="'+q.id+'" data-t="'+_esc(t.t)+'" onclick="qTagTog(this)">'+_esc(t.t)+'</button>';
-  }).join('');
   var scores=_qKompList(q).map(function(o){
     var kd=_kd(o.k); if(!kd) return '';
     var cur=(_qS[q.id]&&_qS[q.id][o.k])||0, b='';
@@ -1597,21 +1607,12 @@ function _qcHtml(q,ix){
   return '<div class="qc" id="qc_'+q.id+'">'
    +'<div class="qc-h"><span class="qc-n">'+(ix+1)+'</span><span class="qc-t">'+_esc(q.cim)+'</span>'+kchips+'</div>'
    +'<div class="qc-q">🎙️ '+_esc(q.q)+'</div>'
-   +'<div class="qc-w"><b>👁️ Mit figyelj?</b><ul>'+q.fig.map(function(x){return '<li>'+_esc(x)+'</li>';}).join('')+'</ul></div>'
+   +'<details class="qc-fig" open><summary>👁️ Mit figyelj?</summary><ul>'+q.fig.map(function(x){return '<li>'+_esc(x)+'</li>';}).join('')+'</ul></details>'
    +'<textarea id="qn_'+q.id+'" placeholder="Helyzet – saját cselekvés – eredmény – fontos szó szerinti mondat" oninput="qNoteIn(\''+q.id+'\')"></textarea>'
-   +'<div class="qc-tags">'+tags+'</div>'
    +scores
    +'</div>';
 }
 function qNoteIn(qid){ _paintQ(qid); felvTouch(); }
-function qTagTog(btn){
-  var qid=btn.getAttribute('data-q'), t=btn.getAttribute('data-t');
-  if(!_qT[qid]) _qT[qid]=[];
-  var i=_qT[qid].indexOf(t);
-  if(i>=0) _qT[qid].splice(i,1); else _qT[qid].push(t);
-  btn.classList.toggle('on', i<0);
-  _paintQ(qid); felvTouch(); sdRender();
-}
 function qScoreSet(qid,k,v){
   if(!_qS[qid]) _qS[qid]={};
   _qS[qid][k]=(_qS[qid][k]===v?0:v);
@@ -1636,8 +1637,33 @@ function _paintQ(qid){
 /* ══ SZAKASZOK ════════════════════════════════════════════════════════ */
 var KERET_TXT='Köszönöm, hogy itt vagy. A következő 35 percben az a célunk, hogy mindketten őszinte képet kapjunk arról, működne-e ez a közös munka. Nem tesztelni akarlak: konkrét, múltbeli helyzetekről fogok kérdezni, mert azok sokkal többet mondanak, mint bármilyen terv. Utána én mutatom meg, pontosan mit csinálunk és hogyan kereshetsz vele. A végén kimondjuk, hol tartunk — nem lebegtetek. Jegyzetelni fogok, ez nálunk minden jelöltnél így megy.';
 
+function bfRender(){
+  var w=document.getElementById('bfBtns'); if(!w) return;
+  var cur=+_g.before||0, h='';
+  for(var i=1;i<=10;i++) h+='<button type="button" class="'+(cur===i?'on':'')+'" data-bf="'+i+'" onclick="bfSet('+i+')">'+i+'</button>';
+  w.innerHTML=h;
+  var lab=document.getElementById('bfLab');
+  if(lab){
+    var st=beforeState();
+    lab.textContent = cur ? (cur+'/10 — '+({g:'illeszkedik',y:'részben illeszkedik',r:'gyenge illeszkedés'}[st]||'')) : 'nincs pontozva';
+    lab.className='bf-lab '+(st||'');
+  }
+}
+function bfSet(v){ _g.before=(+_g.before===v?0:v); bfRender(); felvTouch(); dontesRender(); sdRender(); phBadges(); }
+function beforeState(){ var v=+_g.before||0; return v?(v>=8?'g':(v>=5?'y':'r')):''; }
+
 function _ph0(){
-  return '<div class="ph-lead">🎙️ <b>Mondd el szó szerint:</b><br>„'+_esc(KERET_TXT)+'"</div>'
+  return '<div class="qc" id="qc_before">'
+  +'<div class="qc-h"><span class="qc-n">0</span><span class="qc-t">Before-illeszkedés</span>'
+  +'<span class="qc-k" style="background:var(--gray-100);color:var(--gray-600)">nem része a 0–100 indexnek</span></div>'
+  +'<div class="qc-q">🎙️ A Before-interjúban adott válaszok alapján pontozd a jelöltet, hogy mennyire illeszkedik a minimumokhoz.</div>'
+  +'<div class="qs" style="border-top:none;margin-top:0;padding-top:0;">'
+  +'<div class="qs-l">Illeszkedés a minimumokhoz <span class="bf-lab" id="bfLab">nincs pontozva</span>'
+  +'<i>1 = egyáltalán nem illeszkedik · 10 = maradéktalanul illeszkedik</i></div>'
+  +'<div class="qs-b qs-b10" id="bfBtns"></div></div>'
+  +'<textarea id="qn_before" placeholder="Mi hangzott el a Before-interjúban? Mi miatt hívtad be? Mi az, amit itt ellenőrizni akarsz?" oninput="felvTouch()"></textarea>'
+  +'</div>'
+  +'<div class="ph-lead">🎙️ <b>Mondd el szó szerint:</b><br>„'+_esc(KERET_TXT)+'"</div>'
   +'<div class="qc"><div class="qc-h"><span class="qc-n">0</span><span class="qc-t">Nyitókérdés</span></div>'
   +'<div class="qc-q">🎙️ Kérlek, 90 másodpercben mutatkozz be: mivel foglalkozol jelenleg, mi tölti ki a hetedet, és miért nézel most új lehetőséget?</div>'
   +'<div class="qc-w">Ez a kérdés <b>nem pontozódik</b>. A célja a keret és a nyitás. A tartalmát a lenti szabad jegyzetben rögzítsd, ha fontos mondat hangzik el.</div>'
@@ -1671,10 +1697,16 @@ function _ph2(){
   +'<li>Mit várunk el, és mit nem kérünk soha</li>'
   +'</ul></div>'
   +'<div class="gt" id="gtTeach">'
-  +'<div class="gt-h"><b>🧠 Késleltetett coachability — a tanítás MOST történik</b></div>'
-  +'<div class="gt-f">🎙️ Tanítsd meg szó szerint (30 mp), a prezentáció ELŐTT: „Mielőtt belevágok, mutatok egy trükköt, amit a szakmában mindennap használunk. A 72-es szabály: elosztod a 72-t a hozammal, és megkapod, hány év alatt duplázódik a pénz. Hat százaléknál 72 osztva hattal, az tizenkét év. Ennyi az egész."</div>'
-  +'<div class="gt-q">Ezután NE kérdezz rá azonnal. A visszakérés a 22–28. perces szakaszban, a kemény szűrőknél történik — a késleltetés a lényeg, mert az azonnali visszamondás csak memória, a késleltetett visszaadás valódi tanulás.</div>'
+  +'<div class="gt-h"><b>🧠 Tanítási feladat — te választod ki</b></div>'
+  +'<div class="gt-f">🎙️ A prezentáció ELŐTT taníts meg 30 másodpercben <b>egyetlen dolgot</b>. Bármi lehet, amit te magabiztosan elmagyarázol. Nem a tartalom számít, hanem hogy 10 perc múlva vissza tudja-e adni a saját szavaival.</div>'
+  +'<div class="gt-grid">'
+  +'<div class="gt-f2"><label>Válassz feladatot</label><select id="gD_task" onchange="gChg()">'
+  +GD_TASKS.map(function(t){ return '<option value="'+_esc(t)+'">'+_esc(t||'— válassz, vagy írj sajátot —')+'</option>'; }).join('')
+  +'</select></div>'
+  +'<div class="gt-f2"><label>Vagy a saját feladatod</label><input type="text" id="gD_custom" placeholder="amit te szoktál tanítani" oninput="gChg()"></div>'
+  +'</div>'
   +'<div class="gt-row"><button type="button" class="gt-btn" id="gTeachBtn" onclick="gTeach()">✅ Megtanítva</button><span class="gt-ts" id="gTeachTs"></span></div>'
+  +'<div class="gt-k">Ne kérdezz rá azonnal. A visszakérés a 22–28. perces szakaszban történik — <b>a késleltetés a lényeg</b>: az azonnali visszamondás csak memória, a késleltetett visszaadás valódi tanulás.</div>'
   +'</div>';
 }
 function _ph3(){
@@ -1688,11 +1720,10 @@ function _ph3(){
   +'<div class="gt-grid">'
   +'<div class="gt-f2"><label>Reális óra / hét</label><input type="number" id="gA_hours" min="0" max="80" placeholder="pl. 15" oninput="gChg()"></div>'
   +'<div class="gt-f2"><label>Vállalható napok / hét</label><input type="number" id="gA_days" min="0" max="7" placeholder="pl. 4" oninput="gChg()"></div>'
-  +'<div class="gt-f2"><label>Idősávok</label><input type="text" id="gA_slots" placeholder="pl. hétköznap 17–21, szombat de." oninput="gChg()"></div>'
+  +'<div class="gt-f2"><label>Idősávok, legkorábbi kezdés</label><input type="text" id="gA_slots" placeholder="pl. hétköznap 17–21, szombat de. · szept. 1-től" oninput="gChg()"></div>'
   +'<div class="gt-f2"><label>Fix oktatási időpontok</label><select id="gA_fix" onchange="gChg()">'
   +'<option value="">— válassz —</option><option value="valalja">vállalja a fix időpontokat</option>'
   +'<option value="reszben">részben, egyeztetéssel</option><option value="nem">nem tudja vállalni</option></select></div>'
-  +'<div class="gt-f2"><label>Legkorábbi kezdés</label><input type="date" id="gA_start" onchange="gChg()"></div>'
   +'</div>'
   +'<div class="gt-f2" style="margin-top:9px;"><label>Múlt hét napi bontásban</label><textarea id="gA_note" placeholder="H: … K: … Sze: … Cs: … P: … Szo: … V: …" oninput="gChg()"></textarea></div>'
   +'<div class="gt-k">🟢 15 óra/hét felett · 🟡 8–14 óra · 🔴 8 óra alatt = nem indítható. Ha a fix oktatási időpontokat nem tudja vállalni, a szűrő maximum sárga lehet.</div></div>'
@@ -1730,17 +1761,17 @@ function _ph3(){
   +'<div class="gt-k">🟢 volt már és jól kezelte, vagy van konkrét anyagi terve · 🟡 nehezen viselte, vagy nyitott, de terv nélkül · 🔴 azonnali pénzkényszer vagy a teljesítményalapú munka elutasítása.</div></div>'
 
   /* ── D: késleltetett coachability ── */
-  +'<div class="gt" id="gtD"><div class="gt-h"><b>🧠 D — Késleltetett coachability (72-es szabály)</b><span class="gt-l" id="gtD_l">nincs adat</span></div>'
+  +'<div class="gt" id="gtD"><div class="gt-h"><b>🧠 D — Késleltetett coachability</b><span class="gt-l" id="gtD_l">nincs adat</span></div>'
   +'<div class="gt-f" id="gD_state">A tanítás a prezentáció előtti szakaszban történik. Ha még nem tanítottad meg, ugorj vissza a 12–22 perces szakaszra.</div>'
-  +'<div class="gt-q">🎙️ „Visszaugranék egy pillanatra: el tudnád mondani a saját szavaiddal a 72-es szabályt? Mondjuk 8%-os hozamra."</div>'
+  +'<div class="gt-q">🎙️ „Visszaugranék egy pillanatra: el tudnád mondani a saját szavaiddal azt, amit az elején mutattam?"</div>'
   +'<div id="gD_btns" class="gt-row"></div>'
-  +'<div class="qc-w" style="margin-top:9px;"><b>Horgonyok:</b><ul>'
-  +'<li><b>5</b> — saját szavaival adja vissza ÉS kiszámolja: 72/8, körülbelül 9 év</li>'
-  +'<li><b>4</b> — saját szavaival visszaadja, a számolásban téved vagy segítséget kér</li>'
+  +'<details class="qc-fig"><summary>Horgonyok</summary><ul>'
+  +'<li><b>5</b> — saját szavaival, saját példával adja vissza, és alkalmazza is</li>'
+  +'<li><b>4</b> — saját szavaival visszaadja, a részletekben téved</li>'
   +'<li><b>3</b> — nagyjából visszaadja, de rávezetéssel</li>'
   +'<li><b>2</b> — csak töredékesen emlékszik, a lényeg elveszett</li>'
   +'<li><b>1</b> — nem adja vissza, mellébeszél vagy témát vált</li>'
-  +'</ul></div>'
+  +'</ul></details>'
   +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gD_note" placeholder="szó szerint, ahogy visszaadta" oninput="gChg()"></textarea></div>'
   +'<div class="gt-k">Ez a pontszám <b>automatikusan beszámít</b> a „Tanulási sebesség és coachability" kompetenciába. 🟢 4–5 · 🟡 3 · 🔴 1–2</div></div>'
 
@@ -1754,8 +1785,6 @@ function _ph4(){
   +'<div class="ph-cel">⚠️ A kérdés hiánya <b>önmagában nem red flag</b>. Sok jó jelölt egyszerűen feszült. A kérdések <b>tartalma</b> mond többet, mint a mennyisége.</div>'
   +'<div class="qc"><div class="qc-h"><span class="qc-n">?</span><span class="qc-t">A jelölt kérdései</span></div>'
   +'<textarea id="cqNote" placeholder="Mit kérdezett, szó szerint — és mit árul el a kérdés arról, mi foglalkoztatja" oninput="felvTouch()"></textarea>'
-  +'<div style="margin-top:10px;font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.03em;">Mire irányultak a kérdései?</div>'
-  +'<div class="qc-tags" id="cqTopics"></div>'
   +'<div class="cq-mark">'
   +'<button type="button" id="cqNone" onclick="cqTog(\'none\')">🤐 Nem tett fel kérdést</button>'
   +'<button type="button" class="good" id="cqGreat" onclick="cqTog(\'great\')">💡 Kiemelkedően jó kérdést tett fel</button>'
@@ -1807,7 +1836,7 @@ function phGo(i){
   FLOW.forEach(function(p,j){ var e=document.getElementById('ph'+j); if(e) e.classList.toggle('open', j===i); });
   if(typeof wsStepSync==='function') wsStepSync();
   var L=document.getElementById('wsLeft');
-  if(L && window.innerWidth>=1200){ L.scrollTo({top:0,behavior:'smooth'}); return; }
+  if(L && window.innerWidth>=900){ L.scrollTo({top:0,behavior:'smooth'}); return; }
   var t=document.getElementById('ph'+i); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function phBadges(){
@@ -1845,8 +1874,8 @@ var _flowManual=false;
 
 /* ══ KEMÉNY SZŰRŐK LOGIKÁJA ═══════════════════════════════════════════ */
 function gChg(){
-  ['gA_hours','gA_days','gA_slots','gA_fix','gA_start','gA_note',
-   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_note'].forEach(function(id){
+  ['gA_hours','gA_days','gA_slots','gA_fix','gA_note',
+   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'].forEach(function(id){
     var e=document.getElementById(id); if(e) _g[id]=e.value;
   });
   gRender(); felvTouch(); if(typeof kompRender==='function') kompRender(); sdRender(); phBadges();
@@ -1894,42 +1923,35 @@ function gRender(){
     if(lbl) lbl.textContent=GATE_LBL[G[x]||''];
   });
   var ts=document.getElementById('gTeachTs'), btn=document.getElementById('gTeachBtn'), stt=document.getElementById('gD_state');
+  var task=gDTask();
   if(_g.teach){
     var t=new Date(_g.teach);
     if(ts) ts.textContent='✔ megtanítva '+t.toTimeString().slice(0,5)+'-kor';
     if(btn){ btn.textContent='✅ Megtanítva'; btn.classList.add('ghost'); }
-    if(stt) stt.innerHTML='✔ A 72-es szabályt <b>'+t.toTimeString().slice(0,5)+'</b>-kor tanítottad meg. Most kérheted vissza.';
+    if(stt) stt.innerHTML='✔ <b>'+t.toTimeString().slice(0,5)+'</b>-kor tanítottad meg'+(task?(': <b>'+_esc(task)+'</b>'):'')+'. Most kérheted vissza.';
   } else {
     if(ts) ts.textContent='';
-    if(stt) stt.innerHTML='A tanítás a prezentáció előtti szakaszban történik. Ha még nem tanítottad meg, ugorj vissza a 12–22 perces szakaszra.';
+    if(stt) stt.innerHTML=task
+      ? ('Kiválasztott feladat: <b>'+_esc(task)+'</b> — a tanítás a 12–22 perces szakaszban történik.')
+      : 'Előbb válassz tanítási feladatot a 12–22 perces szakaszban, és tanítsd meg.';
   }
+  var tsel=document.getElementById('gD_task');
+  if(tsel && _g.gD_task!=null && tsel.value!==_g.gD_task) tsel.value=_g.gD_task;
   var db=document.getElementById('gD_btns');
   if(db){
     var h='<span style="font-size:12.5px;font-weight:700;color:var(--navy);">Pontszám:</span><div class="qs-b">';
     for(var i=1;i<=5;i++) h+='<button type="button" class="'+((+_g.gD===i)?'on':'')+'" onclick="gDSet('+i+')">'+i+'</button>';
     h+='</div>';
-    if(!_g.teach) h+='<span style="font-size:11.5px;color:#b45309;font-weight:600;">Előbb tanítsd meg a szabályt (12–22. perc).</span>';
+    if(!_g.teach) h+='<span style="font-size:11.5px;color:#b45309;font-weight:600;">Előbb tanítsd meg a feladatot (12–22. perc).</span>';
     db.innerHTML=h;
   }
 }
 
 /* ══ JELÖLT KÉRDÉSEI ══════════════════════════════════════════════════ */
-var CQ_TOPICS=['jövedelem, jutalék','karrier, előrelépés','képzés, vizsga','időbeosztás','a cég, a háttér','ügyfelek, praxis','szerződés, jogi','csapat, vezető','egyéb'];
 function cqRender(){
-  var w=document.getElementById('cqTopics'); if(!w) return;
-  w.innerHTML=CQ_TOPICS.map(function(t){
-    var on=(_cq.topics||[]).indexOf(t)>=0;
-    return '<button type="button" class="tg'+(on?' on pos':'')+'" onclick="cqTopic(\''+t+'\')">'+_esc(t)+'</button>';
-  }).join('');
   var n=document.getElementById('cqNone'), g=document.getElementById('cqGreat');
   if(n) n.classList.toggle('on', !!_cq.none);
   if(g) g.classList.toggle('on', !!_cq.great);
-}
-function cqTopic(t){
-  if(!_cq.topics) _cq.topics=[];
-  var i=_cq.topics.indexOf(t);
-  if(i>=0) _cq.topics.splice(i,1); else _cq.topics.push(t);
-  cqRender(); felvTouch(); phBadges();
 }
 function cqTog(k){ _cq[k]=!_cq[k]; if(k==='none'&&_cq.none) _cq.great=false; cqRender(); felvTouch(); phBadges(); }
 
@@ -1998,7 +2020,7 @@ function kompSrc(k){
     var v=_qS[q.id]&&_qS[q.id][k];
     if(v) out.push({s:q.cim, v:v});
   });
-  if(k==='tanulas' && +_g.gD) out.push({s:'72-es szabály (késleltetett)', v:+_g.gD});
+  if(k==='tanulas' && +_g.gD) out.push({s:'késleltetett tanítás', v:+_g.gD});
   return out;
 }
 function kompResult(){
@@ -2130,7 +2152,8 @@ function dontesResult(){
   rfSev.forEach(function(x){ if(!x.ko) ko.push('Súlyos red flag: '+x.t.replace('🔴 ','')); });
 
   var cat, why=[];
-  if(ko.length){ cat='C'; why=ko; }
+  var bfW = (beforeState()==='r') ? ['⚠️ A Before-illeszkedés '+_g.before+'/10 — ellenőrizd, mi tér el attól, amit a Before-interjúban hallottál.'] : [];
+  if(ko.length){ cat='C'; why=ko.concat(bfW); }
   else if(K.pct>=82 && grn===4 && !K.low.length && !rf.length){
     cat='A+'; why=['Index '+K.pct+' (82 felett).','Mind a négy kemény szűrő zöld.','Nincs 3 alatti kompetencia.','Nincs bejelölt red flag.'];
   }
@@ -2146,6 +2169,7 @@ function dontesResult(){
     if(K.low.length) why.push('3 alatti kompetencia: '+K.low.join(', ')+'.');
     if(!why.length) why.push('Az A feltételei nem állnak össze maradéktalanul — konkrét bizonytalanság maradt.');
   }
+  if(!ko.length && bfW.length) why=why.concat(bfW);
   return {cat:cat, K:K, G:G, red:red, yel:yel, grn:grn, rf:rf, rfSev:rfSev, ko:ko, why:why};
 }
 function felvManual(){
@@ -2168,7 +2192,8 @@ function dontesRender(){
   var cls={'A+':'ap','A':'a','B':'b','C':'c'}[D.cat]||'nil';
   var lbl={'A+':'A+ — kiemelt jelölt, viheted a második körre','A':'A — mehet a második körre',
            'B':'B — feltételesen, célzott vizsgálattal','C':'C — nem javasolt'}[D.cat]||'Nincs elég adat a javaslathoz';
-  var gh=['A','B','C','D'].map(function(x){
+  var gh='<span class="'+(beforeState()||'')+'">Before '+((+_g.before)?(_g.before+'/10'):'–')+'</span>'
+   +['A','B','C','D'].map(function(x){
     var s=D.G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Coach'}[x];
     return '<span class="'+s+'">'+n+' '+(s==='g'?'🟢':s==='y'?'🟡':s==='r'?'🔴':'–')+'</span>';
   }).join('');
@@ -2197,7 +2222,8 @@ function sdRender(){
     return '<div class="sd-r'+(r.s&&r.s<3?' low':'')+'"><span class="l">'+_esc(r.l)+' <span style="opacity:.6">'+r.w+'%</span></span>'
       +'<span class="v'+(r.s?'':' nd')+'">'+(r.s?String(r.s).replace('.',','):'–')+'</span></div>';
   }).join('');
-  var gh=['A','B','C','D'].map(function(x){
+  var gh='<span class="'+(beforeState()||'')+'">Before</span>'
+   +['A','B','C','D'].map(function(x){
     var s=G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Coach'}[x];
     return '<span class="'+s+'">'+n+'</span>';
   }).join('');
@@ -2296,15 +2322,16 @@ function wsWho(){
 }
 function wsFit(){
   var g=document.getElementById('wsGrid'); if(!g) return;
-  if(window.innerWidth<1200 || document.body.getAttribute('data-page')!=='scoring'){ g.style.height=''; return; }
+  if(window.innerWidth<900 || document.body.getAttribute('data-page')!=='scoring'){ g.style.height=''; return; }
   var top=g.getBoundingClientRect().top;
   g.style.height=Math.max(360, window.innerHeight - top - 10)+'px';
 }
 function wsSteps(){
   var w=document.getElementById('wsSteps'); if(!w) return;
+  var SH=['Keretezés','Kérdésblokk','Prezentáció','Kemény szűrők','Jelölt kérdései','Zárás'];
   w.innerHTML=FLOW.map(function(p,i){
-    return '<button type="button" class="wst" id="wst'+i+'" onclick="phGo('+i+')">'
-     +'<span class="n"><em>'+(i+1)+'</em>'+p.t+'\'</span><span class="t">'+_esc(p.title.split(' — ')[0].split(' (')[0])+'</span></button>';
+    return '<button type="button" class="wst" id="wst'+i+'" onclick="phGo('+i+')" title="'+_esc(p.title)+'">'
+     +'<span class="n"><em>'+(i+1)+'</em>'+p.t+'\'</span><span class="t">'+SH[i]+'</span></button>';
   }).join('');
 }
 function wsStepSync(){
@@ -2326,8 +2353,8 @@ function felvInit(){
   /* mentett állapot visszatöltése — a DOM már áll */
   felvRestoreLocal();
   /* kemény szűrők mezőinek feltöltése a memóriából */
-  ['gA_hours','gA_days','gA_slots','gA_fix','gA_start','gA_note',
-   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_note'].forEach(function(id){
+  ['gA_hours','gA_days','gA_slots','gA_fix','gA_note',
+   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'].forEach(function(id){
     var e=document.getElementById(id); if(e && _g[id]!=null) e.value=_g[id];
   });
   /* kérdés-jegyzetek + címkék visszaírása */
@@ -2343,8 +2370,6 @@ function felvInit(){
   }catch(e){}
   QBANK.forEach(function(q){
     var w=document.getElementById('qc_'+q.id); if(!w) return;
-    w.querySelectorAll('.tg').forEach(function(b){
-      b.classList.toggle('on', (_qT[q.id]||[]).indexOf(b.getAttribute('data-t'))>=0); });
     _qKompList(q).forEach(function(o){
       var g=document.getElementById('qs_'+q.id+'_'+o.k); if(!g) return;
       g.querySelectorAll('.qs-b button').forEach(function(b){
@@ -2352,7 +2377,7 @@ function felvInit(){
     });
     _paintQ(q.id);
   });
-  cqRender(); gRender(); kompRender(); sdRender();
+  cqRender(); bfRender(); gRender(); kompRender(); sdRender();
   wsBuild(); wsWho();
   var f=document.getElementById('ph0'); if(f) f.classList.add('open');
   phBadges(); wsStepSync();
@@ -2543,31 +2568,30 @@ function downloadInterviewPDF(){
       + (val('gA_hours')?('\n    Reális kapacitás: '+val('gA_hours')+' óra/hét'
           +(val('gA_days')?(', '+val('gA_days')+' nap/hét'):'')
           +(val('gA_slots')?(', idősávok: '+val('gA_slots')):'')
-          +(val('gA_start')?(', legkorábbi kezdés: '+val('gA_start')):'')):'')
+          ):'')
       + (val('gB_names')?('\n    Warm market: '+val('gB_names')+' név / 60 mp'):'')
       + (val('gB_note')?('\n    '+val('gB_note')):'')
       + (val('gC_note')?('\n    Jutalék: '+val('gC_note')):'')
-      + (val('gD_note')?('\n    72-es szabály: '+val('gD_note')):''));
+      + (gDTask()?('\n    Tanítási feladat: '+gDTask()):'')
+      + (val('gD_note')?('\n    Visszaadás: '+val('gD_note')):''));
   }
   /* ── kérdésenkénti jegyzetek, címkék, pontok ── */
+  if(+_g.before) section('0. Before-illeszkedés', (+_g.before)+' / 10'+(val('qn_before')?('\n\n'+val('qn_before')):''));
   section('Bemutatkozás (90 mp)', val('qn_q0'));
   section('Első benyomás — jegyzet', val('qn_fb'));
   if(typeof QBANK!=='undefined'){
     QBANK.forEach(function(q,i){
       const t=val('qn_'+q.id);
-      const tg=(typeof _qT!=='undefined'&&_qT[q.id])?_qT[q.id]:[];
       const sc=_qKompList(q).map(function(o){
         const v=(_qS[q.id]&&_qS[q.id][o.k])||0; return v?(_kl(o.k)+': '+v+'/5'):null;
       }).filter(Boolean);
-      if(!t && !tg.length && !sc.length) return;
+      if(!t && !sc.length) return;
       section((i+1)+'. '+q.cim, q.q+'\n\n'+(t||'(nincs jegyzet)')
-        +(tg.length?('\n\nMegfigyelési címkék: '+tg.join(', ')):'')
         +(sc.length?('\nPontok: '+sc.join(' · ')):''));
     });
   }
   section('A jelölt kérdései',
     (val('cqNote')||'')
-    + ((typeof _cq!=='undefined'&&_cq.topics&&_cq.topics.length)?('\nTémák: '+_cq.topics.join(', ')):'')
     + ((typeof _cq!=='undefined'&&_cq.none)?'\nNem tett fel kérdést.':'')
     + ((typeof _cq!=='undefined'&&_cq.great)?'\nKiemelkedően jó kérdést tett fel.':''));
   if(typeof _kOv!=='undefined'){
@@ -2692,7 +2716,8 @@ async function felvSavePipeline(btn){
   const jegyzet=(document.getElementById('noteFree')?document.getElementById('noteFree').value:'').trim();
   const _dr=(typeof dontesResult==='function')?dontesResult():null;
   const _gv=id=>{const e=document.getElementById(id);return e?(e.value||'').trim():'';};
-  const note='📄 Felvételi 1 v3.0 ('+date+'): döntés '+(pot||'–')
+  const note='📄 Felvételi 1 v3.3 ('+date+'): döntés '+(pot||'–')
+    +((+_g.before)?(' · Before '+_g.before+'/10'):'')
     +((_dr&&_dr.cat)?(' (javaslat: '+_dr.cat+')'):'')
     +((KR&&KR.sw)?(' · index: '+KR.pct+'/100, átlag '+String(KR.avg).replace('.',',')+'/5, kitöltöttség '+KR.sw+'%'):'')
     +((_dr)?(' · szűrők: idő '+(_dr.G.A||'–')+', praxis '+(_dr.G.B||'–')+', jutalék '+(_dr.G.C||'–')+', coach '+(_dr.G.D||'–')):'')
@@ -2716,14 +2741,12 @@ async function felvSavePipeline(btn){
   const kerdesek={};
   if(typeof QBANK!=='undefined') QBANK.forEach(function(q,i){
     const t=hv('qn_'+q.id);
-    const tg=(typeof _qT!=='undefined'&&_qT[q.id])?_qT[q.id]:[];
     const sc=_qKompList(q).map(function(o){
       const v=(_qS[q.id]&&_qS[q.id][o.k])||0; return v?(_kl(o.k)+': '+v+'/5'):null; }).filter(Boolean);
-    if(!t && !tg.length && !sc.length) return;
+    if(!t && !sc.length) return;
     kerdesek[(i+1)+'. '+q.cim]={
       kerdes:q.q,
       jegyzet:t||null,
-      cimkek:tg.length?tg.join(', '):null,
       pontok:sc.length?sc.join(' · '):null
     };
   });
@@ -2735,7 +2758,9 @@ async function felvSavePipeline(btn){
   if(typeof _kNM!=='undefined') Object.keys(_kNM).forEach(function(k){ nmObj[_kl(k)]=_kNM[k]; });
   const interju={
     datum: date,
-    verzio: 'Felvételi 1 v3.0',
+    verzio: 'Felvételi 1 v3.3',
+    before_illeszkedes: (+_g.before)?((+_g.before)+'/10'):null,
+    before_jegyzet: hv('qn_before')||null,
     bemutatkozas: hv('qn_q0')||null,
     elso_benyomas_jegyzet: hv('qn_fb')||null,
     kerdesek: Object.keys(kerdesek).length?kerdesek:null,
@@ -2743,18 +2768,17 @@ async function felvSavePipeline(btn){
     ido_kapacitas: hv('gA_hours')?(hv('gA_hours')+' óra/hét'
        +(hv('gA_days')?(' · '+hv('gA_days')+' nap/hét'):'')
        +(hv('gA_slots')?(' · '+hv('gA_slots')):'')
-       +(hv('gA_fix')?(' · fix oktatás: '+hv('gA_fix')):'')
-       +(hv('gA_start')?(' · legkorábbi kezdés: '+hv('gA_start')):'')):null,
+       +(hv('gA_fix')?(' · fix oktatás: '+hv('gA_fix')):'')):null,
     ido_kapacitas_naplo: hv('gA_note')||null,
     warm_market_60mp: hv('gB_names')?(hv('gB_names')+' név / 60 mp'+(hv('gB_att')?(' · praxis-logika: '+hv('gB_att')):'')):null,
     warm_market_jegyzet: hv('gB_note')||null,
     jutalek_tures: hv('gC_sel')||null,
     jutalek_jegyzet: hv('gC_note')||null,
-    coachability_72: (+_g.gD)?((+_g.gD)+'/5'+(_g.teach?(' · tanítva: '+String(_g.teach).slice(11,16)):'')):null,
+    tanitasi_feladat: gDTask()||null,
+    coachability_keslelteteff: (+_g.gD)?((+_g.gD)+'/5'+(_g.teach?(' · tanítva: '+String(_g.teach).slice(11,16)):'')):null,
     coachability_jegyzet: hv('gD_note')||null,
-    jelolt_kerdesei: (hv('cqNote')||((_cq.topics||[]).length)||_cq.none||_cq.great)
+    jelolt_kerdesei: (hv('cqNote')||_cq.none||_cq.great)
       ? ((hv('cqNote')||'')
-         +((_cq.topics||[]).length?(' · témák: '+_cq.topics.join(', ')):'')
          +(_cq.none?' · NEM tett fel kérdést':'')
          +(_cq.great?' · kiemelkedően jó kérdés':'')) : null,
     keszito: val('candInterviewer')||null,
