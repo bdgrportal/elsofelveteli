@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Felvételi — interjú & bemutató</title>
-<!-- Felvételi 1 kérdőív v3.3 — egyszerűsített pontozás, 0. Before-kérdés, szabad tanítási feladat -->
+<!-- Felvételi 1 kérdőív v3.4 — új szakaszsorrend, erősebb blokk-elhatárolás, teljes szélesség -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -524,16 +524,18 @@
   .ws-acc .scorebox{border:none;padding:0;margin:0;}
 
   @media(min-width:900px){
+    /* minden nézet teljes szélességű — interjú, jelölt és pontozó egyaránt */
+    .wrap{max-width:none;margin:0;padding:0 0 70px;}
+    .hero{padding:9px 22px;border-radius:0;margin:0;display:flex;align-items:center;background-image:none;}
+    .hero .sub{display:none;}
+    .hero h1{font-size:15px;font-weight:700;}
+    .hero-top{width:100%;flex-wrap:nowrap;align-items:center;gap:12px;}
+    .mode-btn{padding:6px 12px;font-size:11.5px;}
+    .nav{padding:7px 22px;background:#fff;border-bottom:1px solid var(--gray-200);gap:6px;}
+    .nav a{padding:5px 11px;font-size:11px;}
+    .content{padding:0 22px;}
     body[data-page="scoring"]{overflow:hidden;}
-    body[data-page="scoring"] .wrap{max-width:none;margin:0;padding:0;}
-    body[data-page="scoring"] .hero{padding:9px 22px;border-radius:0;margin:0;display:flex;align-items:center;background-image:none;}
-    body[data-page="scoring"] .hero .sub{display:none;}
-    body[data-page="scoring"] .hero h1{font-size:15px;font-weight:700;}
-    body[data-page="scoring"] .hero-top{width:100%;flex-wrap:nowrap;align-items:center;gap:12px;}
-    body[data-page="scoring"] .mode-btn{padding:6px 12px;font-size:11.5px;}
-    body[data-page="scoring"] .nav{padding:7px 22px;background:#fff;border-bottom:1px solid var(--gray-200);gap:6px;}
-    body[data-page="scoring"] .nav a{padding:5px 11px;font-size:11px;}
-    body[data-page="scoring"] .content{padding:0 22px;}
+    body[data-page="scoring"] .wrap{padding:0;}
     body[data-page="scoring"] footer{display:none;}
     body[data-page="scoring"] #scoreDock{display:none;}
   }
@@ -562,6 +564,115 @@
   .bf-lab.y{background:#FEF3D6;color:#B5862B;}
   .bf-lab.r{background:#FBEAEA;color:#A33A3A;}
   .sd-g span{font-size:9.5px;padding:5px 1px;}
+
+  /* ══ v3.4 — ERŐSEBB BLOKK-ELHATÁROLÁS ═══════════════════════════════════
+     Minden dobozfajtának saját színe és kerete van, hogy interjú közben
+     egy pillantással látszódjon, mit kell csinálni vele.                    */
+  :root{
+    --c-say:#0E8F6F;      /* amit MONDASZ  — zöld   */
+    --c-ask:#2C4BC7;      /* amit KÉRDEZEL — kék    */
+    --c-watch:#C77A0A;    /* amit FIGYELSZ — borostyán */
+    --c-score:#E63E78;    /* amit PONTOZOL — pink   */
+    --c-gate:#7A3FC0;     /* kemény szűrő  — lila   */
+    --c-flag:#C0392B;     /* red flag      — piros  */
+  }
+
+  /* ── kérdéskártya ── */
+  .qc{border:2px solid var(--gray-200);border-radius:16px;padding:16px 17px;margin-bottom:16px;
+      box-shadow:0 2px 0 rgba(15,21,48,.04),0 10px 24px -18px rgba(15,21,48,.4);}
+  .qc.done{border-color:#5FC79B;background:#FBFFFD;box-shadow:0 2px 0 rgba(30,158,90,.10),0 10px 24px -18px rgba(30,158,90,.5);}
+  .qc-h{padding-bottom:10px;border-bottom:2px solid var(--gray-100);margin-bottom:12px;}
+  .qc-n{background:var(--c-ask);}
+  .qc.done .qc-n{background:var(--green);}
+  .qc-t{font-size:15px;}
+  .qc-q{background:#EEF2FF;border:1.5px solid #C7D2FE;border-left:5px solid var(--c-ask);
+        border-radius:0 12px 12px 0;color:#1E2A63;font-size:14.5px;padding:12px 15px;}
+  .qc-fig{background:#FFF9EC;border:1.5px dashed #E5C07B;border-left:5px solid var(--c-watch);border-radius:0 12px 12px 0;}
+  .qc-fig>summary{color:var(--c-watch);font-size:12.2px;padding:9px 13px;}
+  .qc-fig ul{color:#6B5326;}
+  .qc textarea{border:2px solid var(--gray-200);background:#fff;}
+  .qc textarea:focus{border-color:var(--c-score);box-shadow:0 0 0 3px rgba(230,62,120,.12);}
+
+  /* ── amit mondasz ── */
+  .ph-lead{background:#E9F8F2;border:1.5px solid #A8DFC9;border-left:5px solid var(--c-say);
+           border-radius:0 12px 12px 0;color:#0B4D3C;padding:12px 15px;font-size:14px;margin-bottom:12px;}
+  .ph-lead b{color:#07382B;}
+  .ph-cel{background:var(--gray-100);border:1px solid var(--gray-200);border-radius:10px;
+          padding:9px 12px;font-size:12.2px;color:#3F4557;margin-bottom:14px;}
+
+  /* ── pontozó sáv ── */
+  .qs{border-top:2px dashed var(--gray-200);padding-top:12px;margin-top:12px;}
+  .qs-l{font-size:13px;}
+  .qs-b button{border:2px solid var(--gray-200);font-size:15px;}
+  .qs-b button:hover{border-color:var(--c-score);color:var(--c-score);background:#FFF5F8;}
+  .qs-b button.on{background:var(--c-score);border-color:var(--c-score);color:#fff;
+                  box-shadow:0 4px 12px -4px rgba(230,62,120,.6);}
+
+  /* ── kemény szűrők ── */
+  .gt{border:2px solid #D9CCEF;background:#FCFAFF;border-radius:14px;padding:14px 15px;margin-bottom:14px;}
+  .gt>.gt-h{border-bottom:2px solid #EDE6F8;padding-bottom:8px;margin-bottom:10px;}
+  .gt>.gt-h b{color:var(--c-gate);font-size:14px;}
+  .gt.g{border-color:#7FD1AC;background:#F6FFFB;} .gt.g>.gt-h{border-bottom-color:#CBEEDD;}
+  .gt.y{border-color:#EBC46B;background:#FFFCF3;} .gt.y>.gt-h{border-bottom-color:#F5E3B9;}
+  .gt.r{border-color:#E79C9C;background:#FFF8F8;} .gt.r>.gt-h{border-bottom-color:#F3D2D2;}
+  .gt-l{font-size:11px;padding:4px 12px;border:1.5px solid transparent;}
+  .gt.g .gt-l{border-color:#7FD1AC;} .gt.y .gt-l{border-color:#EBC46B;} .gt.r .gt-l{border-color:#E79C9C;}
+  .gt-f{background:#E9F8F2;border:1.5px solid #A8DFC9;border-left:5px solid var(--c-say);
+        border-radius:0 10px 10px 0;color:#0B4D3C;padding:9px 12px;font-size:12.2px;}
+  .gt-q{background:#EEF2FF;border:1.5px solid #C7D2FE;border-left:5px solid var(--c-ask);
+        border-radius:0 10px 10px 0;color:#1E2A63;font-style:normal;padding:9px 12px;font-size:12.8px;margin-bottom:11px;}
+  .gt input,.gt select,.gt textarea{border:2px solid #DDD5EE;background:#fff;}
+  .gt input:focus,.gt select:focus,.gt textarea:focus{border-color:var(--c-gate);outline:none;}
+  .gt-k{background:#F6F3FC;border:1px solid #E3DAF3;border-radius:9px;padding:8px 11px;color:#5B4180;margin-top:10px;}
+  .gt.tch{border-color:#F0B7CE;background:#FFF9FC;}
+  .gt.tch>.gt-h{border-bottom-color:#F8D9E5;}
+  .gt.tch>.gt-h b{color:var(--c-score);}
+
+  /* ── red flag blokk ── */
+  #rfBox{border:2px solid #F0B7B7;background:#FFF9F9;}
+  #rfBox>label{color:var(--c-flag);}
+  #rfBox .redflag-check label{background:#fff;border:1.5px solid #F3DADA;border-radius:9px;
+     padding:8px 11px;cursor:pointer;transition:all .12s;}
+  #rfBox .redflag-check label:hover{border-color:#E79C9C;background:#FFF4F4;}
+  #rfBox .redflag-check label:has(input:checked){background:#FDECEC;border-color:var(--c-flag);color:#7F1D1D;font-weight:700;}
+  #rfBox .redflag-check input{width:17px;height:17px;accent-color:var(--c-flag);flex:0 0 17px;}
+
+  /* ── általános dobozok ── */
+  .scorebox{border:2px solid var(--gray-200);border-radius:16px;padding:16px 18px;
+            box-shadow:0 2px 0 rgba(15,21,48,.03),0 10px 24px -20px rgba(15,21,48,.35);}
+  .scorebox>label{font-size:13.5px;padding-bottom:9px;border-bottom:2px solid var(--gray-100);margin-bottom:12px;}
+  .info-card{border:2px solid var(--gray-200)!important;}
+  #kompBox{border-color:#BFD4F5;background:#FBFCFF;}
+  #kompBox>label{color:#22449B;border-bottom-color:#DDE6F8;}
+  #dontesBox{border-color:var(--gray-200);}
+  #dontesBox>label{color:var(--navy);}
+
+  /* ── panel-elválasztás ── */
+  #wsLeft>.ws-acc,#wsLeft>#flowWrap{margin-bottom:4px;}
+  #wsRight .scorebox{margin-bottom:16px;}
+  .ph-nav{border:2px solid var(--gray-200)!important;border-radius:14px;background:#fff;padding:12px 15px;}
+  .ph-nav .prim{box-shadow:0 4px 12px -5px rgba(15,21,48,.6);}
+
+  /* ── lépcső ── */
+  .wst{border-width:2px;}
+  .wst.ok{border-color:#7FD1AC;}
+  .wst.on{box-shadow:0 5px 14px -6px rgba(15,21,48,.7);}
+
+  /* ── nav: újraindítás gomb ── */
+  .nav a.nav-reset{border-color:#F0B7B7;color:var(--c-flag);background:#FFF6F6;font-weight:800;}
+  .nav a.nav-reset:hover{background:var(--c-flag);border-color:var(--c-flag);color:#fff;}
+
+  /* ── 0. kérdés kiemelése ── */
+  #qc_before{border-color:#BFD4F5;background:#FAFCFF;}
+  #qc_before .qc-n{background:#22449B;}
+
+  /* ── ws-acc ── */
+  .ws-acc{border-width:2px;}
+  .ws-acc>summary{font-size:13.5px;}
+
+  /* ── kompetencia sorok ── */
+  .komp-row{border-bottom:2px solid var(--gray-100);}
+  .komp-w{color:var(--c-score);}
 </style>
 </head>
 <body data-page="interviewer">
@@ -1047,12 +1158,7 @@
         <tr><td><b>100-ig</b></td><td>ajánlásokkal együtt nő magától — ez az első negyedév végállapota, nem induló követelmény</td><td>3. hónap</td></tr>
       </table>
 
-      <div class="card-grid" style="margin-top:12px;">
-        <div class="info-card"><h3>💎 Bizalomépítő húzás</h3><p>Mutasd meg a SAJÁT füzetedet: „Ez a 4. név lett az első ügyfelem, ma is az." A füzet így nem MLM-kellék, hanem egy működő praxis születési anyakönyve.</p></div>
-        <div class="info-card"><h3>🛡️ Miért nem MLM — mondd ki</h3><p>„Az MLM-ben a lista a rendszeré, és kicsavarja a kapcsolataidat. Nálunk a lista a tiéd, a cél a te tanulásod — és pont ezért kérdezem MOST, nem felvétel után."</p></div>
-      </div>
-
-      <div class="prx-watch">👁️ <b>Figyeld a reakciót:</b> ez a blokk a 🎯 Kemény adatok „10 név teszt"-jének
+            <div class="prx-watch">👁️ <b>Figyeld a reakciót:</b> ez a blokk a 🎯 Kemény adatok „10 név teszt"-jének
         előszobája. Aki itt megfeszül vagy kifogásol („az ismerőseimet nem keverném bele"),
         annál a warm market valójában nem elérhető → C besorolás, forrástól függetlenül.</div>
 
@@ -1479,9 +1585,7 @@ var RFLAGS=[
  {t:'Igénytelen beszéd, igénytelen írás, CV-hiba'},
  {t:'Az első kérdése a pénz volt'},
  {t:'Előző munkahelyét / főnökét szidta', sev:1},
- {t:'Nem tud saját kudarc-példát mondani'},
  {t:'„Majd meglátjuk" válaszok az idő-kérdésre'},
- {t:'MLM-múltról szélsőségesen beszél (imádta VAGY gyűlölte)'},
  {t:'🔴 Ellentmondásos, ellenőrizhetetlen történetek (hitelesség)', sev:1},
  {t:'🔴 Minden kudarcért másokat okol (felelősségvállalás)', sev:1},
  {t:'🔴 Kifejezetten elutasítja a teljesítményalapú munkát', sev:1, ko:1},
@@ -1678,7 +1782,8 @@ function _ph0(){
   +'</div>'
   +'<div class="fb-note"><b>Az első benyomás tájékoztató jellegű.</b> Nem számít bele a 0–100 indexbe, és nem helyettesíti a Kommunikáció kompetenciát — azt lent, bizonyíték alapján pontozod.</div>'
   +'<div class="field" style="margin-top:10px;"><label>Szabad jegyzet az első benyomáshoz</label><textarea id="qn_fb" placeholder="pl. pontosan érkezett, kézfogás rendben, kissé feszült az első percben" oninput="felvTouch()"></textarea></div>'
-  +'</div>';
+  +'</div>'
+  +'<div id="rfSlot"></div>';
 }
 function _ph1(){
   return '<div class="ph-lead">🎙️ „Most a múltadról kérdezek. Öt konkrét helyzetet kérek — mindenhol azt, hogy mi volt a helyzet, <b>te</b> mit csináltál, és mi lett a vége. Ha valamire nincs példád, mondd ki nyugodtan, az is információ."</div>'
@@ -1695,8 +1800,11 @@ function _ph2(){
   +'<li>Karrierút és a vezetővé válás logikája</li>'
   +'<li>Az első 90 nap: mi történik hétről hétre</li>'
   +'<li>Mit várunk el, és mit nem kérünk soha</li>'
-  +'</ul></div>'
-  +'<div class="gt" id="gtTeach">'
+  +'</ul></div>';
+}
+/* a tanítás a kemény szűrők blokk VÉGÉN történik, a visszakérés a prezentáció UTÁN */
+function _phTeach(){
+  return '<div class="gt tch" id="gtTeach">'
   +'<div class="gt-h"><b>🧠 Tanítási feladat — te választod ki</b></div>'
   +'<div class="gt-f">🎙️ A prezentáció ELŐTT taníts meg 30 másodpercben <b>egyetlen dolgot</b>. Bármi lehet, amit te magabiztosan elmagyarázol. Nem a tartalom számít, hanem hogy 10 perc múlva vissza tudja-e adni a saját szavaival.</div>'
   +'<div class="gt-grid">'
@@ -1706,7 +1814,7 @@ function _ph2(){
   +'<div class="gt-f2"><label>Vagy a saját feladatod</label><input type="text" id="gD_custom" placeholder="amit te szoktál tanítani" oninput="gChg()"></div>'
   +'</div>'
   +'<div class="gt-row"><button type="button" class="gt-btn" id="gTeachBtn" onclick="gTeach()">✅ Megtanítva</button><span class="gt-ts" id="gTeachTs"></span></div>'
-  +'<div class="gt-k">Ne kérdezz rá azonnal. A visszakérés a 22–28. perces szakaszban történik — <b>a késleltetés a lényeg</b>: az azonnali visszamondás csak memória, a késleltetett visszaadás valódi tanulás.</div>'
+  +'<div class="gt-k">Ne kérdezz rá azonnal. A visszakérés a <b>28–31. perces</b> szakaszban történik, a prezentáció után — a késleltetés a lényeg: az azonnali visszamondás csak memória, a késleltetett visszaadás valódi tanulás.</div>'
   +'</div>';
 }
 function _ph3(){
@@ -1760,10 +1868,18 @@ function _ph3(){
   +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gC_note" placeholder="mit mondott a leggyengébb hónapról / milyen tartaléka van" oninput="gChg()"></textarea></div>'
   +'<div class="gt-k">🟢 volt már és jól kezelte, vagy van konkrét anyagi terve · 🟡 nehezen viselte, vagy nyitott, de terv nélkül · 🔴 azonnali pénzkényszer vagy a teljesítményalapú munka elutasítása.</div></div>'
 
-  /* ── D: késleltetett coachability ── */
-  +'<div class="gt" id="gtD"><div class="gt-h"><b>🧠 D — Késleltetett coachability</b><span class="gt-l" id="gtD_l">nincs adat</span></div>'
-  +'<div class="gt-f" id="gD_state">A tanítás a prezentáció előtti szakaszban történik. Ha még nem tanítottad meg, ugorj vissza a 12–22 perces szakaszra.</div>'
-  +'<div class="gt-q">🎙️ „Visszaugranék egy pillanatra: el tudnád mondani a saját szavaiddal azt, amit az elején mutattam?"</div>'
+  /* ── E: forrás ── */
+  +'<div class="gt" id="gtE"><div class="gt-h"><b>🧭 E — Jelentkezési forrás</b><span class="gt-l" style="background:var(--gray-200);color:var(--gray-600)">csak kontextus</span></div>'
+  +'<div class="gt-q">Ez a blokk <b>nem számít bele az indexbe</b>. A célja a forrásspecifikus kockázat kiszűrése és a red flagek felismerése.</div>'
+  +'<div class="hard-src" id="srcHint"></div></div>'
+  /* ── a tanítás a szűrők után, közvetlenül a prezentáció előtt ── */
+  +_phTeach();
+}
+/* D szűrő — a prezentáció UTÁN kérdezzük vissza */
+function _phGateD(){
+  return '<div class="gt" id="gtD"><div class="gt-h"><b>🧠 D — Késleltetett coachability</b><span class="gt-l" id="gtD_l">nincs adat</span></div>'
+  +'<div class="gt-f" id="gD_state">A tanítás a prezentáció előtti szakaszban történik. Ha még nem tanítottad meg, ugorj vissza a kemény szűrők szakaszra.</div>'
+  +'<div class="gt-q">🎙️ „Visszaugranék egy pillanatra: el tudnád mondani a saját szavaiddal azt, amit a prezentáció előtt mutattam?"</div>'
   +'<div id="gD_btns" class="gt-row"></div>'
   +'<details class="qc-fig"><summary>Horgonyok</summary><ul>'
   +'<li><b>5</b> — saját szavaival, saját példával adja vissza, és alkalmazza is</li>'
@@ -1773,15 +1889,11 @@ function _ph3(){
   +'<li><b>1</b> — nem adja vissza, mellébeszél vagy témát vált</li>'
   +'</ul></details>'
   +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gD_note" placeholder="szó szerint, ahogy visszaadta" oninput="gChg()"></textarea></div>'
-  +'<div class="gt-k">Ez a pontszám <b>automatikusan beszámít</b> a „Tanulási sebesség és coachability" kompetenciába. 🟢 4–5 · 🟡 3 · 🔴 1–2</div></div>'
-
-  /* ── E: forrás ── */
-  +'<div class="gt" id="gtE"><div class="gt-h"><b>🧭 E — Jelentkezési forrás</b><span class="gt-l" style="background:var(--gray-200);color:var(--gray-600)">csak kontextus</span></div>'
-  +'<div class="gt-q">Ez a blokk <b>nem számít bele az indexbe</b>. A célja a forrásspecifikus kockázat kiszűrése és a red flagek felismerése.</div>'
-  +'<div class="hard-src" id="srcHint"></div></div>';
+  +'<div class="gt-k">Ez a pontszám <b>automatikusan beszámít</b> a „Tanulási sebesség és coachability" kompetenciába. 🟢 4–5 · 🟡 3 · 🔴 1–2</div></div>';
 }
 function _ph4(){
-  return '<div class="ph-lead">🎙️ „Most tiéd a terep: kérdezz bármit. Ami nem fér bele, arra a GYIK-ben is találsz választ."</div>'
+  return _phGateD()
+  +'<div class="ph-lead">🎙️ „Most tiéd a terep: kérdezz bármit. Ami nem fér bele, arra a GYIK-ben is találsz választ."</div>'
   +'<div class="ph-cel">⚠️ A kérdés hiánya <b>önmagában nem red flag</b>. Sok jó jelölt egyszerűen feszült. A kérdések <b>tartalma</b> mond többet, mint a mennyisége.</div>'
   +'<div class="qc"><div class="qc-h"><span class="qc-n">?</span><span class="qc-t">A jelölt kérdései</span></div>'
   +'<textarea id="cqNote" placeholder="Mit kérdezett, szó szerint — és mit árul el a kérdés arról, mi foglalkoztatja" oninput="felvTouch()"></textarea>'
@@ -1808,9 +1920,9 @@ function _ph5(){
 var FLOW=[
  {t:'0–2',   title:'Keretezés + első benyomás',                   cel:'A jelölt tudja, mi fog történni és mi lesz a vége. Az első benyomást most rögzítsd, amíg friss.', body:_ph0},
  {t:'2–12',  title:'Bizonyítékalapú kérdésblokk (5 kérdés)',      cel:'Múltbeli VISELKEDÉS, nem ígéret. Ez a szakasz adja a kompetencia-index gerincét.', body:_ph1},
- {t:'12–22', title:'Prezentáció — max 7 dia + 72-es szabály',     cel:'Te beszélsz. A végén tanítasz egy trükköt, amit később visszakérsz.', body:_ph2},
- {t:'22–28', title:'Kemény szűrők + késleltetett coachability',   cel:'A négy szűrő, ami önmagában is el tudja vinni a döntést. Külön státusz, nem az átlagban.', body:_ph3},
- {t:'28–31', title:'A jelölt kérdései',                           cel:'Kiderül, mi foglalkoztatja valójában. A kérdés hiánya önmagában nem red flag.', body:_ph4},
+ {t:'12–18', title:'Kemény szűrők',                               cel:'A szűrők, amik önmagukban is el tudják vinni a döntést. Külön státusz, nem az átlagban. A végén megtanítod a feladatot.', body:_ph3},
+ {t:'18–28', title:'Prezentáció — max 7 dia',                     cel:'Te beszélsz. Ez adja a késleltetést a coachability-teszthez.', body:_ph2},
+ {t:'28–31', title:'Coachability + a jelölt kérdései',            cel:'Visszakéred a tanított feladatot, aztán tiéd a terep. A kérdés hiánya önmagában nem red flag.', body:_ph4},
  {t:'31–35', title:'Értékelés, döntés, lezárás',                  cel:'Kimondott következő lépés és határidő, mindkét irányba.', body:_ph5}
 ];
 
@@ -1844,9 +1956,10 @@ function phBadges(){
   /* 0 */ st.push((+((document.getElementById('score-megjelenes')||{}).dataset||{}).score>0)?1:0);
   /* 1 */ var okq=0; QBANK.forEach(function(q){ var n=0; (q.pri||[]).forEach(function(k){ if(_qS[q.id]&&_qS[q.id][k]) n++; }); if(n>=(q.pri||[]).length) okq++; });
           st.push(okq===QBANK.length?1:(okq?0.5:0));
-  /* 2 */ st.push(_g.teach?1:0);
-  /* 3 */ var G=gateState(); var gn=['A','B','C','D'].filter(function(x){return G[x];}).length; st.push(gn===4?1:(gn?0.5:0));
-  /* 4 */ st.push((_v('cqNote')||_cq.none||_cq.great)?1:0);
+  /* 2 */ var G=gateState(); var gn=['A','B','C'].filter(function(x){return G[x];}).length;
+          st.push((gn===3&&_g.teach)?1:((gn||_g.teach)?0.5:0));
+  /* 3 */ st.push(_g.teach?1:0);
+  /* 4 */ st.push(((_v('cqNote')||_cq.none||_cq.great)&&G.D)?1:((_v('cqNote')||_cq.none||_cq.great||G.D)?0.5:0));
   /* 5 */ var potEl=document.querySelector('#potentialPicker .abc-card.selected'); st.push(potEl?1:0);
   st.forEach(function(v,i){
     var b=document.getElementById('phb'+i); if(!b) return;
@@ -2284,15 +2397,17 @@ function wsBuild(){
     var lbl=cb.querySelector('label'); if(lbl) lbl.style.display='none';
     L.appendChild(_mkAcc('👤 Jelölt adatai', cb, !_v('candName'))); }
   var fw=document.getElementById('flowWrap'); if(fw) L.appendChild(fw);
+  /* red flag blokk az első benyomás alá, a bal panelre */
+  var rfb=document.getElementById('rfBox'), slot=document.getElementById('rfSlot');
+  if(rfb && slot) slot.appendChild(rfb);
 
   /* ── jobb fejléc ── */
   var rh=document.createElement('div'); rh.className='ws-hd';
-  rh.innerHTML='<div class="ws-hd-t"><b>Eredmény</b><span>élőben, a diskurzusból</span>'
-    +'<button type="button" class="gt-btn ghost" style="margin-left:auto;padding:6px 12px;font-size:11px;" onclick="felvUjInterju()">🗑 Új interjú</button></div>';
+  rh.innerHTML='<div class="ws-hd-t"><b>Eredmény</b><span>élőben, a diskurzusból</span></div>';
   R.appendChild(rh);
 
   /* ── jobb törzs: döntés → kompetenciák → red flag → zárás → háttéranyag ── */
-  ['dontesBox','kompBox','rfBox'].forEach(function(id){ var e=document.getElementById(id); if(e) R.appendChild(e); });
+  ['dontesBox','kompBox'].forEach(function(id){ var e=document.getElementById(id); if(e) R.appendChild(e); });
   var z=document.getElementById('zaras-jegyzet'); if(z) R.appendChild(z);
   var mkw=document.getElementById('mkWrap');
   if(mkw) R.appendChild(_mkAcc('🗄️ Második körös kérdések és szituációk', mkw, false));
@@ -2306,8 +2421,9 @@ function wsBuild(){
   var nav=document.querySelector('.nav');
   if(nav){
     var a1=nav.querySelector('a[href="#kerdesbank"]'), a2=nav.querySelector('a[href="#pontozas"]'), a3=nav.querySelector('a[href="#masodikkor"]');
-    if(a1){ a1.textContent='◀ Diskurzus'; a1.setAttribute('href','#wsGrid'); a1.onclick=function(e){ e.preventDefault(); L.scrollTo({top:0,behavior:'smooth'}); }; }
-    if(a2){ a2.textContent='Eredmény ▶'; a2.setAttribute('href','#wsGrid'); a2.onclick=function(e){ e.preventDefault(); R.scrollTo({top:0,behavior:'smooth'}); }; }
+    if(a1){ a1.textContent='🔄 Felvételi újraindítása'; a1.className='nav-reset'; a1.setAttribute('href','#wsGrid');
+            a1.onclick=function(e){ e.preventDefault(); felvUjInterju(); }; }
+    if(a2){ a2.remove(); }
     if(a3){ a3.textContent='🗄️ Második kör'; a3.setAttribute('href','#wsGrid'); a3.onclick=function(e){ e.preventDefault(); var d=R.querySelectorAll('.ws-acc'); d=d[d.length-1]; if(d){ d.open=true; d.scrollIntoView({behavior:'smooth',block:'start'}); } }; }
   }
 
@@ -2328,7 +2444,7 @@ function wsFit(){
 }
 function wsSteps(){
   var w=document.getElementById('wsSteps'); if(!w) return;
-  var SH=['Keretezés','Kérdésblokk','Prezentáció','Kemény szűrők','Jelölt kérdései','Zárás'];
+  var SH=['Keretezés','Kérdésblokk','Kemény szűrők','Prezentáció','Coach + kérdések','Zárás'];
   w.innerHTML=FLOW.map(function(p,i){
     return '<button type="button" class="wst" id="wst'+i+'" onclick="phGo('+i+')" title="'+_esc(p.title)+'">'
      +'<span class="n"><em>'+(i+1)+'</em>'+p.t+'\'</span><span class="t">'+SH[i]+'</span></button>';
@@ -2639,9 +2755,9 @@ function felvReadToken(){
 var TMR_PHASES=[
   {t:0,  l:'0–2 · Keretezés + első benyomás'},
   {t:2,  l:'2–12 · Bizonyítékalapú kérdésblokk — 5 kérdés'},
-  {t:12, l:'12–22 · Prezentáció (max 7 dia) + 72-es szabály tanítása'},
-  {t:22, l:'22–28 · Kemény szűrők + késleltetett coachability'},
-  {t:28, l:'28–31 · A jelölt kérdései'},
+  {t:12, l:'12–18 · Kemény szűrők + a feladat megtanítása'},
+  {t:18, l:'18–28 · Prezentáció (max 7 dia)'},
+  {t:28, l:'28–31 · Coachability visszakérés + a jelölt kérdései'},
   {t:31, l:'31–35 · Értékelés, döntés, lezárás'}
 ];
 var _tmrT=null,_tmrLeft=35*60;
