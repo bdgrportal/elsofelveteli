@@ -1757,7 +1757,8 @@ function bfSet(v){ _g.before=(+_g.before===v?0:v); bfRender(); felvTouch(); dont
 function beforeState(){ var v=+_g.before||0; return v?(v>=8?'g':(v>=5?'y':'r')):''; }
 
 function _ph0(){
-  return '<div class="qc" id="qc_before">'
+  return '<div id="candSlot"></div>'
+  +'<div class="qc" id="qc_before">'
   +'<div class="qc-h"><span class="qc-n">0</span><span class="qc-t">Before-illeszkedés</span>'
   +'<span class="qc-k" style="background:var(--gray-100);color:var(--gray-600)">nem része a 0–100 indexnek</span></div>'
   +'<div class="qc-q">🎙️ A Before-interjúban adott válaszok alapján pontozd a jelöltet, hogy mennyire illeszkedik a minimumokhoz.</div>'
@@ -1767,7 +1768,6 @@ function _ph0(){
   +'<div class="qs-b qs-b10" id="bfBtns"></div></div>'
   +'<textarea id="qn_before" placeholder="Mi hangzott el a Before-interjúban? Mi miatt hívtad be? Mi az, amit itt ellenőrizni akarsz?" oninput="felvTouch()"></textarea>'
   +'</div>'
-  +'<div class="ph-lead">🎙️ <b>Mondd el szó szerint:</b><br>„'+_esc(KERET_TXT)+'"</div>'
   +'<div class="qc"><div class="qc-h"><span class="qc-n">0</span><span class="qc-t">Nyitókérdés</span></div>'
   +'<div class="qc-q">🎙️ Kérlek, 90 másodpercben mutatkozz be: mivel foglalkozol jelenleg, mi tölti ki a hetedet, és miért nézel most új lehetőséget?</div>'
   +'<div class="qc-w">Ez a kérdés <b>nem pontozódik</b>. A célja a keret és a nyitás. A tartalmát a lenti szabad jegyzetben rögzítsd, ha fontos mondat hangzik el.</div>'
@@ -1786,13 +1786,11 @@ function _ph0(){
   +'<div id="rfSlot"></div>';
 }
 function _ph1(){
-  return '<div class="ph-lead">🎙️ „Most a múltadról kérdezek. Öt konkrét helyzetet kérek — mindenhol azt, hogy mi volt a helyzet, <b>te</b> mit csináltál, és mi lett a vége. Ha valamire nincs példád, mondd ki nyugodtan, az is információ."</div>'
-   +'<div class="ph-cel">⏱ Kérdésenként kb. 2 perc. Ha egy kérdésnél nem jön példa, ne erőltesd 2 percnél tovább — inkább menj tovább, és a hiányt jelöld az „általános válasz" címkével.</div>'
+  return '<div class="ph-cel">⏱ Kérdésenként kb. 2 perc. Ha egy kérdésnél nem jön példa, ne erőltesd 2 percnél tovább — inkább menj tovább, és a hiányt jelöld az „általános válasz" címkével.</div>'
    +QBANK.map(_qcHtml).join('');
 }
 function _ph2(){
-  return '<div class="ph-lead">🎙️ Most te beszélsz. <b>Maximum 7 dia, 10 perc.</b> A Cégbemutató / Karrier / Jutalék szekciók anyagát használd — ezek változatlanok, a bal oldali navigációból éred el őket.</div>'
-  +'<div class="qc-w"><b>Mi fér bele 7 diába?</b><ul>'
+  return '<div class="qc-w"><b>Mi fér bele 7 diába?</b><ul>'
   +'<li>Kik vagyunk, mekkora a piac, miért független tanácsadás</li>'
   +'<li>Mit csinál egy tanácsadó egy héten — konkrétan</li>'
   +'<li>Képzés és vizsga: mi a menetrend, meddig tart</li>'
@@ -1818,12 +1816,10 @@ function _phTeach(){
   +'</div>';
 }
 function _ph3(){
-  return '<div class="ph-lead">🎙️ „Most jön néhány konkrét kérdés, amitől függ, tudunk-e egyáltalán elindulni. Nincs jó válasz, őszinte válasz van — ezen múlik, hogy jó helyre jössz-e."</div>'
-  +'<div class="ph-cel">Ezek a szűrők <b>nem számítanak bele a kompetencia-átlagba</b>. Külön zöld / sárga / piros státuszt kapnak, és önállóan is el tudják vinni a döntést.</div>'
+  return '<div class="ph-cel">Ezek a szűrők <b>nem számítanak bele a kompetencia-átlagba</b>. Külön zöld / sárga / piros státuszt kapnak, és önállóan is el tudják vinni a döntést.</div>'
 
   /* ── A: időkapacitás ── */
   +'<div class="gt" id="gtA"><div class="gt-h"><b>⏰ A — Valós időkapacitás</b><span class="gt-l" id="gtA_l">nincs adat</span></div>'
-  +'<div class="gt-f">🎙️ „Nem az érdekel, mennyi időd LENNE, hanem mennyi VAN. Ezért nem a jövőt kérdezem, hanem a múltat: vegyük végig a múlt hetedet napról napra, nagyjából reggeltől estig."</div>'
   +'<div class="gt-q">Menj végig hétfőtől vasárnapig. UTÁNA kérdezd: „Ebben a hétben hol lett volna hely erre a munkára, és mennyi?"</div>'
   +'<div class="gt-grid">'
   +'<div class="gt-f2"><label>Reális óra / hét</label><input type="number" id="gA_hours" min="0" max="80" placeholder="pl. 15" oninput="gChg()"></div>'
@@ -1838,8 +1834,7 @@ function _ph3(){
 
   /* ── B: praxisindítás ── */
   +'<div class="gt" id="gtB"><div class="gt-h"><b>📇 B — Praxisindítás (warm market)</b><span class="gt-l" id="gtB_l">nincs adat</span></div>'
-  +'<div class="gt-f">🎙️ Előbb a keret (Praxis-alap szekció): „Ez a szakma úgy működik, mint a fodrászé: az első ügyfeleid onnan jönnek, akik már ismernek. Nálunk senki nem kezd hideghívással, és az első körben nem eladsz — gyakorolsz. A lista, amit építesz, a tiéd marad."</div>'
-  +'<div class="gt-q">„Játsszunk el ezzel egy percet: kik jutnak eszedbe, akiknek szívesen segítenél egy ingyenes elemzéssel? Mondd a neveket, ahogy jönnek — keresztnév is elég. Egy perced van, én számolom."</div>'
+  +'<div class="gt-q">„Az ösztöndíj programunkban 200.000 Ft-ból 80.000 Ft-ot adunk új kollégáinknak a gyakornoki elemzéseikre, amit el tudnak végezni könnyedén, ismerősi és baráti körben — egyszerű, mert 1-2 hét alatt megvan, és közben megtanulják az elemzést a gyakorlatban. Ki az a 8-10 ember, akinek a környezetedből hasznos lenne egy elemzés, és te is szívesen gyakorolnál vele?"</div>'
   +'<div class="gt-row"><button type="button" class="gt-btn" id="gBtimer" onclick="gBStart()">▶ 60 mp indítása</button>'
   +'<span class="gt-cnt" id="gBclock">60</span>'
   +'<span style="font-size:11.5px;color:var(--gray-400);">A számláló hangjelzés nélkül áll le — ne szakítsd félbe a jelöltet.</span></div>'
@@ -1854,7 +1849,6 @@ function _ph3(){
 
   /* ── C: jutaléktűrés ── */
   +'<div class="gt" id="gtC"><div class="gt-h"><b>💰 C — Jutaléktűrés</b><span class="gt-l" id="gtC_l">nincs adat</span></div>'
-  +'<div class="gt-f">🎙️ „Erre nincs jó válasz, őszintét kérek — ezen múlik, hogy jó helyre jössz-e."</div>'
   +'<div class="gt-q">„Volt már olyan bevételed, ami a teljesítményedtől függött? Ha igen: milyen volt a leggyengébb hónap, és mit csináltál akkor? Ha nem: miből élsz meg az első 2–3 hónapban, amíg felpörög?"</div>'
   +'<select id="gC_sel" onchange="gChg()">'
   +'<option value="">— válassz —</option>'
@@ -1868,12 +1862,10 @@ function _ph3(){
   +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gC_note" placeholder="mit mondott a leggyengébb hónapról / milyen tartaléka van" oninput="gChg()"></textarea></div>'
   +'<div class="gt-k">🟢 volt már és jól kezelte, vagy van konkrét anyagi terve · 🟡 nehezen viselte, vagy nyitott, de terv nélkül · 🔴 azonnali pénzkényszer vagy a teljesítményalapú munka elutasítása.</div></div>'
 
-  /* ── E: forrás ── */
-  +'<div class="gt" id="gtE"><div class="gt-h"><b>🧭 E — Jelentkezési forrás</b><span class="gt-l" style="background:var(--gray-200);color:var(--gray-600)">csak kontextus</span></div>'
-  +'<div class="gt-q">Ez a blokk <b>nem számít bele az indexbe</b>. A célja a forrásspecifikus kockázat kiszűrése és a red flagek felismerése.</div>'
-  +'<div class="hard-src" id="srcHint"></div></div>'
-  /* ── a tanítás a szűrők után, közvetlenül a prezentáció előtt ── */
-  +_phTeach();
+  ;
+  /* E — Jelentkezési forrás: kivéve, a keretezéskor úgyis megkérdezzük.
+     Tanítási feladat + D — késleltetett coachability: kivéve, a 2. körös
+     interjún a jelölt kap egy 5 perces próbafeladatot. */
 }
 /* D szűrő — a prezentáció UTÁN kérdezzük vissza */
 function _phGateD(){
@@ -1892,9 +1884,7 @@ function _phGateD(){
   +'<div class="gt-k">Ez a pontszám <b>automatikusan beszámít</b> a „Tanulási sebesség és coachability" kompetenciába. 🟢 4–5 · 🟡 3 · 🔴 1–2</div></div>';
 }
 function _ph4(){
-  return _phGateD()
-  +'<div class="ph-lead">🎙️ „Most tiéd a terep: kérdezz bármit. Ami nem fér bele, arra a GYIK-ben is találsz választ."</div>'
-  +'<div class="ph-cel">⚠️ A kérdés hiánya <b>önmagában nem red flag</b>. Sok jó jelölt egyszerűen feszült. A kérdések <b>tartalma</b> mond többet, mint a mennyisége.</div>'
+  return '<div class="ph-cel">⚠️ A kérdés hiánya <b>önmagában nem red flag</b>. Sok jó jelölt egyszerűen feszült. A kérdések <b>tartalma</b> mond többet, mint a mennyisége.</div>'
   +'<div class="qc"><div class="qc-h"><span class="qc-n">?</span><span class="qc-t">A jelölt kérdései</span></div>'
   +'<textarea id="cqNote" placeholder="Mit kérdezett, szó szerint — és mit árul el a kérdés arról, mi foglalkoztatja" oninput="felvTouch()"></textarea>'
   +'<div class="cq-mark">'
@@ -1920,9 +1910,9 @@ function _ph5(){
 var FLOW=[
  {t:'0–2',   title:'Keretezés + első benyomás',                   cel:'A jelölt tudja, mi fog történni és mi lesz a vége. Az első benyomást most rögzítsd, amíg friss.', body:_ph0},
  {t:'2–12',  title:'Bizonyítékalapú kérdésblokk (5 kérdés)',      cel:'Múltbeli VISELKEDÉS, nem ígéret. Ez a szakasz adja a kompetencia-index gerincét.', body:_ph1},
- {t:'12–18', title:'Kemény szűrők',                               cel:'A szűrők, amik önmagukban is el tudják vinni a döntést. Külön státusz, nem az átlagban. A végén megtanítod a feladatot.', body:_ph3},
+ {t:'12–18', title:'Kemény szűrők',                               cel:'A szűrők, amik önmagukban is el tudják vinni a döntést. Külön státusz, nem az átlagban.', body:_ph3},
  {t:'18–28', title:'Prezentáció — max 7 dia',                     cel:'Te beszélsz. Ez adja a késleltetést a coachability-teszthez.', body:_ph2},
- {t:'28–31', title:'Coachability + a jelölt kérdései',            cel:'Visszakéred a tanított feladatot, aztán tiéd a terep. A kérdés hiánya önmagában nem red flag.', body:_ph4},
+ {t:'28–31', title:'A jelölt kérdései',                           cel:'Tiéd a terep: kérdezzen bármit. A kérdés hiánya önmagában nem red flag.', body:_ph4},
  {t:'31–35', title:'Értékelés, döntés, lezárás',                  cel:'Kimondott következő lépés és határidő, mindkét irányba.', body:_ph5}
 ];
 
@@ -1957,9 +1947,9 @@ function phBadges(){
   /* 1 */ var okq=0; QBANK.forEach(function(q){ var n=0; (q.pri||[]).forEach(function(k){ if(_qS[q.id]&&_qS[q.id][k]) n++; }); if(n>=(q.pri||[]).length) okq++; });
           st.push(okq===QBANK.length?1:(okq?0.5:0));
   /* 2 */ var G=gateState(); var gn=['A','B','C'].filter(function(x){return G[x];}).length;
-          st.push((gn===3&&_g.teach)?1:((gn||_g.teach)?0.5:0));
-  /* 3 */ st.push(_g.teach?1:0);
-  /* 4 */ st.push(((_v('cqNote')||_cq.none||_cq.great)&&G.D)?1:((_v('cqNote')||_cq.none||_cq.great||G.D)?0.5:0));
+          st.push(gn===3?1:(gn?0.5:0));
+  /* 3 */ st.push(1);   /* prezentáció — nincs mit kipipálni, mindig kész */
+  /* 4 */ st.push((_v('cqNote')||_cq.none||_cq.great)?1:0);
   /* 5 */ var potEl=document.querySelector('#potentialPicker .abc-card.selected'); st.push(potEl?1:0);
   st.forEach(function(v,i){
     var b=document.getElementById('phb'+i); if(!b) return;
@@ -2024,8 +2014,8 @@ function gateState(){
   }
   var c=_g.gC_sel||'';
   if(c) C = (c==='volt_jo'||c==='terv_ok')?'g':((c==='fix'||c==='elutasit')?'r':'y');
-  var d=+_g.gD||0;
-  if(d) D = d>=4?'g':(d===3?'y':'r');
+  /* D (késleltetett coachability) megszűnt — üresen marad, hogy a régi,
+     mentett interjúk se dobjanak hibát. */
   return {A:A,B:B,C:C,D:D};
 }
 function gRender(){
@@ -2392,11 +2382,14 @@ function wsBuild(){
   if(bar){ bar.style.margin='0 0 9px'; bar.style.height='7px'; lh.querySelector('#__bar').replaceWith(bar); }
 
   /* ── bal törzs ── */
-  var cb=document.getElementById('candBox');
-  if(cb){ cb.style.border='none'; cb.style.padding='0'; cb.style.margin='0';
-    var lbl=cb.querySelector('label'); if(lbl) lbl.style.display='none';
-    L.appendChild(_mkAcc('👤 Jelölt adatai', cb, !_v('candName'))); }
   var fw=document.getElementById('flowWrap'); if(fw) L.appendChild(fw);
+  /* A jelölt adatai KIZÁRÓLAG az 1. szakaszban (Keretezés) látszik.
+     Ezért nem a bal panelre tesszük, hanem a _ph0 belsejében lévő
+     #candSlot-ba — így a többi fülre váltva magától eltűnik. */
+  var cb=document.getElementById('candBox'), cs=document.getElementById('candSlot');
+  if(cb && cs){ cb.style.border='none'; cb.style.padding='0'; cb.style.margin='0';
+    var lbl=cb.querySelector('label'); if(lbl) lbl.style.display='none';
+    cs.appendChild(_mkAcc('👤 Jelölt adatai', cb, !_v('candName'))); }
   /* red flag blokk az első benyomás alá, a bal panelre */
   var rfb=document.getElementById('rfBox'), slot=document.getElementById('rfSlot');
   if(rfb && slot) slot.appendChild(rfb);
