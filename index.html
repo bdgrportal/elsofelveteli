@@ -695,6 +695,31 @@
   /* ── kompetencia sorok ── */
   .komp-row{border-bottom:2px solid var(--gray-100);}
   .komp-w{color:var(--c-score);}
+  /* ══ PREZI INDÍTÓ + TELJES KÉPERNYŐS FUTTATÁS ══════════════════════════ */
+  .prezi-launch{border:2px solid var(--navy);border-radius:16px;padding:18px 20px;margin-top:4px;
+    background:linear-gradient(135deg,#0F1530,#1B2350);color:#fff;
+    box-shadow:0 14px 34px -18px rgba(15,21,48,.9);}
+  .prezi-launch .pl-t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;margin-bottom:6px;}
+  .prezi-launch .pl-d{font-size:12.5px;color:#C7CBE0;line-height:1.55;margin-bottom:14px;}
+  .prezi-launch .pl-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .pl-btn{background:var(--pink);border:none;color:#fff;border-radius:999px;padding:12px 26px;
+    font-family:'Poppins',sans-serif;font-weight:800;font-size:14px;cursor:pointer;
+    box-shadow:0 8px 22px -8px rgba(230,62,120,.9);}
+  .pl-btn:hover{background:#F04C86;}
+  .pl-alt{color:#9FB4E8;font-size:12px;font-weight:700;text-decoration:none;}
+  .pl-alt:hover{color:#fff;text-decoration:underline;}
+  .prezi-launch .pl-n{font-size:11px;color:#8189A8;margin-top:12px;line-height:1.5;}
+  .prezi-launch .pl-n b{color:#C7CBE0;}
+  #preziOv{position:fixed;inset:0;z-index:900;background:#04182b;display:none;}
+  #preziOv.on{display:block;}
+  .prezi-fr{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#04182b;z-index:2;}
+  .prezi-x{position:absolute;top:14px;left:16px;z-index:5;background:rgba(4,24,43,.78);color:#fff;
+    border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:9px 18px;
+    font-family:'Poppins',sans-serif;font-weight:700;font-size:12.5px;cursor:pointer;}
+  .prezi-x:hover{background:var(--pink);border-color:var(--pink);}
+  .prezi-fb{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:1;
+    color:#9FB4E8;font-size:14px;line-height:1.6;padding:40px;}
+  .prezi-fb a{color:#fff;}
 </style>
 </head>
 <body data-page="interviewer">
@@ -1769,7 +1794,14 @@ function _ph1(){
    +QBANK.map(_qcHtml).join('');
 }
 function _ph2(){
-  return '<div class="qc-w"><b>Mi fér bele 7 diába?</b><ul>'
+  return '<div class="prezi-launch">'
+  +'<div class="pl-t">🎬 Vezetői prezentáció - 25 dia</div>'
+  +'<div class="pl-d">Cégbemutató · a munka · képzés · jövedelem · az első 90 nap · a keret. Minden diához előadói jegyzet tartozik (N billentyű).</div>'
+  +'<div class="pl-row"><button type="button" class="pl-btn" onclick="preziOpen()">▶ Prezentáció indítása</button>'
+  +'<a class="pl-alt" href="prezi.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
+  +'<div class="pl-n">Vezérlés: <b>← →</b> vagy kattintás · <b>N</b> előadói jegyzet · <b>F</b> teljes képernyő. Visszalépés az interjúhoz a bal felső <b>✕</b> gombbal.</div>'
+  +'</div>'
+  +'<div class="qc-w" style="margin-top:12px;"><b>Mi fér bele 7 diába?</b><ul>'
   +'<li>Kik vagyunk, mekkora a piac, miért független tanácsadás</li>'
   +'<li>Mit csinál egy tanácsadó egy héten - konkrétan</li>'
   +'<li>Képzés és vizsga: mi a menetrend, meddig tart</li>'
@@ -1779,6 +1811,28 @@ function _ph2(){
   +'<li>Mit várunk el, és mit nem kérünk soha</li>'
   +'</ul></div>';
 }
+/* ── a prezentáció teljes képernyős futtatása az oldalon belül ── */
+function preziOpen(){
+  var ov=document.getElementById('preziOv');
+  if(!ov){
+    ov=document.createElement('div'); ov.id='preziOv';
+    ov.innerHTML='<button class="prezi-x" onclick="preziClose()">✕ Vissza az interjúhoz</button>'
+      +'<div class="prezi-fb">Ha itt üres marad, a <b>prezi.html</b> még nincs feltöltve a repóba. '
+      +'<a href="prezi.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
+      +'<iframe class="prezi-fr" src="prezi.html" allow="fullscreen" allowfullscreen title="Vezetői prezentáció"></iframe>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click', function(e){ if(e.target===ov) preziClose(); });
+  }
+  ov.classList.add('on');
+  var fr=ov.querySelector('.prezi-fr'); if(fr && !fr.getAttribute('src')) fr.setAttribute('src','prezi.html');
+  setTimeout(function(){ try{ ov.querySelector('.prezi-fr').contentWindow.focus(); }catch(e){} }, 250);
+}
+function preziClose(){
+  var ov=document.getElementById('preziOv'); if(ov) ov.classList.remove('on');
+}
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ var ov=document.getElementById('preziOv'); if(ov && ov.classList.contains('on')) preziClose(); }
+});
 /* A tanítási feladat blokkja törölve (2. körben élő feladatot kap). */
 function _ph3(){
   return '<div class="ph-cel">Ezek a szűrők <b>nem számítanak bele a kompetencia-átlagba</b>. Külön zöld / sárga / piros státuszt kapnak, és önállóan is el tudják vinni a döntést.</div>'
