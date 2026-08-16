@@ -1558,19 +1558,6 @@ var QBANK=[
        'A történet a kapcsolódásról szól, vagy csak a saját szorongásáról?']}
 ];
 
-/* ── választható tanítási feladatok (a vezető szabadon dönt) ──────────── */
-var GD_TASKS=['',
- '72-es szabály: 72 osztva a hozammal = hány év alatt duplázódik a pénz',
- 'Infláció és reálhozam: a névleges hozamból le kell vonni az inflációt',
- 'Kockázat és hozam: magasabb hozam csak nagyobb ingadozással jár',
- 'Vésztartalék: 3-6 havi kiadás, azonnal elérhető formában',
- 'TBSZ 3+2: az ötödik év végén nulla kamatadó',
- 'Diverzifikáció: miért nem egy lapra teszünk mindent',
- 'Kamatos kamat: miért a korai kezdés a legerősebb tényező'
-];
-function gDTask(){ return (_g.gD_custom||'').trim() || (_g.gD_task||'').trim(); }
-
-/* ── KEMÉNY SZŰRŐK (22-28. perc) - NEM részei a kompetencia-átlagnak ──── */
 var GATE_LBL={g:'ZÖLD',y:'SÁRGA',r:'PIROS','':'nincs adat'};
 
 /* ── RED FLAGEK (sev = súlyos, ko = önmagában kiütő) ──────────────────── */
@@ -1619,7 +1606,7 @@ var _asvT=null;
 var FELV_IDS=['candName','candDate','candInterviewer','candSource','candPhone','candOccupation',
  'noteFree','elteresOk','masodikKorHipotezis','nextStep','nextDeadline','cqNote',
  'gA_hours','gA_days','gA_slots','gA_fix','gA_note',
- 'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'];
+ 'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_mnb','gD_elearn','gD_note'];
 
 function felvCollect(){
   var f={};
@@ -1792,21 +1779,7 @@ function _ph2(){
   +'<li>Mit várunk el, és mit nem kérünk soha</li>'
   +'</ul></div>';
 }
-/* a tanítás a kemény szűrők blokk VÉGÉN történik, a visszakérés a prezentáció UTÁN */
-function _phTeach(){
-  return '<div class="gt tch" id="gtTeach">'
-  +'<div class="gt-h"><b>🧠 Tanítási feladat - te választod ki</b></div>'
-  +'<div class="gt-f">🎙️ A prezentáció ELŐTT taníts meg 30 másodpercben <b>egyetlen dolgot</b>. Bármi lehet, amit te magabiztosan elmagyarázol. Nem a tartalom számít, hanem hogy 10 perc múlva vissza tudja-e adni a saját szavaival.</div>'
-  +'<div class="gt-grid">'
-  +'<div class="gt-f2"><label>Válassz feladatot</label><select id="gD_task" onchange="gChg()">'
-  +GD_TASKS.map(function(t){ return '<option value="'+_esc(t)+'">'+_esc(t||'- válassz, vagy írj sajátot -')+'</option>'; }).join('')
-  +'</select></div>'
-  +'<div class="gt-f2"><label>Vagy a saját feladatod</label><input type="text" id="gD_custom" placeholder="amit te szoktál tanítani" oninput="gChg()"></div>'
-  +'</div>'
-  +'<div class="gt-row"><button type="button" class="gt-btn" id="gTeachBtn" onclick="gTeach()">✅ Megtanítva</button><span class="gt-ts" id="gTeachTs"></span></div>'
-  +'<div class="gt-k">Ne kérdezz rá azonnal. A visszakérés a <b>28-31. perces</b> szakaszban történik, a prezentáció után - a késleltetés a lényeg: az azonnali visszamondás csak memória, a késleltetett visszaadás valódi tanulás.</div>'
-  +'</div>';
-}
+/* A tanítási feladat blokkja törölve (2. körben élő feladatot kap). */
 function _ph3(){
   return '<div class="ph-cel">Ezek a szűrők <b>nem számítanak bele a kompetencia-átlagba</b>. Külön zöld / sárga / piros státuszt kapnak, és önállóan is el tudják vinni a döntést.</div>'
 
@@ -1854,10 +1827,28 @@ function _ph3(){
   +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gC_note" placeholder="mit mondott a leggyengébb hónapról / milyen tartaléka van" oninput="gChg()"></textarea></div>'
   +'<div class="gt-k">🟢 volt már és jól kezelte, vagy van konkrét anyagi terve · 🟡 nehezen viselte, vagy nyitott, de terv nélkül · 🔴 azonnali pénzkényszer vagy a teljesítményalapú munka elutasítása.</div></div>'
 
+  /* ── D: képzés-vállalás (belépési feltétel, nincs alóla kivétel) ── */
+  +'<div class="gt" id="gtD"><div class="gt-h"><b>🎓 D - Képzés-vállalás</b><span class="gt-l" id="gtD_l">nincs adat</span></div>'
+  +'<div class="gt-q">„Ahhoz, hogy egyáltalán elindulhass, két képzés kötelező. Nézzük meg, hogy ezek beleférnek-e az életedbe."</div>'
+  +'<div class="gt-grid">'
+  +'<div class="gt-f2"><label>4 napos MNB képzés + vizsga</label><select id="gD_mnb" onchange="gChg()">'
+  +'<option value="">- válassz -</option>'
+  +'<option value="igen">✅ vállalja, be tudja osztani</option>'
+  +'<option value="talan">🤔 szeretné, de időzítést kell keresni</option>'
+  +'<option value="nem">🚩 nem tudja vagy nem akarja vállalni</option>'
+  +'</select></div>'
+  +'<div class="gt-f2"><label>4 napos irodai e-learning (Google Classroom)</label><select id="gD_elearn" onchange="gChg()">'
+  +'<option value="">- válassz -</option>'
+  +'<option value="igen">✅ vállalja, be tudja osztani</option>'
+  +'<option value="talan">🤔 szeretné, de időzítést kell keresni</option>'
+  +'<option value="nem">🚩 nem tudja vagy nem akarja vállalni</option>'
+  +'</select></div>'
+  +'</div>'
+  +'<div class="gt-f2" style="margin-top:9px;"><label>Jegyzet</label><textarea id="gD_note" placeholder="mikorra tudja betenni, mi az akadály, milyen időzítés jöhet szóba" oninput="gChg()"></textarea></div>'
+  +'<div class="gt-k">🟢 mindkettőt vállalja · 🟡 legalább az egyiknél időzítést kell keresni · 🔴 bármelyiket elutasítja. Az MNB vizsga nélkül jogszabály szerint nem lehet elindulni, ezért a piros itt önmagában is elviszi a döntést.</div></div>'
   ;
   /* E - Jelentkezési forrás: kivéve, a keretezéskor úgyis megkérdezzük.
-     Tanítási feladat + D - késleltetett coachability: kivéve, a 2. körös
-     interjún a jelölt kap egy 5 perces próbafeladatot. */
+     Tanítási feladat: kivéve, a 2. körös interjún a jelölt élő feladatot kap. */
 }
 /* D szűrő - a prezentáció UTÁN kérdezzük vissza */
 function _phGateD(){
@@ -1981,14 +1972,10 @@ var _flowManual=false;
 /* ══ KEMÉNY SZŰRŐK LOGIKÁJA ═══════════════════════════════════════════ */
 function gChg(){
   ['gA_hours','gA_days','gA_slots','gA_fix','gA_note',
-   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'].forEach(function(id){
+   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_mnb','gD_elearn','gD_note'].forEach(function(id){
     var e=document.getElementById(id); if(e) _g[id]=e.value;
   });
   gRender(); felvTouch(); if(typeof kompRender==='function') kompRender(); sdRender(); phBadges();
-}
-function gTeach(){
-  _g.teach=new Date().toISOString();
-  gRender(); felvTouch(); phBadges();
 }
 var _gBt=null,_gBleft=60;
 function gBStart(){
@@ -2000,7 +1987,6 @@ function gBStart(){
     if(!_gBleft){ clearInterval(_gBt); _gBt=null; var b=document.getElementById('gBtimer'); if(b) b.textContent='↻ Újra'; }
   },1000);
 }
-function gDSet(v){ _g.gD=(_g.gD===v?0:v); gRender(); felvTouch(); if(typeof kompRender==='function') kompRender(); sdRender(); phBadges(); }
 
 function gateState(){
   var A='',B='',C='',D='';
@@ -2017,8 +2003,13 @@ function gateState(){
   }
   var c=_g.gC_sel||'';
   if(c) C = (c==='volt_jo'||c==='terv_ok')?'g':((c==='fix'||c==='elutasit')?'r':'y');
-  /* D (késleltetett coachability) megszűnt - üresen marad, hogy a régi,
-     mentett interjúk se dobjanak hibát. */
+  /* D: képzés-vállalás. Piros, ha bármelyik kötelező képzést elutasítja. */
+  var m=_g.gD_mnb||'', el=_g.gD_elearn||'';
+  if(m && el){
+    if(m==='nem' || el==='nem') D='r';
+    else if(m==='igen' && el==='igen') D='g';
+    else D='y';
+  }
   return {A:A,B:B,C:C,D:D};
 }
 function gRender(){
@@ -2028,29 +2019,7 @@ function gRender(){
     if(card){ card.classList.remove('g','y','r'); if(G[x]) card.classList.add(G[x]); }
     if(lbl) lbl.textContent=GATE_LBL[G[x]||''];
   });
-  var ts=document.getElementById('gTeachTs'), btn=document.getElementById('gTeachBtn'), stt=document.getElementById('gD_state');
-  var task=gDTask();
-  if(_g.teach){
-    var t=new Date(_g.teach);
-    if(ts) ts.textContent='✔ megtanítva '+t.toTimeString().slice(0,5)+'-kor';
-    if(btn){ btn.textContent='✅ Megtanítva'; btn.classList.add('ghost'); }
-    if(stt) stt.innerHTML='✔ <b>'+t.toTimeString().slice(0,5)+'</b>-kor tanítottad meg'+(task?(': <b>'+_esc(task)+'</b>'):'')+'. Most kérheted vissza.';
-  } else {
-    if(ts) ts.textContent='';
-    if(stt) stt.innerHTML=task
-      ? ('Kiválasztott feladat: <b>'+_esc(task)+'</b> - a tanítás a 12-22 perces szakaszban történik.')
-      : 'Előbb válassz tanítási feladatot a 12-22 perces szakaszban, és tanítsd meg.';
-  }
-  var tsel=document.getElementById('gD_task');
-  if(tsel && _g.gD_task!=null && tsel.value!==_g.gD_task) tsel.value=_g.gD_task;
-  var db=document.getElementById('gD_btns');
-  if(db){
-    var h='<span style="font-size:12.5px;font-weight:700;color:var(--navy);">Pontszám:</span><div class="qs-b">';
-    for(var i=1;i<=5;i++) h+='<button type="button" class="'+((+_g.gD===i)?'on':'')+'" onclick="gDSet('+i+')">'+i+'</button>';
-    h+='</div>';
-    if(!_g.teach) h+='<span style="font-size:11.5px;color:#b45309;font-weight:600;">Előbb tanítsd meg a feladatot (12-22. perc).</span>';
-    db.innerHTML=h;
-  }
+  /* a D szűrő mezőit a felvCollect/felvApply kezeli, itt nincs külön teendő */
 }
 
 /* ══ JELÖLT KÉRDÉSEI ══════════════════════════════════════════════════ */
@@ -2120,7 +2089,6 @@ function kompSrc(k){
     var v=_qS[q.id]&&_qS[q.id][k];
     if(v) out.push({s:q.cim, v:v});
   });
-  if(k==='tanulas' && +_g.gD) out.push({s:'késleltetett tanítás', v:+_g.gD});
   return out;
 }
 function kompResult(){
@@ -2248,6 +2216,7 @@ function dontesResult(){
   if(K.pct<62) ko.push('A kompetencia-index 62 alatt van ('+K.pct+').');
   if(G.A==='r') ko.push('Valós időkapacitás PIROS: 8 óra/hét alatt nem indítható.');
   if(_g.gC_sel==='elutasit') ko.push('Kifejezetten elutasítja a teljesítményalapú munkát.');
+  if(G.D==='r') ko.push('Nem vállalja a kötelező képzést (MNB vizsga vagy irodai e-learning) - enélkül nem indítható.');
   rf.forEach(function(x){ if(x.ko) ko.push(x.t.replace('🔴 ','')); });
   rfSev.forEach(function(x){ if(!x.ko) ko.push('Súlyos red flag: '+x.t.replace('🔴 ','')); });
 
@@ -2294,7 +2263,7 @@ function dontesRender(){
            'B':'B - feltételesen, célzott vizsgálattal','C':'C - nem javasolt'}[D.cat]||'Nincs elég adat a javaslathoz';
   var gh='<span class="'+(beforeState()||'')+'">Before '+((+_g.before)?(_g.before+'/10'):'-')+'</span>'
    +['A','B','C','D'].map(function(x){
-    var s=D.G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Coach'}[x];
+    var s=D.G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Képzés'}[x];
     return '<span class="'+s+'">'+n+' '+(s==='g'?'🟢':s==='y'?'🟡':s==='r'?'🔴':'-')+'</span>';
   }).join('');
   var blockers=felvBlockers();
@@ -2324,7 +2293,7 @@ function sdRender(){
   }).join('');
   var gh='<span class="'+(beforeState()||'')+'">Before</span>'
    +['A','B','C','D'].map(function(x){
-    var s=G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Coach'}[x];
+    var s=G[x]||''; var n={A:'Idő',B:'Praxis',C:'Jutalék',D:'Képzés'}[x];
     return '<span class="'+s+'">'+n+'</span>';
   }).join('');
   var elapsed=35*60-_tmrLeft, perc=Math.floor(elapsed/60);
@@ -2461,7 +2430,7 @@ function felvInit(){
   felvRestoreLocal();
   /* kemény szűrők mezőinek feltöltése a memóriából */
   ['gA_hours','gA_days','gA_slots','gA_fix','gA_note',
-   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_task','gD_custom','gD_note'].forEach(function(id){
+   'gB_names','gB_att','gB_note','gC_sel','gC_note','gD_mnb','gD_elearn','gD_note'].forEach(function(id){
     var e=document.getElementById(id); if(e && _g[id]!=null) e.value=_g[id];
   });
   /* kérdés-jegyzetek + címkék visszaírása */
@@ -2666,7 +2635,7 @@ function downloadInterviewPDF(){
   /* ── döntés-blokk ── */
   const DR=(typeof dontesResult==='function')?dontesResult():null;
   if(DR){
-    const GN={A:'Valós időkapacitás',B:'Praxisindítás (warm market)',C:'Jutaléktűrés',D:'Késleltetett coachability'};
+    const GN={A:'Valós időkapacitás',B:'Praxisindítás (warm market)',C:'Jutaléktűrés',D:'Képzés-vállalás'};
     const GL={g:'ZÖLD',y:'SÁRGA',r:'PIROS','':'nincs adat'};
     section('Automatikus javaslat: '+(DR.cat||'nincs adat'),
       DR.why.map(x=>'•  '+x).join('\n'));
@@ -2679,8 +2648,9 @@ function downloadInterviewPDF(){
       + (val('gB_names')?('\n    Warm market: '+val('gB_names')+' név / 60 mp'):'')
       + (val('gB_note')?('\n    '+val('gB_note')):'')
       + (val('gC_note')?('\n    Jutalék: '+val('gC_note')):'')
-      + (gDTask()?('\n    Tanítási feladat: '+gDTask()):'')
-      + (val('gD_note')?('\n    Visszaadás: '+val('gD_note')):''));
+      + (val('gD_mnb')?('\n    MNB képzés + vizsga: '+val('gD_mnb')):'')
+      + (val('gD_elearn')?('\n    Irodai e-learning: '+val('gD_elearn')):'')
+      + (val('gD_note')?('\n    Képzés-jegyzet: '+val('gD_note')):''));
   }
   /* ── kérdésenkénti jegyzetek, címkék, pontok ── */
   if(+_g.before) section('0. Before-illeszkedés', (+_g.before)+' / 10'+(val('qn_before')?('\n\n'+val('qn_before')):''));
@@ -2748,7 +2718,7 @@ var TMR_PHASES=[
   {t:2,  l:'2-12 · Bizonyítékalapú kérdésblokk - 5 kérdés'},
   {t:12, l:'12-18 · Kemény szűrők + a feladat megtanítása'},
   {t:18, l:'18-28 · Prezentáció (max 7 dia)'},
-  {t:28, l:'28-31 · Coachability visszakérés + a jelölt kérdései'},
+  {t:28, l:'28-31 · A jelölt kérdései'},
   {t:31, l:'31-35 · Értékelés, döntés, lezárás'}
 ];
 var _tmrT=null,_tmrLeft=35*60;
@@ -2836,7 +2806,7 @@ async function felvSavePipeline(btn){
     +(' · első benyomás: '+sM+'/'+sK+'/'+sH);
   /* ── 🎤 A TELJES INTERJÚ egy csomagban - a portál HR-kártyáján jelenik meg ── */
   const DR=(typeof dontesResult==='function')?dontesResult():null;
-  const GN={A:'Valós időkapacitás',B:'Praxisindítás (warm market)',C:'Jutaléktűrés',D:'Késleltetett coachability'};
+  const GN={A:'Valós időkapacitás',B:'Praxisindítás (warm market)',C:'Jutaléktűrés',D:'Képzés-vállalás'};
   const GL={g:'ZÖLD',y:'SÁRGA',r:'PIROS','':'nincs adat'};
   const kompObj={};
   if(KR&&KR.rows) KR.rows.forEach(function(r){
@@ -2881,8 +2851,8 @@ async function felvSavePipeline(btn){
     warm_market_jegyzet: hv('gB_note')||null,
     jutalek_tures: hv('gC_sel')||null,
     jutalek_jegyzet: hv('gC_note')||null,
-    tanitasi_feladat: gDTask()||null,
-    coachability_keslelteteff: (+_g.gD)?((+_g.gD)+'/5'+(_g.teach?(' · tanítva: '+String(_g.teach).slice(11,16)):'')):null,
+    kepzes_mnb: _g.gD_mnb||null,
+    kepzes_elearning: _g.gD_elearn||null,
     coachability_jegyzet: hv('gD_note')||null,
     jelolt_kerdesei: (hv('cqNote')||_cq.none||_cq.great)
       ? ((hv('cqNote')||'')
