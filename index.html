@@ -1795,21 +1795,17 @@ function _ph1(){
 }
 function _ph2(){
   return '<div class="prezi-launch">'
-  +'<div class="pl-t">🎬 Vezetői prezentáció - 25 dia</div>'
-  +'<div class="pl-d">Cégbemutató · a munka · képzés · jövedelem · az első 90 nap · a keret. Minden diához előadói jegyzet tartozik (N billentyű).</div>'
+  +'<div class="pl-t">🎬 Felvételi prezentáció - 23 dia</div>'
+  +'<div class="pl-d">Három blokk, kb. 10 perc: <b>Jelenünk és a jövőnk</b> · <b>Munka és jövedelem</b> · <b>Indulás és betanulás</b>. Minden diához szó szerinti előadói jegyzet tartozik (N billentyű).</div>'
   +'<div class="pl-row"><button type="button" class="pl-btn" onclick="preziOpen()">▶ Prezentáció indítása</button>'
-  +'<a class="pl-alt" href="prezi.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
+  +'<a class="pl-alt" href="prezi_15_slide.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
   +'<div class="pl-n">Vezérlés: <b>← →</b> vagy kattintás · <b>N</b> előadói jegyzet · <b>F</b> teljes képernyő. Visszalépés az interjúhoz a bal felső <b>✕</b> gombbal.</div>'
   +'</div>'
-  +'<div class="qc-w" style="margin-top:12px;"><b>Mi fér bele 7 diába?</b><ul>'
-  +'<li>Kik vagyunk, mekkora a piac, miért független tanácsadás</li>'
-  +'<li>Mit csinál egy tanácsadó egy héten - konkrétan</li>'
-  +'<li>Képzés és vizsga: mi a menetrend, meddig tart</li>'
-  +'<li>Hogyan keletkezik a jövedelem - számmal, nem ígérettel</li>'
-  +'<li>Karrierút és a vezetővé válás logikája</li>'
-  +'<li>Az első 90 nap: mi történik hétről hétre</li>'
-  +'<li>Mit várunk el, és mit nem kérünk soha</li>'
-  +'</ul></div>';
+  +'<div class="qc-w" style="margin-top:12px;"><b>Mi van a három blokkban?</b><ul>'
+  +'<li><b>Jelenünk és a jövőnk</b> - az ügyfél problémája, a független tanácsadás, a piaci pozíció és az igazgatóság víziója</li>'
+  +'<li><b>Munka és jövedelem</b> - mit csinál egy kezdő, heti időblokkoló, honnan jön a bevétel, két élő kalkulátor, karrierpálya és sávok</li>'
+  +'<li><b>Indulás és betanulás</b> - MNB-képzés, belső e-learning, Start számla</li>'
+  +'</ul><b>Interaktív elemek:</b> a 11. dián heti mintát lapozol, a 14-15. dián a díjakat és a szorzókat élőben átírod, a karrierszintekre rá lehet kattintani.</div>';
 }
 /* ── a prezentáció teljes képernyős futtatása az oldalon belül ── */
 function preziOpen(){
@@ -1817,14 +1813,14 @@ function preziOpen(){
   if(!ov){
     ov=document.createElement('div'); ov.id='preziOv';
     ov.innerHTML='<button class="prezi-x" onclick="preziClose()">✕ Vissza az interjúhoz</button>'
-      +'<div class="prezi-fb">Ha itt üres marad, a <b>prezi.html</b> még nincs feltöltve a repóba. '
-      +'<a href="prezi.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
-      +'<iframe class="prezi-fr" src="prezi.html" allow="fullscreen" allowfullscreen title="Vezetői prezentáció"></iframe>';
+      +'<div class="prezi-fb">Ha itt üres marad, a <b>prezi_15_slide.html</b> még nincs feltöltve a repóba. '
+      +'<a href="prezi_15_slide.html" target="_blank" rel="noopener">Megnyitás új lapon ↗</a></div>'
+      +'<iframe class="prezi-fr" src="prezi_15_slide.html" allow="fullscreen" allowfullscreen title="Felvételi prezentáció"></iframe>';
     document.body.appendChild(ov);
     ov.addEventListener('click', function(e){ if(e.target===ov) preziClose(); });
   }
   ov.classList.add('on');
-  var fr=ov.querySelector('.prezi-fr'); if(fr && !fr.getAttribute('src')) fr.setAttribute('src','prezi.html');
+  var fr=ov.querySelector('.prezi-fr'); if(fr && !fr.getAttribute('src')) fr.setAttribute('src','prezi_15_slide.html');
   setTimeout(function(){ try{ ov.querySelector('.prezi-fr').contentWindow.focus(); }catch(e){} }, 250);
 }
 function preziClose(){
